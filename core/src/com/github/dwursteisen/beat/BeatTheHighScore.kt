@@ -1,6 +1,10 @@
 package com.github.dwursteisen.beat
 
-import com.badlogic.gdx.*
+import com.badlogic.gdx.Game
+import com.badlogic.gdx.Screen
+import com.badlogic.gdx.Gdx
+import com.badlogic.gdx.Application
+import com.badlogic.gdx.Input
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver
 import com.badlogic.gdx.audio.Music
@@ -38,7 +42,7 @@ open class BeatTheHighScore : Game() {
                             "Will force the loading of it. (Bad performance expected!)"
                 }
 
-                finishLoadingAsset(fileName)
+                finishLoadingAsset<String?>(fileName)
                 super.get(fileName, type)
             }
         }
@@ -126,14 +130,14 @@ open class BeatTheHighScore : Game() {
         private val credits by lazy { CreditsScreen(game.assetsManager) }
 
         private val levels = mapOf(
-                "level0.tmx" to "level1.tmx",
-                "level1.tmx" to "level2.tmx",
-                "level2.tmx" to "level3.tmx",
-                "level3.tmx" to "level4.tmx",
-                "level4.tmx" to "level5.tmx",
-                "level5.tmx" to "level6.tmx",
-                "level6.tmx" to "level7.tmx",
-                "level7.tmx" to "level8.tmx"
+            "level0.tmx" to "level1.tmx",
+            "level1.tmx" to "level2.tmx",
+            "level2.tmx" to "level3.tmx",
+            "level3.tmx" to "level4.tmx",
+            "level4.tmx" to "level5.tmx",
+            "level5.tmx" to "level6.tmx",
+            "level6.tmx" to "level7.tmx",
+            "level7.tmx" to "level8.tmx"
         )
 
         fun title() {
