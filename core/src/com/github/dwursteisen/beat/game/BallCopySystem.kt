@@ -4,11 +4,11 @@ import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Family
 import com.badlogic.ashley.systems.IntervalSystem
 import com.badlogic.gdx.assets.AssetManager
-import com.github.dwursteisen.libgdx.aseprite.Aseprite
+import com.github.dwursteisen.beat.addons.aseprite.Aseprite
 import com.github.dwursteisen.libgdx.ashley.Rotation
 import com.github.dwursteisen.libgdx.ashley.StateComponent
 import com.github.dwursteisen.libgdx.ashley.get
-import com.github.dwursteisen.libgdx.v2
+import com.github.dwursteisen.beat.addons.core.v2
 import ktx.ashley.entity
 
 class BallCopySystem(private val assets: AssetManager) : IntervalSystem(0.1f) {

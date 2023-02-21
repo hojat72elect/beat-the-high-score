@@ -11,7 +11,7 @@ import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.github.dwursteisen.libgdx.ashley.get
 import com.github.dwursteisen.libgdx.ashley.removeAllWith
-import com.github.dwursteisen.libgdx.v2
+import com.github.dwursteisen.beat.addons.core.v2
 import ktx.ashley.entity
 
 class PlayerControlSystem(private val viewport: Viewport) : IteratingSystem(Family.all(Player::class.java, Position::class.java).get()) {

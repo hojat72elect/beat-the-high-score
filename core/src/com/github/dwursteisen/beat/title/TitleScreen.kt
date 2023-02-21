@@ -29,13 +29,22 @@ import com.badlogic.gdx.utils.viewport.FitViewport
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.github.dwursteisen.beat.BeatTheHighScore
-import com.github.dwursteisen.beat.game.*
+import com.github.dwursteisen.beat.addons.aseprite.Aseprite
+import com.github.dwursteisen.beat.game.EntityRender
+import com.github.dwursteisen.beat.game.Size
+import com.github.dwursteisen.beat.game.Position
+import com.github.dwursteisen.beat.game.invoke
+import com.github.dwursteisen.beat.game.screenWidth
+import com.github.dwursteisen.beat.game.screenHeight
+import com.github.dwursteisen.beat.game.RenderSystem
+import com.github.dwursteisen.beat.game.TransitionSystem
+import com.github.dwursteisen.beat.game.Config
+import com.github.dwursteisen.beat.game.Transition
 import com.github.dwursteisen.beat.options.centerCamera
-import com.github.dwursteisen.libgdx.aseprite.Aseprite
 import com.github.dwursteisen.libgdx.ashley.StateComponent
 import com.github.dwursteisen.libgdx.ashley.StateSystem
 import com.github.dwursteisen.libgdx.ashley.get
-import com.github.dwursteisen.libgdx.v2
+import com.github.dwursteisen.beat.addons.core.v2
 import ktx.ashley.entity
 import ktx.log.info
 import ktx.scene2d.KVerticalGroup
@@ -52,7 +61,7 @@ class TitleSystem : IteratingSystem(all(Title::class.java).get()) {
     private val title: ComponentMapper<Title> = get()
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
-        val alpha = Interpolation.bounceOut.invoke(Math.min(duration, entity[state].time / duration))
+        val alpha = Interpolation.bounceOut.invoke(duration.coerceAtMost(entity[state].time / duration))
         val w = entity[render].texture.regionWidth * alpha
         val h = entity[render].texture.regionHeight * alpha
 
@@ -112,11 +121,8 @@ class TitleScreen(private val assetManager: AssetManager) : ScreenAdapter() {
         val logo = txt.frame(0)
         engine.entity {
 
-            entity.add(StateComponent())
-                    .add(Title(128 * 0.5 v2 screenHeight - logo.regionHeight * 0.5f - 5f))
-                    .add(Position(0 v2 0))
-                    .add(Size(0 v2 0))
-                    .add(EntityRender(logo))
+            entity.add(StateComponent()).add(Title(128 * 0.5 v2 screenHeight - logo.regionHeight * 0.5f - 5f))
+                .add(Position(0 v2 0)).add(Size(0 v2 0)).add(EntityRender(logo))
         }
         transition = false
 
@@ -170,8 +176,7 @@ class TitleScreen(private val assetManager: AssetManager) : ScreenAdapter() {
     override fun render(delta: Float) {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             engine.entity {
-                entity.add(StateComponent())
-                        .add(Transition(wayIn = true))
+                entity.add(StateComponent()).add(Transition(wayIn = true))
             }
         }
 
@@ -186,7 +191,7 @@ class TitleScreen(private val assetManager: AssetManager) : ScreenAdapter() {
         stage.act()
         stage.draw()
 
-        engine.update(Math.min(delta, 1 / 60f))
+        engine.update(delta.coerceAtMost(1 / 60f))
     }
 
     override fun resume() {
