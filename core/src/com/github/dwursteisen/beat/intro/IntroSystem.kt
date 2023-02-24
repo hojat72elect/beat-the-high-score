@@ -8,9 +8,9 @@ import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.I18NBundle
 import com.github.dwursteisen.beat.BeatTheHighScore
+import com.github.dwursteisen.beat.components.Position
 import com.github.dwursteisen.beat.game.Animated
 import com.github.dwursteisen.beat.game.EntityRender
-import com.github.dwursteisen.beat.game.Position
 import com.github.dwursteisen.beat.game.Size
 import com.github.dwursteisen.libgdx.aseprite.Aseprite
 import com.github.dwursteisen.libgdx.ashley.StateComponent

@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family.all
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.math.MathUtils
+import com.github.dwursteisen.beat.components.Player
 import com.github.dwursteisen.libgdx.aseprite.Aseprite
 import com.github.dwursteisen.libgdx.ashley.EntityState
 import com.github.dwursteisen.libgdx.ashley.EventBus

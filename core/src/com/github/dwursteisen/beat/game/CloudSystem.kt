@@ -5,6 +5,8 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family.all
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.math.MathUtils
+import com.github.dwursteisen.beat.components.Cloud
+import com.github.dwursteisen.beat.components.Position
 import com.github.dwursteisen.libgdx.ashley.StateComponent
 import com.github.dwursteisen.libgdx.ashley.get
 

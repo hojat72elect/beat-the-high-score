@@ -6,7 +6,7 @@ import com.badlogic.ashley.core.Family
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import com.github.dwursteisen.beat.game.Position
+import com.github.dwursteisen.beat.components.Position
 import com.github.dwursteisen.beat.game.Size
 import com.github.dwursteisen.libgdx.ashley.get
 

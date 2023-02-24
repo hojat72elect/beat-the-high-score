@@ -30,8 +30,7 @@ import com.badlogic.gdx.utils.I18NBundle
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.github.dwursteisen.beat.BeatTheHighScore
-import com.github.dwursteisen.beat.components.Ball
-import com.github.dwursteisen.beat.components.BallCopy
+import com.github.dwursteisen.beat.components.*
 import com.github.dwursteisen.beat.intro.TextRender
 import com.github.dwursteisen.beat.intro.TextRenderSystem
 import com.github.dwursteisen.libgdx.aseprite.AnimationSlice
@@ -64,31 +63,9 @@ const val hitTime = 0.2f
 const val screenWidth = 128f
 const val screenHeight = 224f
 
-class CameraHolder(val camera: Camera, val amplitude: Vector2 = Vector2()) : Component
-class Player(
-    val hitbox: Vector2 = Vector2(),
-    val offsetHitbox: Vector2 = Vector2(),
-    val direction: Vector2 = Vector2(),
-    var win: Boolean = false
-) : Component
 
-class PlayerTouch : Component
-
-class Brick(var hit: Int = 3, val body: Body) : Component
-class Gate(var open: Boolean = true, var openTime: Float = 3f, var closeTime: Float = 1f) : Component
-class DeadZone : Component
-class Cloud(val origin: Vector2 = Vector2(), val offset: Float = 0f) : Component
-class MapLayer(val map: OrthogonalTiledMapRenderer) : Component
-class Position(var position: Vector2) : Component
 class Size(var size: Vector2) : Component
 class ShapeToRender(var type: ShapeType, var color: Color) : Component
-class Move(
-    val duration: Float = 0f,
-    var delay: Float,
-    val from: Vector2 = Vector2(),
-    val target: Vector2 = Vector2(),
-    val interpolation: Interpolation = Interpolation.linear
-) : Component
 
 class Hitbox(val size: Vector2, val offset: Vector2) : Component
 
@@ -434,7 +411,7 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
 
         eventBus.register(object : EventListener {
             override fun onEvent(event: Event, eventData: EventData) {
-                info { "Player just loose the game!" }
+                info { "com.github.dwursteisen.beat.components.Player just loose the game!" }
                 // destroy the ball
                 val balls = engine.getEntitiesFor(Family.all(Ball::class.java).get())
                 engine.removeAll(balls)
@@ -468,7 +445,7 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
 
         eventBus.register(object : EventListener {
             override fun onEvent(event: Event, eventData: EventData) {
-                info { "Player just win the game!" }
+                info { "com.github.dwursteisen.beat.components.Player just win the game!" }
 
                 engine.getEntitiesFor(all(Player::class.java).get()).forEach {
                     it.getComponent(Player::class.java).win = true

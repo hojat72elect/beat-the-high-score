@@ -29,6 +29,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.github.dwursteisen.beat.BeatTheHighScore
+import com.github.dwursteisen.beat.components.Position
 import com.github.dwursteisen.beat.game.*
 import com.github.dwursteisen.beat.options.centerCamera
 import com.github.dwursteisen.libgdx.aseprite.Aseprite

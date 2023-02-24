@@ -9,6 +9,10 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
 import com.github.dwursteisen.beat.components.Ball
+import com.github.dwursteisen.beat.components.Brick
+import com.github.dwursteisen.beat.components.DeadZone
+import com.github.dwursteisen.beat.components.Player
+import com.github.dwursteisen.beat.components.Position
 import com.github.dwursteisen.libgdx.ashley.*
 import com.github.dwursteisen.libgdx.v2
 import ktx.ashley.entity

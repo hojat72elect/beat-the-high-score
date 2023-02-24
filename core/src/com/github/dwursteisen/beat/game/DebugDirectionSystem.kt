@@ -7,12 +7,15 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.Vector2
+import com.github.dwursteisen.beat.components.Position
 import com.github.dwursteisen.beat.components.Ball
+import com.github.dwursteisen.beat.components.Player
 import com.github.dwursteisen.libgdx.ashley.Direction
 import com.github.dwursteisen.libgdx.ashley.get
 import com.github.dwursteisen.libgdx.ashley.getNullable
 
-class DebugDirectionSystem(val batch: ShapeRenderer) : IteratingSystem(Family.all(Debugable::class.java, Position::class.java).get()) {
+class DebugDirectionSystem(val batch: ShapeRenderer) :
+    IteratingSystem(Family.all(Debugable::class.java, Position::class.java).get()) {
 
     private val ball: ComponentMapper<Ball> = get()
     private val player: ComponentMapper<Player> = get()
@@ -32,8 +35,8 @@ class DebugDirectionSystem(val batch: ShapeRenderer) : IteratingSystem(Family.al
             draw(position, b.direction)
         } else if (p != null) {
             tmp2.set(entity[size].size)
-                    .scl(0.5f)
-                    .add(position)
+                .scl(0.5f)
+                .add(position)
             draw(tmp2, p.direction)
         } else if (d != null) {
             draw(position, d.value)
@@ -48,17 +51,17 @@ class DebugDirectionSystem(val batch: ShapeRenderer) : IteratingSystem(Family.al
         batch.line(position, tmp)
 
         arrow.set(tmp)
-                .sub(position)
-                .nor()
-                .scl(5f)
-                .rotate(45f + 90f)
-                .add(tmp)
+            .sub(position)
+            .nor()
+            .scl(5f)
+            .rotate(45f + 90f)
+            .add(tmp)
         batch.color = Color.GREEN
         batch.line(tmp, arrow)
 
         arrow.sub(tmp)
-                .rotate(+90f)
-                .add(tmp)
+            .rotate(+90f)
+            .add(tmp)
         batch.color = Color.BLUE
         batch.line(tmp, arrow)
     }
