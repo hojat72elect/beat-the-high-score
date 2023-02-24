@@ -17,5 +17,17 @@ sealed class GameEvent(val id: Int) {
         object Idle : Camera(4)
         object Shake : Camera(5)
     }
+
+    // 2 player events
+    sealed class Player(id: Int) : GameEvent(id) {
+        object Idle : Player(6)
+        object Touch : Player(7)
+    }
+
+    // 2 game result events
+    sealed class Result(id: Int) : GameEvent(id) {
+        object Win : Result(8)
+        object Lose : Result(9)
+    }
 }
 

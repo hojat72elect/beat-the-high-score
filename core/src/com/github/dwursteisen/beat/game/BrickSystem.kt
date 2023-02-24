@@ -104,7 +104,7 @@ class BrickSystem(
 
                 val remainingBricks = engine.getEntitiesFor(family).count()
                 if (remainingBricks == 0) {
-                    machine.eventBus.emit(EVENT_WIN)
+                    machine.eventBus.emit(GameEvent.Result.Win.id)
                 }
             }
         }

@@ -59,14 +59,6 @@ const val playerWidth = 48f
 const val playerHeight = 32f
 const val hitTime = 0.2f
 
-// 2 player events
-const val EVENT_PLAYER_IDLE = 6
-const val EVENT_PLAYER_TOUCH = 7
-
-// 2 game result events
-const val EVENT_WIN = 8
-const val EVENT_LOOSE = 9
-
 // I have no idea what this event is used for
 const val EVENT_UPDATE_GATE = 10
 
@@ -473,7 +465,7 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
                 }
             }
 
-        }, EVENT_LOOSE)
+        }, GameEvent.Result.Lose.id)
 
 
         eventBus.register(object : EventListener {
@@ -511,7 +503,7 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
                 }
             }
 
-        }, EVENT_WIN)
+        }, GameEvent.Result.Win.id)
 
         info { "Add BOX2d information" }
         // -- box2d -- //

@@ -57,7 +57,7 @@ class BallSystem(eventBus: EventBus, val assetManager: AssetManager) :
 
             override fun update(entity: Entity, machine: StateMachineSystem, delta: Float) {
                 if (touchDeadZone(entity)) {
-                    machine.eventBus.emit(EVENT_LOOSE)
+                    machine.eventBus.emit(GameEvent.Result.Lose.id)
                     return
                 }
 
@@ -110,7 +110,7 @@ class BallSystem(eventBus: EventBus, val assetManager: AssetManager) :
             entity[ball].direction.x = dst * 0.2f
             p[collision].hit = hitTime
 
-            eventBus.emit(EVENT_PLAYER_TOUCH, p)
+            eventBus.emit(GameEvent.Player.Touch.id, p)
             if (withSfx) {
                 val sfx: Sound = assetManager["sfx/beat_sfx_0.ogg"]
                 sfx.play(MathUtils.random(0.3f, 0.8f))

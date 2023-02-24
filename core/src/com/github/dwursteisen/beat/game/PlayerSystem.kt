@@ -18,7 +18,8 @@ fun <T> List<T>.pickOne(): T {
     return this.elementAt(index)
 }
 
-class PlayerSystem(eventBus: EventBus, val assets: AssetManager) : StateMachineSystem(eventBus, all(Player::class.java).get()) {
+class PlayerSystem(eventBus: EventBus, val assets: AssetManager) :
+    StateMachineSystem(eventBus, all(Player::class.java).get()) {
     private val animation: ComponentMapper<Animated> = get()
     private val state: ComponentMapper<StateComponent> = get()
 
@@ -28,7 +29,7 @@ class PlayerSystem(eventBus: EventBus, val assets: AssetManager) : StateMachineS
         val IDLE = object : EntityState() {
             override fun enter(entity: Entity, machine: StateMachineSystem, eventData: EventData) {
                 val chicken: Aseprite = assets["sheets/chicken"]
-                val anim = if (eventData.event == EVENT_PLAYER_TOUCH) {
+                val anim = if (eventData.event == GameEvent.Player.Touch.id) {
                     chicken["bounce"]
                 } else {
                     // chose an random animation
@@ -41,7 +42,7 @@ class PlayerSystem(eventBus: EventBus, val assets: AssetManager) : StateMachineS
 
             override fun update(entity: Entity, machine: StateMachineSystem, delta: Float) {
                 if (entity[animation].animation.isAnimationFinished(entity[state].time)) {
-                    machine.eventBus.emit(EVENT_PLAYER_IDLE, entity)
+                    machine.eventBus.emit(GameEvent.Player.Idle.id, entity)
                 }
             }
         }
@@ -51,7 +52,7 @@ class PlayerSystem(eventBus: EventBus, val assets: AssetManager) : StateMachineS
                 // chose an random animation
                 val chicken: Aseprite = assets["sheets/chicken"]
 
-                val anim = if (eventData.event == EVENT_PLAYER_TOUCH) {
+                val anim = if (eventData.event == GameEvent.Player.Touch.id) {
                     chicken["bounce"]
                 } else {
                     chicken["idle2"]
@@ -63,13 +64,13 @@ class PlayerSystem(eventBus: EventBus, val assets: AssetManager) : StateMachineS
 
             override fun update(entity: Entity, machine: StateMachineSystem, delta: Float) {
                 if (entity[animation].animation.isAnimationFinished(entity[state].time)) {
-                    machine.eventBus.emit(EVENT_PLAYER_IDLE, entity)
+                    machine.eventBus.emit(GameEvent.Player.Idle.id, entity)
                 }
             }
         }
 
         startWith(IDLE)
-        onState(IDLE).on(EVENT_PLAYER_IDLE, EVENT_PLAYER_TOUCH) { entity, event ->
+        onState(IDLE).on(GameEvent.Player.Idle.id, GameEvent.Player.Touch.id) { entity, event ->
             go(IDLE, entity, event)
         }
 
@@ -89,7 +90,7 @@ class PlayerSystem(eventBus: EventBus, val assets: AssetManager) : StateMachineS
             go(IDLE, entity, event)
         }
 
-        onState(MOVE).on(EVENT_PLAYER_TOUCH) { entity, event ->
+        onState(MOVE).on(GameEvent.Player.Touch.id) { entity, event ->
             go(MOVE, entity, event)
         }
     }
