@@ -35,6 +35,7 @@ import com.badlogic.gdx.utils.viewport.Viewport
 import com.github.dwursteisen.beat.BeatTheHighScore
 import com.github.dwursteisen.beat.components.*
 import com.github.dwursteisen.beat.components.Position
+import com.github.dwursteisen.beat.components.Transition
 import com.github.dwursteisen.beat.intro.TextRender
 import com.github.dwursteisen.beat.intro.TextRenderSystem
 import com.github.dwursteisen.libgdx.aseprite.AnimationSlice
@@ -67,8 +68,6 @@ const val screenWidth = 128f
 const val screenHeight = 224f
 
 class Size(var size: Vector2) : Component
-
-class Transition(val duration: Float = 0.5f, val wayIn: Boolean = true, var done: Boolean = false) : Component
 
 class DebugCollision(var hit: Float = 0f) : Component
 class ParticleEntity(var particle: ParticleEffectPool.PooledEffect? = null) : Component
