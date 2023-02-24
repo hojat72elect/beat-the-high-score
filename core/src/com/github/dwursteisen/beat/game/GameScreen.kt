@@ -67,7 +67,6 @@ const val screenWidth = 128f
 const val screenHeight = 224f
 
 class Size(var size: Vector2) : Component
-class ShapeToRender(var type: ShapeType, var color: Color) : Component
 
 class StageComponent(val stage: Stage) : Component
 

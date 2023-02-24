@@ -12,6 +12,7 @@ import com.github.dwursteisen.beat.components.Player
 import com.github.dwursteisen.libgdx.ashley.get
 import com.github.dwursteisen.libgdx.ashley.getNullable
 import com.github.dwursteisen.beat.components.Position
+import com.github.dwursteisen.beat.components.ShapeToRender
 import ktx.ashley.has
 import ktx.graphics.circle
 import ktx.graphics.rect

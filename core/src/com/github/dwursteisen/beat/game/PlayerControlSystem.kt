@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.viewport.Viewport
 import com.github.dwursteisen.beat.components.Player
 import com.github.dwursteisen.beat.components.PlayerTouch
 import com.github.dwursteisen.beat.components.Position
+import com.github.dwursteisen.beat.components.ShapeToRender
 import com.github.dwursteisen.libgdx.ashley.get
 import com.github.dwursteisen.libgdx.ashley.removeAllWith
 import com.github.dwursteisen.libgdx.v2
