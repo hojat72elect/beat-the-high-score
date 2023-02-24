@@ -10,7 +10,10 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.ScreenAdapter
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.audio.Music
-import com.badlogic.gdx.graphics.*
+import com.badlogic.gdx.graphics.Color
+import com.badlogic.gdx.graphics.GL20
+import com.badlogic.gdx.graphics.OrthographicCamera
+import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.*
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.maps.MapObjects
@@ -31,6 +34,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.github.dwursteisen.beat.BeatTheHighScore
 import com.github.dwursteisen.beat.components.*
+import com.github.dwursteisen.beat.components.Position
 import com.github.dwursteisen.beat.intro.TextRender
 import com.github.dwursteisen.beat.intro.TextRenderSystem
 import com.github.dwursteisen.libgdx.aseprite.AnimationSlice
@@ -43,7 +47,6 @@ import ktx.log.info
 import ktx.scene2d.horizontalGroup
 import ktx.scene2d.textButton
 import com.badlogic.gdx.utils.Array as GdxArray
-import com.github.dwursteisen.libgdx.ashley.Position as AshleyPosition
 
 /**
  * All the different types of shapes that you are going to draw in this game.
@@ -68,8 +71,6 @@ class Size(var size: Vector2) : Component
 class ShapeToRender(var type: ShapeType, var color: Color) : Component
 
 class Hitbox(val size: Vector2, val offset: Vector2) : Component
-
-class AnimatedHitbox(var slices: AnimationSlice = NO_SLICE_ANIMATION) : Component
 
 class StageComponent(val stage: Stage) : Component
 
