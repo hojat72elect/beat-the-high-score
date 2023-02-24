@@ -66,11 +66,8 @@ const val hitTime = 0.2f
 const val screenWidth = 128f
 const val screenHeight = 224f
 
-
 class Size(var size: Vector2) : Component
 class ShapeToRender(var type: ShapeType, var color: Color) : Component
-
-class Hitbox(val size: Vector2, val offset: Vector2) : Component
 
 class StageComponent(val stage: Stage) : Component
 

@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family.all
 import com.badlogic.ashley.systems.IteratingSystem
 import com.github.dwursteisen.beat.components.AnimatedHitbox
+import com.github.dwursteisen.beat.components.Hitbox
 import com.github.dwursteisen.libgdx.ashley.StateComponent
 import com.github.dwursteisen.libgdx.ashley.get
 

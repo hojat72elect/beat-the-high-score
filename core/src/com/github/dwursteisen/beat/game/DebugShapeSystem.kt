@@ -7,6 +7,7 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.Vector2
+import com.github.dwursteisen.beat.components.Hitbox
 import com.github.dwursteisen.beat.components.Player
 import com.github.dwursteisen.libgdx.ashley.get
 import com.github.dwursteisen.libgdx.ashley.getNullable
