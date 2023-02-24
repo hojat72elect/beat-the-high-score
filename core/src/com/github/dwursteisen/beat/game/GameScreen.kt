@@ -70,7 +70,6 @@ class Size(var size: Vector2) : Component
 
 class Transition(val duration: Float = 0.5f, val wayIn: Boolean = true, var done: Boolean = false) : Component
 
-class Debugable : Component
 class DebugCollision(var hit: Float = 0f) : Component
 class ParticleEntity(var particle: ParticleEffectPool.PooledEffect? = null) : Component
 

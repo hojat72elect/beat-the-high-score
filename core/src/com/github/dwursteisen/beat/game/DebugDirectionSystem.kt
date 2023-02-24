@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.Vector2
 import com.github.dwursteisen.beat.components.Position
 import com.github.dwursteisen.beat.components.Ball
+import com.github.dwursteisen.beat.components.Debugable
 import com.github.dwursteisen.beat.components.Player
 import com.github.dwursteisen.libgdx.ashley.Direction
 import com.github.dwursteisen.libgdx.ashley.get

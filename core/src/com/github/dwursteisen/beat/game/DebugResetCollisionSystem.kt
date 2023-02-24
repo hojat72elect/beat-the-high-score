@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family
 import com.badlogic.ashley.systems.IteratingSystem
+import com.github.dwursteisen.beat.components.Debugable
 import com.github.dwursteisen.libgdx.ashley.get
 
 class DebugResetCollisionSystem : IteratingSystem(Family.all(DebugCollision::class.java, Debugable::class.java).get()) {
