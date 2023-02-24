@@ -59,11 +59,6 @@ const val playerWidth = 48f
 const val playerHeight = 32f
 const val hitTime = 0.2f
 
-// 3 brick events
-const val EVENT_BRICK_TOUCHED = 1
-const val EVENT_BRICK_IDLE = 2
-const val EVENT_BRICK_EXPLODED = 3
-
 // 2 camera events
 const val EVENT_CAMERA_IDLE = 4
 const val EVENT_CAMERA_SHAKE = 5
