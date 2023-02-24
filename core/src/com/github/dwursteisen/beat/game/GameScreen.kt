@@ -44,6 +44,9 @@ import ktx.scene2d.textButton
 import com.badlogic.gdx.utils.Array as GdxArray
 import com.github.dwursteisen.libgdx.ashley.Position as AshleyPosition
 
+/**
+ * All the different types of shapes that you are going to draw in this game.
+ */
 sealed class ShapeType(val filed: Boolean) {
     object FilledRectangle : ShapeType(true)
     object FilledCircle : ShapeType(true)
@@ -56,18 +59,24 @@ const val playerWidth = 48f
 const val playerHeight = 32f
 const val hitTime = 0.2f
 
+// 3 brick events
 const val EVENT_BRICK_TOUCHED = 1
 const val EVENT_BRICK_IDLE = 2
 const val EVENT_BRICK_EXPLODED = 3
+
+// 2 camera events
 const val EVENT_CAMERA_IDLE = 4
 const val EVENT_CAMERA_SHAKE = 5
 
+// 2 player events
 const val EVENT_PLAYER_IDLE = 6
 const val EVENT_PLAYER_TOUCH = 7
 
+// 2 game result events
 const val EVENT_WIN = 8
 const val EVENT_LOOSE = 9
 
+// I have no idea what this event is used for
 const val EVENT_UPDATE_GATE = 10
 
 const val screenWidth = 128f
@@ -308,13 +317,13 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
             }
 
             val entity = engine.createEntity().add(
-                    Brick(
-                        hit = props.hit, body = createBox2DRect(
-                            pos.cpy().sub(-it.rectangle.width * 0.5f, startOffset - it.rectangle.height * 0.5f),
-                            size.cpy().sub(it.rectangle.width * 0.5f, it.rectangle.height * 0.5f)
-                        )
+                Brick(
+                    hit = props.hit, body = createBox2DRect(
+                        pos.cpy().sub(-it.rectangle.width * 0.5f, startOffset - it.rectangle.height * 0.5f),
+                        size.cpy().sub(it.rectangle.width * 0.5f, it.rectangle.height * 0.5f)
                     )
-                ).add(Debugable()).add(DebugCollision()).add(Position(pos)).add(Size(size)).add(StateComponent())
+                )
+            ).add(Debugable()).add(DebugCollision()).add(Position(pos)).add(Size(size)).add(StateComponent())
                 .add(Hitbox(size.cpy(), Vector2.Zero.cpy()))
                 .add(ShapeToRender(type = ShapeType.Rectangle, color = Color.CHARTREUSE))
 
@@ -334,18 +343,18 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
 
         val breakableBricks = blocks.filter { it.getComponent(Brick::class.java).hit > 0 }
         breakableBricks.forEachIndexed { index, entity ->
-                val delay = index.toFloat() * 0.1f
-                entity.add(
-                    Move(
-                        duration = 0.7f,
-                        delay = delay,
-                        target = entity.getComponent(Position::class.java).position.cpy().sub(0f, startOffset),
-                        from = entity.getComponent(Position::class.java).position.cpy(),
-                        interpolation = Interpolation.pow2Out
-                    )
+            val delay = index.toFloat() * 0.1f
+            entity.add(
+                Move(
+                    duration = 0.7f,
+                    delay = delay,
+                    target = entity.getComponent(Position::class.java).position.cpy().sub(0f, startOffset),
+                    from = entity.getComponent(Position::class.java).position.cpy(),
+                    interpolation = Interpolation.pow2Out
                 )
+            )
 
-            }
+        }
 
         blocks.forEach { engine.addEntity(it) }
 

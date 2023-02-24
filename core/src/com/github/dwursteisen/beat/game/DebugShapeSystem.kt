@@ -13,7 +13,9 @@ import ktx.ashley.has
 import ktx.graphics.circle
 import ktx.graphics.rect
 
-class DebugShapeSystem(private val batch: ShapeRenderer) : IteratingSystem(Family.all(Debugable::class.java, Position::class.java, ShapeToRender::class.java, Size::class.java).get()) {
+class DebugShapeSystem(private val batch: ShapeRenderer) : IteratingSystem(
+    Family.all(Debugable::class.java, Position::class.java, ShapeToRender::class.java, Size::class.java).get()
+) {
 
     private val position: ComponentMapper<Position> = get()
     private val size: ComponentMapper<Size> = get()
@@ -26,15 +28,14 @@ class DebugShapeSystem(private val batch: ShapeRenderer) : IteratingSystem(Famil
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
         val shape = entity[shape]
-        batch.color = if (entity.getNullable(collision)?.hit ?: 0f > 0f) {
+        batch.color = if ((entity.getNullable(collision)?.hit ?: 0f) > 0f) {
             Color.RED
         } else {
             shape.color
         }
 
         if (entity.has(player)) {
-            tmp.set(entity[position].position)
-                    .add(entity[player].offsetHitbox)
+            tmp.set(entity[position].position).add(entity[player].offsetHitbox)
 
             draw(shape, tmp, entity[player].hitbox)
         }

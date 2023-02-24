@@ -14,7 +14,8 @@ import com.github.dwursteisen.libgdx.ashley.removeAllWith
 import com.github.dwursteisen.libgdx.v2
 import ktx.ashley.entity
 
-class PlayerControlSystem(private val viewport: Viewport) : IteratingSystem(Family.all(Player::class.java, Position::class.java).get()) {
+class PlayerControlSystem(private val viewport: Viewport) :
+    IteratingSystem(Family.all(Player::class.java, Position::class.java).get()) {
 
     private val player: ComponentMapper<Player> = get()
     private val position: ComponentMapper<Position> = get()
@@ -41,19 +42,13 @@ class PlayerControlSystem(private val viewport: Viewport) : IteratingSystem(Fami
                 current.set(origin)
 
                 engine.entity {
-                    entity.add(Position(position = origin))
-                            .add(PlayerTouch())
-                            .add(Debugable())
-                            .add(Size(4f v2 4f))
-                            .add(ShapeToRender(type = ShapeType.Circle, color = Color.WHITE))
+                    entity.add(Position(position = origin)).add(PlayerTouch()).add(Debugable()).add(Size(4f v2 4f))
+                        .add(ShapeToRender(type = ShapeType.Circle, color = Color.WHITE))
                 }
 
                 engine.entity {
-                    entity.add(Position(position = current))
-                            .add(PlayerTouch())
-                            .add(Debugable())
-                            .add(Size(4f v2 4f))
-                            .add(ShapeToRender(type = ShapeType.Circle, color = Color.WHITE))
+                    entity.add(Position(position = current)).add(PlayerTouch()).add(Debugable()).add(Size(4f v2 4f))
+                        .add(ShapeToRender(type = ShapeType.Circle, color = Color.WHITE))
                 }
             } else {
                 tmp.set(Gdx.input.x.toFloat(), Gdx.input.y.toFloat())
@@ -74,8 +69,7 @@ class PlayerControlSystem(private val viewport: Viewport) : IteratingSystem(Fami
         }
 
         // sort de la zone ?
-        tmp.set(pEntity[player].direction)
-                .add(pEntity[position].position)
+        tmp.set(pEntity[player].direction).add(pEntity[position].position)
 
         if (tmp.x.between(0f, screenWidth - pEntity[size].size.x)) {
             pEntity[position].position.add(pEntity[player].direction)

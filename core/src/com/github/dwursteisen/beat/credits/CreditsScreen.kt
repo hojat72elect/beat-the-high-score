@@ -15,7 +15,6 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer
 import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.Stage
-import com.badlogic.gdx.scenes.scene2d.ui.Label
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.I18NBundle
@@ -35,7 +34,6 @@ import ktx.scene2d.verticalGroup
 
 class CreditsScreen(val assets: AssetManager) : ScreenAdapter() {
 
-
     private lateinit var viewport: Viewport
     private lateinit var fixedViewport: Viewport
     private lateinit var stage: Stage
@@ -46,8 +44,6 @@ class CreditsScreen(val assets: AssetManager) : ScreenAdapter() {
 
     private lateinit var shader: ShaderProgram
     private lateinit var alpha: (Float) -> Float
-
-    private lateinit var labelTxt: Label
 
     override fun show() {
         info { "Clean input processor" }
@@ -99,11 +95,11 @@ class CreditsScreen(val assets: AssetManager) : ScreenAdapter() {
         stage.addActor(root)
         stage.isDebugAll = Config.scene2d
         stage.addListener(
-                object : ClickListener() {
-                    override fun clicked(event: InputEvent?, x: Float, y: Float) {
-                        BeatTheHighScore.title()
-                    }
-                })
+            object : ClickListener() {
+                override fun clicked(event: InputEvent?, x: Float, y: Float) {
+                    BeatTheHighScore.title()
+                }
+            })
         Gdx.input.inputProcessor = stage
 
         info { "Configuring Shaders" }
@@ -151,7 +147,7 @@ class CreditsScreen(val assets: AssetManager) : ScreenAdapter() {
         val region = TextureRegion(frameBuffer.colorBufferTexture)
         region.flip(false, true)
 
-        time = Math.min(time + delta, 3f)
+        time = (time + delta).coerceAtMost(3f)
 
         shader.begin()
         shader.setUniformf("alpha", alpha(time))
