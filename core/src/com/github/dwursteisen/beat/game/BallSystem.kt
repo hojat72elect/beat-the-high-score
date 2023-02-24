@@ -8,10 +8,10 @@ import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
+import com.github.dwursteisen.beat.components.Ball
 import com.github.dwursteisen.libgdx.ashley.*
 import com.github.dwursteisen.libgdx.v2
 import ktx.ashley.entity
-
 
 operator fun Vector2.component1() = this.x
 operator fun Vector2.component2() = this.y

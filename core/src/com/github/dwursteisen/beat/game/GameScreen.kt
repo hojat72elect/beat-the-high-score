@@ -30,6 +30,8 @@ import com.badlogic.gdx.utils.I18NBundle
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.github.dwursteisen.beat.BeatTheHighScore
+import com.github.dwursteisen.beat.components.Ball
+import com.github.dwursteisen.beat.components.BallCopy
 import com.github.dwursteisen.beat.intro.TextRender
 import com.github.dwursteisen.beat.intro.TextRenderSystem
 import com.github.dwursteisen.libgdx.aseprite.AnimationSlice
@@ -71,12 +73,11 @@ class Player(
 ) : Component
 
 class PlayerTouch : Component
-class Ball(val direction: Vector2) : Component
+
 class Brick(var hit: Int = 3, val body: Body) : Component
 class Gate(var open: Boolean = true, var openTime: Float = 3f, var closeTime: Float = 1f) : Component
 class DeadZone : Component
 class Cloud(val origin: Vector2 = Vector2(), val offset: Float = 0f) : Component
-class BallCopy(var alpha: Float = 1f) : Component
 class MapLayer(val map: OrthogonalTiledMapRenderer) : Component
 class Position(var position: Vector2) : Component
 class Size(var size: Vector2) : Component

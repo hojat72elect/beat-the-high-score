@@ -4,6 +4,8 @@ import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Family
 import com.badlogic.ashley.systems.IntervalSystem
 import com.badlogic.gdx.assets.AssetManager
+import com.github.dwursteisen.beat.components.Ball
+import com.github.dwursteisen.beat.components.BallCopy
 import com.github.dwursteisen.libgdx.aseprite.Aseprite
 import com.github.dwursteisen.libgdx.ashley.Rotation
 import com.github.dwursteisen.libgdx.ashley.StateComponent
