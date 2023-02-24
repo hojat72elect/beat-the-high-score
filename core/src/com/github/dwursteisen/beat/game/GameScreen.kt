@@ -68,8 +68,6 @@ const val screenHeight = 224f
 
 class Size(var size: Vector2) : Component
 
-class StageComponent(val stage: Stage) : Component
-
 class Transition(val duration: Float = 0.5f, val wayIn: Boolean = true, var done: Boolean = false) : Component
 
 class Debugable : Component
