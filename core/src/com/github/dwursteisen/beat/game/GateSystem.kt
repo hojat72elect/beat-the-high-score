@@ -12,27 +12,27 @@ class GateSystem(eventBus: EventBus, assets: AssetManager) : StateMachineSystem(
 
     private val gate: ComponentMapper<Gate> = get()
     private val animation: ComponentMapper<Animated> = get()
-    private val animatedHitbox: ComponentMapper<AnimatedHitbox> = get()
+    private val animatedHitBox: ComponentMapper<AnimatedHitbox> = get()
     private val state: ComponentMapper<StateComponent> = get()
 
     private val sprData: Aseprite = assets["sheets/gate"]
 
     override fun describeMachine() {
 
-        val OPEN = object : EntityState() {
+        val open = object : EntityState() {
             override fun enter(entity: Entity, machine: StateMachineSystem, eventData: EventData) {
                 entity[state].time = 0f
                 entity[animation].animation = sprData["open_nr"]
-                entity[animatedHitbox].slices = sprData.animatedSlices("gate")["open_nr"]
+                entity[animatedHitBox].slices = sprData.animatedSlices("gate")["open_nr"]
                 machine.eventBus.emitLater(entity[gate].openTime, EVENT_UPDATE_GATE, entity)
             }
         }
 
-        val CLOSED = object : EntityState() {
+        val closed = object : EntityState() {
             override fun enter(entity: Entity, machine: StateMachineSystem, eventData: EventData) {
                 entity[state].time = 0f
                 entity[animation].animation = sprData["close_nr"]
-                entity[animatedHitbox].slices = sprData.animatedSlices("gate")["close_nr"]
+                entity[animatedHitBox].slices = sprData.animatedSlices("gate")["close_nr"]
 
                 machine.eventBus.emitLater(entity[gate].closeTime, EVENT_UPDATE_GATE, entity)
             }
@@ -43,19 +43,19 @@ class GateSystem(eventBus: EventBus, assets: AssetManager) : StateMachineSystem(
                 return@startWith
             }
             if (entity[gate].open) {
-                go(OPEN, entity, event)
+                go(open, entity, event)
             } else {
-                go(CLOSED, entity, event)
+                go(closed, entity, event)
             }
         }
 
-        onState(OPEN).on(EVENT_UPDATE_GATE) { entity, event ->
-            go(CLOSED, entity, event)
+        onState(open).on(EVENT_UPDATE_GATE) { entity, event ->
+            go(closed, entity, event)
         }
 
 
-        onState(CLOSED).on(EVENT_UPDATE_GATE) { entity, event ->
-            go(OPEN, entity, event)
+        onState(closed).on(EVENT_UPDATE_GATE) { entity, event ->
+            go(open, entity, event)
         }
 
     }

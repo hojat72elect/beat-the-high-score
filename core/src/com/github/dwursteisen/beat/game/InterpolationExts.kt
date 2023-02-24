@@ -13,7 +13,6 @@ fun Interpolation.invoke(value: Float): Float {
     }
 }
 
-
 fun Interpolation.invoke(start: Float, stop: Float, value: Float): Float {
     return when (Config.interpolation) {
         "DISABLED" -> this.apply(start, value, 1f)
