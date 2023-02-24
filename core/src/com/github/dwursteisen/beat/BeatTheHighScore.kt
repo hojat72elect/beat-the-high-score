@@ -17,16 +17,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin
 import com.badlogic.gdx.utils.GdxRuntimeException
 import com.badlogic.gdx.utils.I18NBundle
 import com.badlogic.gdx.utils.Logger
-import com.github.dwursteisen.beat.addons.aseprite.Aseprite
-import com.github.dwursteisen.beat.addons.aseprite.AsepriteJson
-import com.github.dwursteisen.beat.addons.aseprite.AsepriteJsonLoader
-import com.github.dwursteisen.beat.addons.aseprite.AsepriteLoader
 import com.github.dwursteisen.beat.credits.CreditsScreen
 import com.github.dwursteisen.beat.game.Config
 import com.github.dwursteisen.beat.game.GameScreen
 import com.github.dwursteisen.beat.intro.IntroScreen
 import com.github.dwursteisen.beat.options.OptionsScreen
 import com.github.dwursteisen.beat.title.TitleScreen
+import com.github.dwursteisen.libgdx.aseprite.Aseprite
+import com.github.dwursteisen.libgdx.aseprite.AsepriteJson
+import com.github.dwursteisen.libgdx.aseprite.AsepriteJsonLoader
+import com.github.dwursteisen.libgdx.aseprite.AsepriteLoader
 import ktx.log.info
 import ktx.scene2d.Scene2DSkin
 
@@ -38,7 +38,8 @@ open class BeatTheHighScore : Game() {
                 super.get(fileName, type)
             } catch (ex: GdxRuntimeException) {
                 ktx.log.error(ex) {
-                    "Asset $fileName not yet loaded! You should load it before accessing to it! " + "Will force the loading of it. (Bad performance expected!)"
+                    "Asset $fileName not yet loaded! You should load it before accessing to it! " +
+                            "Will force the loading of it. (Bad performance expected!)"
                 }
 
                 finishLoadingAsset<String?>(fileName)

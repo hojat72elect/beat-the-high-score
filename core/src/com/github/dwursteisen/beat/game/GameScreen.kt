@@ -10,17 +10,8 @@ import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.ScreenAdapter
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.audio.Music
-import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.graphics.Color
-import com.badlogic.gdx.graphics.OrthographicCamera
-import com.badlogic.gdx.graphics.GL20
-import com.badlogic.gdx.graphics.Camera
-import com.badlogic.gdx.graphics.g2d.BitmapFont
-import com.badlogic.gdx.graphics.g2d.ParticleEffect
-import com.badlogic.gdx.graphics.g2d.ParticleEffectPool
-import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import com.badlogic.gdx.graphics.g2d.TextureRegion
-import com.badlogic.gdx.graphics.g2d.Animation
+import com.badlogic.gdx.graphics.*
+import com.badlogic.gdx.graphics.g2d.*
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.maps.MapObjects
 import com.badlogic.gdx.maps.objects.RectangleMapObject
@@ -30,13 +21,7 @@ import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
-import com.badlogic.gdx.physics.box2d.PolygonShape
-import com.badlogic.gdx.physics.box2d.FixtureDef
-import com.badlogic.gdx.physics.box2d.BodyDef
-import com.badlogic.gdx.physics.box2d.Body
-import com.badlogic.gdx.physics.box2d.World
-import com.badlogic.gdx.physics.box2d.CircleShape
+import com.badlogic.gdx.physics.box2d.*
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
@@ -45,25 +30,19 @@ import com.badlogic.gdx.utils.I18NBundle
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.github.dwursteisen.beat.BeatTheHighScore
-import com.github.dwursteisen.beat.addons.aseprite.AnimationSlice
-import com.github.dwursteisen.beat.addons.aseprite.Aseprite
-import com.github.dwursteisen.beat.addons.aseprite.AsepriteJson
-import com.github.dwursteisen.beat.addons.core.v2
 import com.github.dwursteisen.beat.intro.TextRender
 import com.github.dwursteisen.beat.intro.TextRenderSystem
-import com.github.dwursteisen.libgdx.ashley.StateComponent
-import com.github.dwursteisen.libgdx.ashley.removeAll
-import com.github.dwursteisen.libgdx.ashley.EventListener
-import com.github.dwursteisen.libgdx.ashley.Event
-import com.github.dwursteisen.libgdx.ashley.EventData
-import com.github.dwursteisen.libgdx.ashley.EventBus
-import com.github.dwursteisen.libgdx.ashley.Rotation
-import com.github.dwursteisen.libgdx.ashley.StateSystem
+import com.github.dwursteisen.libgdx.aseprite.AnimationSlice
+import com.github.dwursteisen.libgdx.aseprite.Aseprite
+import com.github.dwursteisen.libgdx.aseprite.AsepriteJson
+import com.github.dwursteisen.libgdx.ashley.*
+import com.github.dwursteisen.libgdx.v2
 import ktx.ashley.entity
 import ktx.log.info
 import ktx.scene2d.horizontalGroup
 import ktx.scene2d.textButton
 import com.badlogic.gdx.utils.Array as GdxArray
+import com.github.dwursteisen.libgdx.ashley.Position as AshleyPosition
 
 sealed class ShapeType(val filed: Boolean) {
     object FilledRectangle : ShapeType(true)
@@ -95,13 +74,7 @@ const val screenWidth = 128f
 const val screenHeight = 224f
 
 class CameraHolder(val camera: Camera, val amplitude: Vector2 = Vector2()) : Component
-class Player(
-    val hitbox: Vector2 = Vector2(),
-    val offsetHitbox: Vector2 = Vector2(),
-    val direction: Vector2 = Vector2(),
-    var win: Boolean = false
-) : Component
-
+class Player(val hitbox: Vector2 = Vector2(), val offsetHitbox: Vector2 = Vector2(), val direction: Vector2 = Vector2(), var win: Boolean = false) : Component
 class PlayerTouch : Component
 class Ball(val direction: Vector2) : Component
 class Brick(var hit: Int = 3, val body: Body) : Component
@@ -113,14 +86,7 @@ class MapLayer(val map: OrthogonalTiledMapRenderer) : Component
 class Position(var position: Vector2) : Component
 class Size(var size: Vector2) : Component
 class ShapeToRender(var type: ShapeType, var color: Color) : Component
-class Move(
-    val duration: Float = 0f,
-    var delay: Float,
-    val from: Vector2 = Vector2(),
-    val target: Vector2 = Vector2(),
-    val interpolation: Interpolation = Interpolation.linear
-) : Component
-
+class Move(val duration: Float = 0f, var delay: Float, val from: Vector2 = Vector2(), val target: Vector2 = Vector2(), val interpolation: Interpolation = Interpolation.linear) : Component
 class Hitbox(val size: Vector2, val offset: Vector2) : Component
 
 class AnimatedHitbox(var slices: AnimationSlice = NO_SLICE_ANIMATION) : Component
@@ -141,13 +107,12 @@ val NO_SLICE_ANIMATION = AnimationSlice(0f)
 class Animated(var animation: Animation<TextureRegion> = NO_ANIMATION) : Component
 
 class EntityRender(
-    var texture: TextureRegion = NO_TEXTURE,
-    val zLevel: Int = 0,
-    var enabled: Boolean = true,
-    val offset: Vector2 = Vector2(),
-    var hFlip: Boolean = false,
-    var alpha: Float = 1f
-) : Component
+        var texture: TextureRegion = NO_TEXTURE,
+        val zLevel: Int = 0,
+        var enabled: Boolean = true,
+        val offset: Vector2 = Vector2(),
+        var hFlip: Boolean = false,
+        var alpha: Float = 1f) : Component
 
 fun Float.between(min: Float, max: Float): Boolean {
     return this in min..max
@@ -329,56 +294,43 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
             }
 
             val entity = engine.createEntity()
-                .add(
-                    Brick(
-                        hit = props.hit,
-                        body = createBox2DRect(
-                            pos.cpy().sub(-it.rectangle.width * 0.5f, startOffset - it.rectangle.height * 0.5f),
-                            size.cpy().sub(it.rectangle.width * 0.5f, it.rectangle.height * 0.5f)
-                        )
-                    )
-                )
-                .add(Debugable())
-                .add(DebugCollision())
-                .add(Position(pos))
-                .add(Size(size))
-                .add(StateComponent())
-                .add(Hitbox(size.cpy(), Vector2.Zero.cpy()))
-                .add(ShapeToRender(type = ShapeType.Rectangle, color = Color.CHARTREUSE))
+                    .add(Brick(hit = props.hit, body = createBox2DRect(pos.cpy().sub(-it.rectangle.width * 0.5f, startOffset - it.rectangle.height * 0.5f), size.cpy().sub(it.rectangle.width * 0.5f, it.rectangle.height * 0.5f))))
+                    .add(Debugable())
+                    .add(DebugCollision())
+                    .add(Position(pos))
+                    .add(Size(size))
+                    .add(StateComponent())
+                    .add(Hitbox(size.cpy(), Vector2.Zero.cpy()))
+                    .add(ShapeToRender(type = ShapeType.Rectangle, color = Color.CHARTREUSE))
 
             if (props.hit > 0) {
                 entity.add(Animated())
-                    .add(EntityRender())
+                        .add(EntityRender())
             } else if (props.hit == -2) {
                 entity.add(Gate())
-                    .add(AnimatedHitbox())
-                    .add(Animated())
-                    .add(EntityRender(zLevel = -1))
+                        .add(AnimatedHitbox())
+                        .add(Animated())
+                        .add(EntityRender(zLevel = -1))
             }
 
             entity
 
-        }.sortedWith(
-            compareBy({ it.getComponent(Position::class.java).position.y },
-                { it.getComponent(Position::class.java).position.x })
-        )
+        }.sortedWith(compareBy({ it.getComponent(Position::class.java).position.y }, { it.getComponent(Position::class.java).position.x }))
 
 
         val breakableBricks = blocks.filter { it.getComponent(Brick::class.java).hit > 0 }
         breakableBricks
-            .forEachIndexed { index, entity ->
-                val delay = index.toFloat() * 0.1f
-                entity.add(
-                    Move(
-                        duration = 0.7f,
-                        delay = delay,
-                        target = entity.getComponent(Position::class.java).position.cpy().sub(0f, startOffset),
-                        from = entity.getComponent(Position::class.java).position.cpy(),
-                        interpolation = Interpolation.pow2Out
-                    )
-                )
+                .forEachIndexed { index, entity ->
+                    val delay = index.toFloat() * 0.1f
+                    entity.add(Move(
+                            duration = 0.7f,
+                            delay = delay,
+                            target = entity.getComponent(Position::class.java).position.cpy().sub(0f, startOffset),
+                            from = entity.getComponent(Position::class.java).position.cpy(),
+                            interpolation = Interpolation.pow2Out
+                    ))
 
-            }
+                }
 
         blocks.forEach { engine.addEntity(it) }
 
@@ -393,11 +345,11 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
 
             engine.entity {
                 entity.add(Debugable())
-                    .add(DebugCollision())
-                    .add(Position(pos))
-                    .add(Size(size))
-                    .add(DeadZone())
-                    .add(ShapeToRender(type = ShapeType.Rectangle, color = Color.RED))
+                        .add(DebugCollision())
+                        .add(Position(pos))
+                        .add(Size(size))
+                        .add(DeadZone())
+                        .add(ShapeToRender(type = ShapeType.Rectangle, color = Color.RED))
             }
 
         }
@@ -409,24 +361,24 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
 
             val ball: Aseprite = assets["sheets/egg"]
             entity.add(Ball(direction = 0 v2 0))
-                .add(Debugable())
-                .add(Position(((screenWidth - ballRadius) * 0.5f) v2 25 + playerHeight))
-                .add(Size(8 v2 9))
-                .add(ShapeToRender(type = ShapeType.Rectangle, color = Color.WHITE))
-                .add(EntityRender(ball.frame(0)))
-                .add(StateComponent())
-                .add(Rotation(origin = 4 v2 4))
+                    .add(Debugable())
+                    .add(Position(((screenWidth - ballRadius) * 0.5f) v2 25 + playerHeight))
+                    .add(Size(8 v2 9))
+                    .add(ShapeToRender(type = ShapeType.Rectangle, color = Color.WHITE))
+                    .add(EntityRender(ball.frame(0)))
+                    .add(StateComponent())
+                    .add(Rotation(origin = 4 v2 4))
         }
 
         (1..4).forEach {
             engine.entity {
                 val ball: Aseprite = assets["sheets/egg"]
                 entity.add(BallCopy(alpha = 1f / it))
-                    .add(Position(-100 v2 -100)) // hide it by default
-                    .add(Size(8 v2 9))
-                    .add(EntityRender(ball.frame(0), zLevel = -1))
-                    .add(StateComponent())
-                    .add(Rotation(origin = 4 v2 4))
+                        .add(Position(-100 v2 -100)) // hide it by default
+                        .add(Size(8 v2 9))
+                        .add(EntityRender(ball.frame(0), zLevel = -1))
+                        .add(StateComponent())
+                        .add(Rotation(origin = 4 v2 4))
             }
         }
 
@@ -435,39 +387,34 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
         val bounds = playerJson.slices("hitbox").keys[0].bounds
 
         engine.entity {
-            entity.add(
-                Player(
-                    hitbox = bounds.w v2 bounds.h,
-                    offsetHitbox = bounds.x v2 (playerHeight - bounds.y) - bounds.h
-                )
-            )
-                .add(Debugable())
-                .add(DebugCollision())
-                .add(EntityRender())
-                .add(Animated())
-                .add(Position((screenWidth - playerWidth) * 0.5f v2 25))
-                .add(Size(playerWidth v2 playerHeight))
-                .add(ShapeToRender(type = ShapeType.Rectangle, color = Color.BLUE))
-                .add(StateComponent())
+            entity.add(Player(hitbox = bounds.w v2 bounds.h, offsetHitbox = bounds.x v2 (playerHeight - bounds.y) - bounds.h))
+                    .add(Debugable())
+                    .add(DebugCollision())
+                    .add(EntityRender())
+                    .add(Animated())
+                    .add(Position((screenWidth - playerWidth) * 0.5f v2 25))
+                    .add(Size(playerWidth v2 playerHeight))
+                    .add(ShapeToRender(type = ShapeType.Rectangle, color = Color.BLUE))
+                    .add(StateComponent())
         }
 
         // --- FOX --- //
         val fox: Aseprite = assets["sheets/renard"]
         engine.entity {
             entity.add(Debugable())
-                .add(EntityRender())
-                .add(Animated(fox["idle"]))
-                .add(Position((screenWidth - 64) v2 (screenHeight - 32)))
-                .add(Size(64 v2 32))
-                .add(ShapeToRender(type = ShapeType.Rectangle, color = Color.BLUE))
-                .add(StateComponent())
+                    .add(EntityRender())
+                    .add(Animated(fox["idle"]))
+                    .add(Position((screenWidth - 64) v2 (screenHeight - 32)))
+                    .add(Size(64 v2 32))
+                    .add(ShapeToRender(type = ShapeType.Rectangle, color = Color.BLUE))
+                    .add(StateComponent())
         }
 
         // --- CAMERA --- //
         engine.entity {
             entity.add(CameraHolder(viewport.camera))
-                .add(Position(screenWidth * 0.5f v2 screenHeight * 0.5f))
-                .add(StateComponent())
+                    .add(Position(screenWidth * 0.5f v2 screenHeight * 0.5f))
+                    .add(StateComponent())
         }
 
         // -- MAP --- //
@@ -488,18 +435,18 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
             engine.entity {
                 val texture = clouds[cloudsName.pickOne()].getKeyFrame(0f)
                 entity.add(Debugable())
-                    .add(Cloud(origin = it, offset = index.toFloat() * 2.5f))
-                    .add(Position(it.cpy()))
-                    .add(Size(64 v2 64))
-                    .add(ShapeToRender(type = ShapeType.Rectangle, color = Color.BLACK))
-                    .add(EntityRender(texture = texture, zLevel = -2))
-                    .add(StateComponent())
+                        .add(Cloud(origin = it, offset = index.toFloat() * 2.5f))
+                        .add(Position(it.cpy()))
+                        .add(Size(64 v2 64))
+                        .add(ShapeToRender(type = ShapeType.Rectangle, color = Color.BLACK))
+                        .add(EntityRender(texture = texture, zLevel = -2))
+                        .add(StateComponent())
             }
         }
 
         engine.entity {
             entity.add(Transition(wayIn = false))
-                .add(StateComponent())
+                    .add(StateComponent())
 
         }
 
@@ -517,8 +464,8 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
                     for (y in -2..2 step 4) {
                         engine.entity {
                             entity.add(TextRender(txt, color = Color.BLACK, scale = 1f, halign = Align.center))
-                                .add(Position((0 + x) v2 (64 + y)))
-                                .add(Size(screenWidth v2 90))
+                                    .add(Position((0 + x) v2 (64 + y)))
+                                    .add(Size(screenWidth v2 90))
                         }
 
                     }
@@ -526,14 +473,14 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
 
                 engine.entity {
                     entity.add(TextRender(txt, color = Color.WHITE, scale = 1f, halign = Align.center))
-                        .add(Position(0 v2 64))
-                        .add(Size(screenWidth v2 90))
+                            .add(Position(0 v2 64))
+                            .add(Size(screenWidth v2 90))
                 }
 
                 // add transition to same level
                 engine.entity {
                     entity.add(Transition(wayIn = true))
-                        .add(StateComponent())
+                            .add(StateComponent())
                 }
             }
 
@@ -558,8 +505,8 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
                     for (y in -2..2 step 4) {
                         engine.entity {
                             entity.add(TextRender(txt, color = Color.BLACK, scale = 0.7f, halign = Align.center))
-                                .add(Position((0 + x) v2 (64 + y)))
-                                .add(Size(screenWidth v2 90))
+                                    .add(Position((0 + x) v2 (64 + y)))
+                                    .add(Size(screenWidth v2 90))
                         }
 
                     }
@@ -567,14 +514,14 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
 
                 engine.entity {
                     entity.add(TextRender(txt, color = Color.WHITE, scale = 0.7f, halign = Align.center))
-                        .add(Position(0 v2 64))
-                        .add(Size(screenWidth v2 90))
+                            .add(Position(0 v2 64))
+                            .add(Size(screenWidth v2 90))
                 }
 
                 // add transition to same level
                 engine.entity {
                     entity.add(Transition(wayIn = true))
-                        .add(StateComponent())
+                            .add(StateComponent())
                 }
             }
 
@@ -659,7 +606,7 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
     private fun dropChickens() {
         // remove everything
         engine.entities.filter { it.getComponent(TextRender::class.java) == null }
-            .forEach { engine.removeEntity(it) }
+                .forEach { engine.removeEntity(it) }
 
         val gdxArray = GdxArray<Body>()
         world.getBodies(gdxArray)
@@ -689,12 +636,12 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
                     val spriteData: Aseprite = assets["sheets/free_chicken"]
                     val chickenAnimation = spriteData["fly"]
                     entity.add(Position(position = position))
-                        .add(Size(chickenSize))
-                        .add(StateComponent())
-                        .add(EntityRender())
-                        .add(Debugable())
-                        .add(Rotation())
-                        .add(Animated(animation = chickenAnimation))
+                            .add(Size(chickenSize))
+                            .add(StateComponent())
+                            .add(EntityRender())
+                            .add(Debugable())
+                            .add(Rotation())
+                            .add(Animated(animation = chickenAnimation))
                 }
 
                 val bodyDef = BodyDef()

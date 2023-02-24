@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
 import com.github.dwursteisen.libgdx.ashley.*
-import com.github.dwursteisen.beat.addons.core.v2
+import com.github.dwursteisen.libgdx.v2
 import ktx.ashley.entity
 
 

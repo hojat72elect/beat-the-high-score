@@ -11,23 +11,16 @@ import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.CircleShape
 import com.badlogic.gdx.physics.box2d.FixtureDef
 import com.badlogic.gdx.physics.box2d.World
-import com.github.dwursteisen.beat.addons.aseprite.Aseprite
+import com.github.dwursteisen.libgdx.aseprite.Aseprite
 import com.github.dwursteisen.libgdx.ashley.*
-import com.github.dwursteisen.beat.addons.core.v2
+import com.github.dwursteisen.libgdx.v2
 import ktx.ashley.entity
 import ktx.ashley.hasNot
 
-class BrickSystem(
-    eventBus: EventBus,
-    private val world: World,
-    val assets: AssetManager,
-    val feather: ParticleEffectPool,
-    var enabled: Boolean = true
-) : StateMachineSystem(
-    eventBus,
-    Family.all(Brick::class.java, Animated::class.java)
-        .exclude(Gate::class.java)
-        .get()
+class BrickSystem(eventBus: EventBus, private val world: World, val assets: AssetManager, val feather: ParticleEffectPool, var enabled: Boolean = true) : StateMachineSystem(eventBus,
+        Family.all(Brick::class.java, Animated::class.java)
+                .exclude(Gate::class.java)
+                .get()
 ) {
 
     private val position: ComponentMapper<Position> = get()
@@ -88,10 +81,9 @@ class BrickSystem(
 
                 val radius = 1.5f + MathUtils.random(2.5f)
                 world.destroyBody(entity[brick].body)
-                addWreckage(
-                    radius,
-                    entity[position].position,
-                    direction
+                addWreckage(radius,
+                        entity[position].position,
+                        direction
                 )
 
                 addFreeChicken(entity[position].position)
@@ -138,9 +130,9 @@ class BrickSystem(
         val chickenAnimation = spriteData["fly"]
         engine.entity {
             val dir = direction.first.cpy()
-                .nor()
-                .scl(0.5f)
-                .rotateRad(-1.0f + MathUtils.random(2.0f))
+                    .nor()
+                    .scl(0.5f)
+                    .rotateRad(-1.0f + MathUtils.random(2.0f))
 
             val particle = feather.obtain()
             if (direction.second) {
@@ -149,13 +141,13 @@ class BrickSystem(
             }
 
             entity.add(FreeChicken(position.cpy(), particle))
-                .add(Position(position = position.cpy()))
-                .add(Size(chickenSize))
-                .add(StateComponent())
-                .add(EntityRender(hFlip = direction.second))
-                .add(Debugable())
-                .add(Direction(value = dir))
-                .add(Animated(animation = chickenAnimation))
+                    .add(Position(position = position.cpy()))
+                    .add(Size(chickenSize))
+                    .add(StateComponent())
+                    .add(EntityRender(hFlip = direction.second))
+                    .add(Debugable())
+                    .add(Direction(value = dir))
+                    .add(Animated(animation = chickenAnimation))
         }
     }
 
@@ -166,9 +158,9 @@ class BrickSystem(
         }
 
         tmp.set(impulse)
-            .rotate(MathUtils.random(-20f, 20f))
-            .nor()
-            .scl(40f)
+                .rotate(MathUtils.random(-20f, 20f))
+                .nor()
+                .scl(40f)
 
         // -- box2d entities -- //
         // Create our body definition
@@ -204,10 +196,10 @@ class BrickSystem(
 
         val et = engine.entity {
             EngineEntity@ entity.add(Position(position.cpy()))
-                .add(Size(wreckageSize))
-                .add(StateComponent())
-                .add(EntityRender(texture = randomFrame))
-                .add(Rotation(origin = wreckageOrigin))
+                    .add(Size(wreckageSize))
+                    .add(StateComponent())
+                    .add(EntityRender(texture = randomFrame))
+                    .add(Rotation(origin = wreckageOrigin))
         }
         body.userData = et
         // Clean up after ourselves
