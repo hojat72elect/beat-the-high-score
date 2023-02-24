@@ -59,9 +59,6 @@ const val playerWidth = 48f
 const val playerHeight = 32f
 const val hitTime = 0.2f
 
-// I have no idea what this event is used for
-const val EVENT_UPDATE_GATE = 10
-
 const val screenWidth = 128f
 const val screenHeight = 224f
 

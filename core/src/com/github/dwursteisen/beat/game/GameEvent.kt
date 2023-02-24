@@ -29,5 +29,8 @@ sealed class GameEvent(val id: Int) {
         object Win : Result(8)
         object Lose : Result(9)
     }
+
+    // I have no idea what this event is used for
+    object UpdateGate : GameEvent(10)
 }
 

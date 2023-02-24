@@ -24,7 +24,7 @@ class GateSystem(eventBus: EventBus, assets: AssetManager) : StateMachineSystem(
                 entity[state].time = 0f
                 entity[animation].animation = sprData["open_nr"]
                 entity[animatedHitBox].slices = sprData.animatedSlices("gate")["open_nr"]
-                machine.eventBus.emitLater(entity[gate].openTime, EVENT_UPDATE_GATE, entity)
+                machine.eventBus.emitLater(entity[gate].openTime, GameEvent.UpdateGate.id, entity)
             }
         }
 
@@ -34,7 +34,7 @@ class GateSystem(eventBus: EventBus, assets: AssetManager) : StateMachineSystem(
                 entity[animation].animation = sprData["close_nr"]
                 entity[animatedHitBox].slices = sprData.animatedSlices("gate")["close_nr"]
 
-                machine.eventBus.emitLater(entity[gate].closeTime, EVENT_UPDATE_GATE, entity)
+                machine.eventBus.emitLater(entity[gate].closeTime, GameEvent.UpdateGate.id, entity)
             }
         }
 
@@ -49,12 +49,12 @@ class GateSystem(eventBus: EventBus, assets: AssetManager) : StateMachineSystem(
             }
         }
 
-        onState(open).on(EVENT_UPDATE_GATE) { entity, event ->
+        onState(open).on(GameEvent.UpdateGate.id) { entity, event ->
             go(closed, entity, event)
         }
 
 
-        onState(closed).on(EVENT_UPDATE_GATE) { entity, event ->
+        onState(closed).on(GameEvent.UpdateGate.id) { entity, event ->
             go(open, entity, event)
         }
 
