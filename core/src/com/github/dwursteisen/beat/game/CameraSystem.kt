@@ -27,7 +27,7 @@ class CameraSystem(eventBus: EventBus) : StateMachineSystem(eventBus, Family.all
         val SHAKING = object : EntityState() {
             override fun enter(entity: Entity, machine: StateMachineSystem, eventData: EventData) {
                 entity[state].time = 0.second
-                machine.eventBus.emitLater(effectDuration, EVENT_CAMERA_IDLE, entity)
+                machine.eventBus.emitLater(effectDuration, GameEvent.Camera.Idle.id, entity)
                 entity[cameraHolder].amplitude.set(-1f + MathUtils.random(2.0f), -1f + MathUtils.random(2.0f))
             }
 
@@ -43,11 +43,11 @@ class CameraSystem(eventBus: EventBus) : StateMachineSystem(eventBus, Family.all
         }
 
         startWith(IDLE)
-        onState(IDLE).on(EVENT_CAMERA_SHAKE) { entity, event ->
+        onState(IDLE).on(GameEvent.Camera.Shake.id) { entity, event ->
             go(SHAKING, entity, event)
         }
 
-        onState(SHAKING).on(EVENT_CAMERA_IDLE) { entity, event ->
+        onState(SHAKING).on(GameEvent.Camera.Idle.id) { entity, event ->
             go(IDLE, entity, event)
         }
     }

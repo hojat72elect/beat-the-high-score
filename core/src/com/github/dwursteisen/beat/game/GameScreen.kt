@@ -59,10 +59,6 @@ const val playerWidth = 48f
 const val playerHeight = 32f
 const val hitTime = 0.2f
 
-// 2 camera events
-const val EVENT_CAMERA_IDLE = 4
-const val EVENT_CAMERA_SHAKE = 5
-
 // 2 player events
 const val EVENT_PLAYER_IDLE = 6
 const val EVENT_PLAYER_TOUCH = 7

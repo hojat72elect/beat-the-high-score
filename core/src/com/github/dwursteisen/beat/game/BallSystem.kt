@@ -162,7 +162,7 @@ class BallSystem(eventBus: EventBus, val assetManager: AssetManager) :
                 val sfx: Sound = assetManager["sfx/beat_sfx_1.ogg"]
                 sfx.play(MathUtils.random(0.3f, 0.8f))
             }
-            eventBus.emit(EVENT_CAMERA_SHAKE)
+            eventBus.emit(GameEvent.Camera.Shake.id)
         }
         return hit
     }
