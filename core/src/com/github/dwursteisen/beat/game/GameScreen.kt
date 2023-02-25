@@ -69,8 +69,6 @@ const val screenHeight = 224f
 
 class Size(var size: Vector2) : Component
 
-class ParticleEntity(var particle: ParticleEffectPool.PooledEffect? = null) : Component
-
 val NO_TEXTURE = TextureRegion()
 val NO_ANIMATION = Animation<TextureRegion>(0f)
 val NO_SLICE_ANIMATION = AnimationSlice(0f)
