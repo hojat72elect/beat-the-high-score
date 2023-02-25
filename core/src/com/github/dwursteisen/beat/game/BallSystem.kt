@@ -8,9 +8,24 @@ import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
-import com.github.dwursteisen.beat.components.*
+import com.github.dwursteisen.beat.components.Ball
+import com.github.dwursteisen.beat.components.Brick
+import com.github.dwursteisen.beat.components.DeadZone
+import com.github.dwursteisen.beat.components.DebugCollision
+import com.github.dwursteisen.beat.components.Hitbox
+import com.github.dwursteisen.beat.components.ParticleEntity
+import com.github.dwursteisen.beat.components.Player
 import com.github.dwursteisen.beat.components.Position
-import com.github.dwursteisen.libgdx.ashley.*
+import com.github.dwursteisen.beat.extensions.between
+import com.github.dwursteisen.beat.extensions.set
+import com.github.dwursteisen.libgdx.ashley.EntityState
+import com.github.dwursteisen.libgdx.ashley.EventBus
+import com.github.dwursteisen.libgdx.ashley.EventData
+import com.github.dwursteisen.libgdx.ashley.Rotation
+import com.github.dwursteisen.libgdx.ashley.StateComponent
+import com.github.dwursteisen.libgdx.ashley.StateMachineSystem
+import com.github.dwursteisen.libgdx.ashley.entity
+import com.github.dwursteisen.libgdx.ashley.get
 import com.github.dwursteisen.libgdx.v2
 import ktx.ashley.entity
 
@@ -52,8 +67,7 @@ class BallSystem(eventBus: EventBus, val assetManager: AssetManager) :
         val MOVING = object : EntityState() {
 
             override fun enter(entity: Entity, machine: StateMachineSystem, eventData: EventData) {
-                // direction
-                // entity[ball].direction.set((0 v2 1).rotateRad(rotation))
+
             }
 
             override fun update(entity: Entity, machine: StateMachineSystem, delta: Float) {
@@ -66,7 +80,8 @@ class BallSystem(eventBus: EventBus, val assetManager: AssetManager) :
 
                 if (touched) {
                     engine.entity {
-                        EngineEntity@ this.entity.add(Position(entity[position].position.cpy())).add(ParticleEntity())
+                        this.entity.add(Position(entity[position].position.cpy()))
+                            .add(ParticleEntity())
                     }
 
                 }

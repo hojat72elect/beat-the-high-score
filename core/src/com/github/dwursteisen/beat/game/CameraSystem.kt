@@ -6,6 +6,8 @@ import com.badlogic.ashley.core.Family
 import com.badlogic.gdx.math.MathUtils
 import com.github.dwursteisen.beat.components.CameraHolder
 import com.github.dwursteisen.beat.components.Position
+import com.github.dwursteisen.beat.extensions.second
+import com.github.dwursteisen.beat.extensions.seconds
 import com.github.dwursteisen.libgdx.ashley.*
 
 class CameraSystem(eventBus: EventBus) : StateMachineSystem(eventBus, Family.all(CameraHolder::class.java).get()) {

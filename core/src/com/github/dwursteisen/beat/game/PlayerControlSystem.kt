@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.github.dwursteisen.beat.components.*
+import com.github.dwursteisen.beat.extensions.between
 import com.github.dwursteisen.libgdx.ashley.get
 import com.github.dwursteisen.libgdx.ashley.removeAllWith
 import com.github.dwursteisen.libgdx.v2

@@ -14,7 +14,12 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.graphics.g2d.*
+import com.badlogic.gdx.graphics.g2d.Animation
+import com.badlogic.gdx.graphics.g2d.BitmapFont
+import com.badlogic.gdx.graphics.g2d.ParticleEffect
+import com.badlogic.gdx.graphics.g2d.ParticleEffectPool
+import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.maps.MapObjects
 import com.badlogic.gdx.maps.objects.RectangleMapObject
@@ -22,9 +27,14 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer
 import com.badlogic.gdx.math.Interpolation
 import com.badlogic.gdx.math.MathUtils
-import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.physics.box2d.*
+import com.badlogic.gdx.physics.box2d.Body
+import com.badlogic.gdx.physics.box2d.BodyDef
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer
+import com.badlogic.gdx.physics.box2d.CircleShape
+import com.badlogic.gdx.physics.box2d.FixtureDef
+import com.badlogic.gdx.physics.box2d.PolygonShape
+import com.badlogic.gdx.physics.box2d.World
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener
@@ -33,15 +43,37 @@ import com.badlogic.gdx.utils.I18NBundle
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.github.dwursteisen.beat.BeatTheHighScore
-import com.github.dwursteisen.beat.components.*
+import com.github.dwursteisen.beat.components.AnimatedHitbox
+import com.github.dwursteisen.beat.components.Ball
+import com.github.dwursteisen.beat.components.BallCopy
+import com.github.dwursteisen.beat.components.Brick
+import com.github.dwursteisen.beat.components.CameraHolder
+import com.github.dwursteisen.beat.components.Cloud
+import com.github.dwursteisen.beat.components.DeadZone
+import com.github.dwursteisen.beat.components.DebugCollision
+import com.github.dwursteisen.beat.components.Debugable
+import com.github.dwursteisen.beat.components.Gate
+import com.github.dwursteisen.beat.components.Hitbox
+import com.github.dwursteisen.beat.components.MapLayer
+import com.github.dwursteisen.beat.components.Move
+import com.github.dwursteisen.beat.components.Player
 import com.github.dwursteisen.beat.components.Position
+import com.github.dwursteisen.beat.components.ShapeToRender
+import com.github.dwursteisen.beat.components.StageComponent
 import com.github.dwursteisen.beat.components.Transition
 import com.github.dwursteisen.beat.intro.TextRender
 import com.github.dwursteisen.beat.intro.TextRenderSystem
 import com.github.dwursteisen.libgdx.aseprite.AnimationSlice
 import com.github.dwursteisen.libgdx.aseprite.Aseprite
 import com.github.dwursteisen.libgdx.aseprite.AsepriteJson
-import com.github.dwursteisen.libgdx.ashley.*
+import com.github.dwursteisen.libgdx.ashley.Event
+import com.github.dwursteisen.libgdx.ashley.EventBus
+import com.github.dwursteisen.libgdx.ashley.EventData
+import com.github.dwursteisen.libgdx.ashley.EventListener
+import com.github.dwursteisen.libgdx.ashley.Rotation
+import com.github.dwursteisen.libgdx.ashley.StateComponent
+import com.github.dwursteisen.libgdx.ashley.StateSystem
+import com.github.dwursteisen.libgdx.ashley.removeAll
 import com.github.dwursteisen.libgdx.v2
 import ktx.ashley.entity
 import ktx.log.info
@@ -84,20 +116,6 @@ class EntityRender(
     var hFlip: Boolean = false,
     var alpha: Float = 1f
 ) : Component
-
-fun Float.between(min: Float, max: Float): Boolean {
-    return this in min..max
-}
-
-fun Rectangle.set(position: Vector2, size: Vector2): Rectangle {
-    return this.set(position.x, position.y, size.x, size.y)
-}
-
-val Double.seconds: Float
-    get() = this.toFloat()
-
-val Int.second: Float
-    get() = this.toFloat()
 
 class GameScreen(private val assets: AssetManager, var levelName: String = "level0.tmx") :
     ScreenAdapter() {
