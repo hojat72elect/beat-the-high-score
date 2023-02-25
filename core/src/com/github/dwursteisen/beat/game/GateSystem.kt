@@ -7,10 +7,16 @@ import com.badlogic.gdx.assets.AssetManager
 import com.github.dwursteisen.beat.components.AnimatedHitbox
 import com.github.dwursteisen.beat.components.Gate
 import com.github.dwursteisen.libgdx.aseprite.Aseprite
-import com.github.dwursteisen.libgdx.ashley.*
+import com.github.dwursteisen.libgdx.ashley.EntityState
+import com.github.dwursteisen.libgdx.ashley.EventBus
+import com.github.dwursteisen.libgdx.ashley.EventData
+import com.github.dwursteisen.libgdx.ashley.StateComponent
+import com.github.dwursteisen.libgdx.ashley.StateMachineSystem
+import com.github.dwursteisen.libgdx.ashley.get
 import ktx.ashley.has
 
-class GateSystem(eventBus: EventBus, assets: AssetManager) : StateMachineSystem(eventBus, all(Gate::class.java).get()) {
+class GateSystem(eventBus: EventBus, assets: AssetManager) :
+    StateMachineSystem(eventBus, all(Gate::class.java).get()) {
 
     private val gate: ComponentMapper<Gate> = get()
     private val animation: ComponentMapper<Animated> = get()

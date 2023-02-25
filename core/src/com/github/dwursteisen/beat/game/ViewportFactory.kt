@@ -1,6 +1,11 @@
 package com.github.dwursteisen.beat.game
 
-import com.badlogic.gdx.utils.viewport.*
+import com.badlogic.gdx.utils.viewport.ExtendViewport
+import com.badlogic.gdx.utils.viewport.FillViewport
+import com.badlogic.gdx.utils.viewport.FitViewport
+import com.badlogic.gdx.utils.viewport.ScreenViewport
+import com.badlogic.gdx.utils.viewport.StretchViewport
+import com.badlogic.gdx.utils.viewport.Viewport
 
 object ViewportFactory {
     fun create(width: Float, height: Float): Viewport {
