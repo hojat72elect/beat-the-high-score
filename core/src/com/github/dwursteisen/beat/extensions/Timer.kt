@@ -1,4 +1,4 @@
-package com.github.dwursteisen.beat.game
+package com.github.dwursteisen.beat.extensions
 
 import com.badlogic.gdx.utils.Timer
 
