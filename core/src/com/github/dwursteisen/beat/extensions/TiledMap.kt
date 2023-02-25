@@ -1,4 +1,4 @@
-package com.github.dwursteisen.beat.game
+package com.github.dwursteisen.beat.extensions
 
 import com.badlogic.gdx.maps.MapProperties
 import kotlin.reflect.KProperty
@@ -15,10 +15,8 @@ inline operator fun <reified T> MapProperties.getValue(thisRef: Any?, property: 
 }
 
 open class TiledProperties(properties: MapProperties) {
-    // val id: String by properties
     val x: Double by properties
     val y: Double by properties
-    // val visible: Boolean by properties
 }
 
 class BrickProperties(properties: MapProperties) : TiledProperties(properties) {

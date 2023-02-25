@@ -61,6 +61,8 @@ import com.github.dwursteisen.beat.components.Position
 import com.github.dwursteisen.beat.components.ShapeToRender
 import com.github.dwursteisen.beat.components.StageComponent
 import com.github.dwursteisen.beat.components.Transition
+import com.github.dwursteisen.beat.extensions.BrickProperties
+import com.github.dwursteisen.beat.extensions.TiledProperties
 import com.github.dwursteisen.beat.intro.TextRender
 import com.github.dwursteisen.beat.intro.TextRenderSystem
 import com.github.dwursteisen.libgdx.aseprite.AnimationSlice
