@@ -67,7 +67,6 @@ import com.github.dwursteisen.beat.extensions.TiledProperties
 import com.github.dwursteisen.beat.extensions.runLater
 import com.github.dwursteisen.beat.intro.TextRender
 import com.github.dwursteisen.beat.intro.TextRenderSystem
-import com.github.dwursteisen.libgdx.aseprite.AnimationSlice
 import com.github.dwursteisen.libgdx.aseprite.Aseprite
 import com.github.dwursteisen.libgdx.aseprite.AsepriteJson
 import com.github.dwursteisen.libgdx.ashley.Event
@@ -85,19 +84,9 @@ import ktx.scene2d.horizontalGroup
 import ktx.scene2d.textButton
 import com.badlogic.gdx.utils.Array as GdxArray
 
-/**
- * All the different types of shapes that you are going to draw in this game.
- */
-sealed class ShapeType(val filed: Boolean) {
-    object FilledRectangle : ShapeType(true)
-    object FilledCircle : ShapeType(true)
-    object Rectangle : ShapeType(false)
-    object Circle : ShapeType(false)
-}
-
-const val ballRadius = 4f
-const val playerWidth = 48f
-const val playerHeight = 32f
+private const val ballRadius = 4f
+private const val playerWidth = 48f
+private const val playerHeight = 32f
 const val hitTime = 0.2f
 
 const val screenWidth = 128f
@@ -106,8 +95,6 @@ const val screenHeight = 224f
 class Size(var size: Vector2) : Component
 
 val NO_TEXTURE = TextureRegion()
-val NO_SLICE_ANIMATION = AnimationSlice(0f)
-
 
 class GameScreen(private val assets: AssetManager, var levelName: String = "level0.tmx") :
     ScreenAdapter() {
