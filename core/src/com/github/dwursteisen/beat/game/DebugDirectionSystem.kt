@@ -7,16 +7,12 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.Vector2
-import com.github.dwursteisen.beat.game.components.Position
-import com.github.dwursteisen.beat.game.components.Ball
-import com.github.dwursteisen.beat.game.components.Debugable
-import com.github.dwursteisen.beat.game.components.Player
 import com.github.dwursteisen.libgdx.ashley.Direction
 import com.github.dwursteisen.libgdx.ashley.get
 import com.github.dwursteisen.libgdx.ashley.getNullable
 
 class DebugDirectionSystem(val batch: ShapeRenderer) :
-    IteratingSystem(Family.all(com.github.dwursteisen.beat.game.components.Debugable::class.java, com.github.dwursteisen.beat.game.components.Position::class.java).get()) {
+    IteratingSystem(Family.all(com.github.dwursteisen.beat.game.components.Debuggable::class.java, com.github.dwursteisen.beat.game.components.Position::class.java).get()) {
 
     private val ball: ComponentMapper<com.github.dwursteisen.beat.game.components.Ball> = get()
     private val player: ComponentMapper<com.github.dwursteisen.beat.game.components.Player> = get()

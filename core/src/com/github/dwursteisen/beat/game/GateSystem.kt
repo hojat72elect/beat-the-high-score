@@ -4,9 +4,6 @@ import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family.all
 import com.badlogic.gdx.assets.AssetManager
-import com.github.dwursteisen.beat.game.components.Animated
-import com.github.dwursteisen.beat.game.components.AnimatedHitbox
-import com.github.dwursteisen.beat.game.components.Gate
 import com.github.dwursteisen.libgdx.aseprite.Aseprite
 import com.github.dwursteisen.libgdx.ashley.EntityState
 import com.github.dwursteisen.libgdx.ashley.EventBus
@@ -21,7 +18,7 @@ class GateSystem(eventBus: EventBus, assets: AssetManager) :
 
     private val gate: ComponentMapper<com.github.dwursteisen.beat.game.components.Gate> = get()
     private val animation: ComponentMapper<com.github.dwursteisen.beat.game.components.Animated> = get()
-    private val animatedHitBox: ComponentMapper<com.github.dwursteisen.beat.game.components.AnimatedHitbox> = get()
+    private val animatedHitBox: ComponentMapper<com.github.dwursteisen.beat.game.components.AnimatedHitBox> = get()
     private val state: ComponentMapper<StateComponent> = get()
 
     private val sprData: Aseprite = assets["sheets/gate"]

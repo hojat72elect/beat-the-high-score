@@ -22,7 +22,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.github.dwursteisen.beat.BeatTheHighScore
 import com.github.dwursteisen.beat.game.Config
-import com.github.dwursteisen.beat.game.invoke
+import com.github.dwursteisen.beat.extensions.invoke
 import com.github.dwursteisen.beat.game.screenHeight
 import com.github.dwursteisen.beat.game.screenWidth
 import com.github.dwursteisen.beat.options.centerCamera
@@ -94,17 +94,18 @@ class CreditsScreen(val assets: AssetManager) : ScreenAdapter() {
 
         stage.addActor(root)
         stage.isDebugAll = Config.scene2d
-        stage.addListener(
-            object : ClickListener() {
-                override fun clicked(event: InputEvent?, x: Float, y: Float) {
-                    BeatTheHighScore.title()
-                }
-            })
+        stage.addListener(object : ClickListener() {
+            override fun clicked(event: InputEvent?, x: Float, y: Float) {
+                BeatTheHighScore.title()
+            }
+        })
         Gdx.input.inputProcessor = stage
 
         info { "Configuring Shaders" }
 
-        frameBuffer = FrameBuffer(Pixmap.Format.RGBA8888, fixedViewport.screenWidth, fixedViewport.screenHeight, false)
+        frameBuffer = FrameBuffer(
+            Pixmap.Format.RGBA8888, fixedViewport.screenWidth, fixedViewport.screenHeight, false
+        )
 
         shader = if (Config.shader) {
             if (Config.credit == "pixel") {

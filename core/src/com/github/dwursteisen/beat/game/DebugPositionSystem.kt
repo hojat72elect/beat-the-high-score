@@ -6,12 +6,10 @@ import com.badlogic.ashley.core.Family
 import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import com.github.dwursteisen.beat.game.components.Debugable
 import com.github.dwursteisen.libgdx.ashley.get
-import com.github.dwursteisen.beat.game.components.Position
 
 class DebugPositionSystem(private val batch: SpriteBatch) :
-    IteratingSystem(Family.all(com.github.dwursteisen.beat.game.components.Debugable::class.java, com.github.dwursteisen.beat.game.components.Position::class.java).get()) {
+    IteratingSystem(Family.all(com.github.dwursteisen.beat.game.components.Debuggable::class.java, com.github.dwursteisen.beat.game.components.Position::class.java).get()) {
 
     private val font = BitmapFont().apply {
         this.data.setScale(0.35f)

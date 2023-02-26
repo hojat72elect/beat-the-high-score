@@ -21,18 +21,11 @@ class BallCopySystem(private val assets: AssetManager) : IntervalSystem(0.1f) {
         engine.entity {
 
             val ballSpr: Aseprite = assets["sheets/egg"]
-            entity.add(com.github.dwursteisen.beat.game.components.BallCopy(alpha = 0.25f))
-                    .add(com.github.dwursteisen.beat.game.components.Position(0 v2 0))
-                    .add(Size(8 v2 9))
-                    .add(
-                        com.github.dwursteisen.beat.game.components.EntityRender(
-                            ballSpr.frame(0),
-                            zLevel = -1,
-                            alpha = 0.25f
-                        )
+            entity.add(BallCopy(alpha = 0.25f)).add(Position(0 v2 0)).add(Size(8 v2 9)).add(
+                    EntityRender(
+                        ballSpr.frame(0), zLevel = -1, alpha = 0.25f
                     )
-                    .add(StateComponent())
-                    .add(Rotation(origin = 4 v2 4))
+                ).add(StateComponent()).add(Rotation(origin = 4 v2 4))
 
             entity[ballCopy].alpha = 1f
             val ball = engine.getEntitiesFor(BALL_FAMILY).firstOrNull() ?: return
@@ -41,13 +34,13 @@ class BallCopySystem(private val assets: AssetManager) : IntervalSystem(0.1f) {
         }
     }
 
-    private val ballCopy: ComponentMapper<com.github.dwursteisen.beat.game.components.BallCopy> = get()
-    private val position: ComponentMapper<com.github.dwursteisen.beat.game.components.Position> = get()
+    private val ballCopy: ComponentMapper<BallCopy> = get()
+    private val position: ComponentMapper<Position> = get()
     private val rotation: ComponentMapper<Rotation> = get()
 
 
     companion object {
-        private val BALL_FAMILY = Family.all(com.github.dwursteisen.beat.game.components.Ball::class.java).get()
+        private val BALL_FAMILY = Family.all(Ball::class.java).get()
     }
 
 

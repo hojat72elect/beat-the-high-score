@@ -4,15 +4,13 @@ import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family.all
 import com.badlogic.ashley.systems.IteratingSystem
-import com.github.dwursteisen.beat.game.components.AnimatedHitbox
-import com.github.dwursteisen.beat.game.components.Hitbox
 import com.github.dwursteisen.libgdx.ashley.StateComponent
 import com.github.dwursteisen.libgdx.ashley.get
 
-class SlicesAnimationSystem : IteratingSystem(all(com.github.dwursteisen.beat.game.components.AnimatedHitbox::class.java, com.github.dwursteisen.beat.game.components.Hitbox::class.java).get()) {
+class SlicesAnimationSystem : IteratingSystem(all(com.github.dwursteisen.beat.game.components.AnimatedHitBox::class.java, com.github.dwursteisen.beat.game.components.HitBox::class.java).get()) {
 
-    private val hitbox: ComponentMapper<com.github.dwursteisen.beat.game.components.Hitbox> = get()
-    private val animated: ComponentMapper<com.github.dwursteisen.beat.game.components.AnimatedHitbox> = get()
+    private val hitbox: ComponentMapper<com.github.dwursteisen.beat.game.components.HitBox> = get()
+    private val animated: ComponentMapper<com.github.dwursteisen.beat.game.components.AnimatedHitBox> = get()
     private val state: ComponentMapper<StateComponent> = get()
 
     override fun processEntity(entity: Entity, deltaTime: Float) {

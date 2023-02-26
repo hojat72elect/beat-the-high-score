@@ -8,16 +8,15 @@ import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
+import com.github.dwursteisen.beat.extensions.between
+import com.github.dwursteisen.beat.extensions.set
 import com.github.dwursteisen.beat.game.components.Ball
 import com.github.dwursteisen.beat.game.components.Brick
 import com.github.dwursteisen.beat.game.components.DeadZone
 import com.github.dwursteisen.beat.game.components.DebugCollision
-import com.github.dwursteisen.beat.game.components.Hitbox
-import com.github.dwursteisen.beat.game.components.ParticleEntity
+import com.github.dwursteisen.beat.game.components.HitBox
 import com.github.dwursteisen.beat.game.components.Player
 import com.github.dwursteisen.beat.game.components.Position
-import com.github.dwursteisen.beat.extensions.between
-import com.github.dwursteisen.beat.extensions.set
 import com.github.dwursteisen.libgdx.ashley.EntityState
 import com.github.dwursteisen.libgdx.ashley.EventBus
 import com.github.dwursteisen.libgdx.ashley.EventData
@@ -32,30 +31,30 @@ import ktx.ashley.entity
 operator fun Vector2.component1() = this.x
 operator fun Vector2.component2() = this.y
 
-class BallSystem(eventBus: EventBus, val assetManager: AssetManager) :
-    StateMachineSystem(eventBus, Family.all(com.github.dwursteisen.beat.game.components.Ball::class.java, com.github.dwursteisen.beat.game.components.Position::class.java).get()) {
+class BallSystem(eventBus: EventBus, private val assetManager: AssetManager) :
+    StateMachineSystem(eventBus, Family.all(Ball::class.java, Position::class.java).get()) {
 
 
-    private val position: ComponentMapper<com.github.dwursteisen.beat.game.components.Position> = get()
+    private val position: ComponentMapper<Position> = get()
     private val size: ComponentMapper<Size> = get()
-    private val ball: ComponentMapper<com.github.dwursteisen.beat.game.components.Ball> = get()
-    private val collision: ComponentMapper<com.github.dwursteisen.beat.game.components.DebugCollision> = get()
-    private val player: ComponentMapper<com.github.dwursteisen.beat.game.components.Player> = get()
+    private val ball: ComponentMapper<Ball> = get()
+    private val collision: ComponentMapper<DebugCollision> = get()
+    private val player: ComponentMapper<Player> = get()
     private val state: ComponentMapper<StateComponent> = get()
     private val rotation: ComponentMapper<Rotation> = get()
-    private val hitbox: ComponentMapper<com.github.dwursteisen.beat.game.components.Hitbox> = get()
+    private val hitBox: ComponentMapper<HitBox> = get()
 
     private val tmp = Vector2()
     private val tmp2 = Vector2()
     private val tmpRectangle = Rectangle()
 
-    private val brickFamilly = Family.all(com.github.dwursteisen.beat.game.components.Brick::class.java).get()
-    private val deadZoneFamilly = Family.all(com.github.dwursteisen.beat.game.components.DeadZone::class.java).get()
+    private val brickFamily = Family.all(Brick::class.java).get()
+    private val deadZoneFamily = Family.all(DeadZone::class.java).get()
 
     private val withSfx = Config.sfx
 
     override fun describeMachine() {
-        val IDLE = object : EntityState() {
+        val idle = object : EntityState() {
 
             override fun update(entity: Entity, machine: StateMachineSystem, delta: Float) {
                 val rot = MathUtils.cos(entity[state].time / 0.5f)
@@ -64,7 +63,7 @@ class BallSystem(eventBus: EventBus, val assetManager: AssetManager) :
             }
         }
 
-        val MOVING = object : EntityState() {
+        val moving = object : EntityState() {
 
             override fun enter(entity: Entity, machine: StateMachineSystem, eventData: EventData) {
 
@@ -80,7 +79,7 @@ class BallSystem(eventBus: EventBus, val assetManager: AssetManager) :
 
                 if (touched) {
                     engine.entity {
-                        this.entity.add(com.github.dwursteisen.beat.game.components.Position(entity[position].position.cpy()))
+                        this.entity.add(Position(entity[position].position.cpy()))
                             .add(com.github.dwursteisen.beat.game.components.ParticleEntity())
                     }
 
@@ -92,14 +91,14 @@ class BallSystem(eventBus: EventBus, val assetManager: AssetManager) :
             }
         }
 
-        startWith(IDLE)
-        onState(IDLE).on(EVENT_TOUCHED, EVENT_KEY) { entity, event ->
-            go(MOVING, entity, event)
+        startWith(idle)
+        onState(idle).on(EVENT_TOUCHED, EVENT_KEY) { entity, event ->
+            go(moving, entity, event)
         }
     }
 
     private fun touchDeadZone(entity: Entity): Boolean {
-        val zones = engine.getEntitiesFor(deadZoneFamilly)
+        val zones = engine.getEntitiesFor(deadZoneFamily)
         return zones.filter {
             val (x, y) = entity[position].position
             val (w, h) = entity[size].size
@@ -109,10 +108,10 @@ class BallSystem(eventBus: EventBus, val assetManager: AssetManager) :
     }
 
     private fun touchPlayer(entity: Entity): Boolean {
-        val p = engine.entity(com.github.dwursteisen.beat.game.components.Player::class.java)
-        tmp.set(p[player].offsetHitbox).add(p[position].position)
+        val p = engine.entity(Player::class.java)
+        tmp.set(p[player].offsetHitBox).add(p[position].position)
 
-        tmpRectangle.set(tmp, p[player].hitbox)
+        tmpRectangle.set(tmp, p[player].hitBox)
 
         tmp.set(entity[position].position).add(entity[ball].direction)
 
@@ -149,7 +148,7 @@ class BallSystem(eventBus: EventBus, val assetManager: AssetManager) :
             tmp2.x, tmp2.y, entity[size].size.x, entity[size].size.y
         )
 
-        val bricks = engine.getEntitiesFor(brickFamilly)
+        val bricks = engine.getEntitiesFor(brickFamily)
         val brickOnX = bricks.firstOrNull { overlaps(moveX, it) }
 
         var hitX = false
@@ -213,8 +212,8 @@ class BallSystem(eventBus: EventBus, val assetManager: AssetManager) :
 
     private fun overlaps(ballHitbox: Rectangle, target: Entity): Boolean {
         val (x, y) = target[position].position
-        val (offsetX, offsetY) = target[hitbox].offset
-        val (sizeX, sizeY) = target[hitbox].size
+        val (offsetX, offsetY) = target[hitBox].offset
+        val (sizeX, sizeY) = target[hitBox].size
 
         // ignore small hitbox
         if (sizeX + sizeY <= 0f) return false

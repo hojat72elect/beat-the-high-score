@@ -9,11 +9,6 @@ import com.badlogic.gdx.Input
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.viewport.Viewport
-import com.github.dwursteisen.beat.game.components.Debugable
-import com.github.dwursteisen.beat.game.components.Player
-import com.github.dwursteisen.beat.game.components.PlayerTouch
-import com.github.dwursteisen.beat.game.components.Position
-import com.github.dwursteisen.beat.game.components.ShapeToRender
 import com.github.dwursteisen.beat.extensions.between
 import com.github.dwursteisen.libgdx.ashley.get
 import com.github.dwursteisen.libgdx.ashley.removeAllWith
@@ -50,7 +45,7 @@ class PlayerControlSystem(private val viewport: Viewport) :
                 engine.entity {
                     entity.add(com.github.dwursteisen.beat.game.components.Position(position = origin)).add(
                         com.github.dwursteisen.beat.game.components.PlayerTouch()
-                    ).add(com.github.dwursteisen.beat.game.components.Debugable()).add(Size(4f v2 4f))
+                    ).add(com.github.dwursteisen.beat.game.components.Debuggable()).add(Size(4f v2 4f))
                         .add(
                             com.github.dwursteisen.beat.game.components.ShapeToRender(
                                 type = ShapeType.Circle,
@@ -62,7 +57,7 @@ class PlayerControlSystem(private val viewport: Viewport) :
                 engine.entity {
                     entity.add(com.github.dwursteisen.beat.game.components.Position(position = current)).add(
                         com.github.dwursteisen.beat.game.components.PlayerTouch()
-                    ).add(com.github.dwursteisen.beat.game.components.Debugable()).add(Size(4f v2 4f))
+                    ).add(com.github.dwursteisen.beat.game.components.Debuggable()).add(Size(4f v2 4f))
                         .add(
                             com.github.dwursteisen.beat.game.components.ShapeToRender(
                                 type = ShapeType.Circle,

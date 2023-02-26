@@ -1,6 +1,7 @@
-package com.github.dwursteisen.beat.game
+package com.github.dwursteisen.beat.extensions
 
 import com.badlogic.gdx.math.Interpolation
+import com.github.dwursteisen.beat.game.Config
 
 fun Interpolation.invoke(value: Float): Float {
     return when (Config.interpolation) {

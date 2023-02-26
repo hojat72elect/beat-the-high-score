@@ -8,9 +8,9 @@ import com.github.dwursteisen.beat.game.components.BallCopy
 import com.github.dwursteisen.beat.game.components.EntityRender
 import com.github.dwursteisen.libgdx.ashley.get
 
-class AlphaBallCopySystem : IteratingSystem(Family.all(com.github.dwursteisen.beat.game.components.BallCopy::class.java).get()) {
-    private val ballCopy: ComponentMapper<com.github.dwursteisen.beat.game.components.BallCopy> = get()
-    private val render: ComponentMapper<com.github.dwursteisen.beat.game.components.EntityRender> = get()
+class AlphaBallCopySystem : IteratingSystem(Family.all(BallCopy::class.java).get()) {
+    private val ballCopy: ComponentMapper<BallCopy> = get()
+    private val render: ComponentMapper<EntityRender> = get()
     private val size: ComponentMapper<Size> = get()
 
     override fun processEntity(entity: Entity, deltaTime: Float) {

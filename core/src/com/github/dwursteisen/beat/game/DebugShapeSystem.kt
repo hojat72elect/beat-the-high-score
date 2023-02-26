@@ -7,12 +7,6 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.Vector2
-import com.github.dwursteisen.beat.game.components.DebugCollision
-import com.github.dwursteisen.beat.game.components.Debugable
-import com.github.dwursteisen.beat.game.components.Hitbox
-import com.github.dwursteisen.beat.game.components.Player
-import com.github.dwursteisen.beat.game.components.Position
-import com.github.dwursteisen.beat.game.components.ShapeToRender
 import com.github.dwursteisen.libgdx.ashley.get
 import com.github.dwursteisen.libgdx.ashley.getNullable
 import ktx.ashley.has
@@ -20,7 +14,7 @@ import ktx.graphics.circle
 import ktx.graphics.rect
 
 class DebugShapeSystem(private val batch: ShapeRenderer) : IteratingSystem(
-    Family.all(com.github.dwursteisen.beat.game.components.Debugable::class.java, com.github.dwursteisen.beat.game.components.Position::class.java, com.github.dwursteisen.beat.game.components.ShapeToRender::class.java, Size::class.java).get()
+    Family.all(com.github.dwursteisen.beat.game.components.Debuggable::class.java, com.github.dwursteisen.beat.game.components.Position::class.java, com.github.dwursteisen.beat.game.components.ShapeToRender::class.java, Size::class.java).get()
 ) {
 
     private val position: ComponentMapper<com.github.dwursteisen.beat.game.components.Position> = get()
@@ -28,7 +22,7 @@ class DebugShapeSystem(private val batch: ShapeRenderer) : IteratingSystem(
     private val shape: ComponentMapper<com.github.dwursteisen.beat.game.components.ShapeToRender> = get()
     private val collision: ComponentMapper<com.github.dwursteisen.beat.game.components.DebugCollision> = get()
     private val player: ComponentMapper<com.github.dwursteisen.beat.game.components.Player> = get()
-    private val hitbox: ComponentMapper<com.github.dwursteisen.beat.game.components.Hitbox> = get()
+    private val hitbox: ComponentMapper<com.github.dwursteisen.beat.game.components.HitBox> = get()
 
     private val tmp = Vector2()
 
@@ -41,9 +35,9 @@ class DebugShapeSystem(private val batch: ShapeRenderer) : IteratingSystem(
         }
 
         if (entity.has(player)) {
-            tmp.set(entity[position].position).add(entity[player].offsetHitbox)
+            tmp.set(entity[position].position).add(entity[player].offsetHitBox)
 
-            draw(shape, tmp, entity[player].hitbox)
+            draw(shape, tmp, entity[player].hitBox)
         }
 
         if (entity.has(hitbox)) {
@@ -71,7 +65,7 @@ class DebugShapeSystem(private val batch: ShapeRenderer) : IteratingSystem(
 
     override fun update(deltaTime: Float) {
 
-        val groupBy = super.getEntities().groupBy { it[shape].type.filed }
+        val groupBy = super.getEntities().groupBy { it[shape].type.filled }
         batch.begin(ShapeRenderer.ShapeType.Filled)
         groupBy[true]?.forEach { processEntity(it, deltaTime) }
         batch.end()

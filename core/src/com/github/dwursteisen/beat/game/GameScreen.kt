@@ -42,26 +42,6 @@ import com.badlogic.gdx.utils.I18NBundle
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.github.dwursteisen.beat.BeatTheHighScore
-import com.github.dwursteisen.beat.game.components.Animated
-import com.github.dwursteisen.beat.game.components.AnimatedHitbox
-import com.github.dwursteisen.beat.game.components.Ball
-import com.github.dwursteisen.beat.game.components.BallCopy
-import com.github.dwursteisen.beat.game.components.Brick
-import com.github.dwursteisen.beat.game.components.CameraHolder
-import com.github.dwursteisen.beat.game.components.Cloud
-import com.github.dwursteisen.beat.game.components.DeadZone
-import com.github.dwursteisen.beat.game.components.DebugCollision
-import com.github.dwursteisen.beat.game.components.Debugable
-import com.github.dwursteisen.beat.game.components.EntityRender
-import com.github.dwursteisen.beat.game.components.Gate
-import com.github.dwursteisen.beat.game.components.Hitbox
-import com.github.dwursteisen.beat.game.components.MapLayer
-import com.github.dwursteisen.beat.game.components.Move
-import com.github.dwursteisen.beat.game.components.Player
-import com.github.dwursteisen.beat.game.components.Position
-import com.github.dwursteisen.beat.game.components.ShapeToRender
-import com.github.dwursteisen.beat.game.components.StageComponent
-import com.github.dwursteisen.beat.game.components.Transition
 import com.github.dwursteisen.beat.extensions.BrickProperties
 import com.github.dwursteisen.beat.extensions.TiledProperties
 import com.github.dwursteisen.beat.extensions.runLater
@@ -270,11 +250,11 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
                         ), size.cpy().sub(it.rectangle.width * 0.5f, it.rectangle.height * 0.5f)
                     )
                 )
-            ).add(com.github.dwursteisen.beat.game.components.Debugable()).add(com.github.dwursteisen.beat.game.components.DebugCollision()).add(
+            ).add(com.github.dwursteisen.beat.game.components.Debuggable()).add(com.github.dwursteisen.beat.game.components.DebugCollision()).add(
                 com.github.dwursteisen.beat.game.components.Position(pos)
             ).add(Size(size))
                 .add(StateComponent()).add(
-                    com.github.dwursteisen.beat.game.components.Hitbox(
+                    com.github.dwursteisen.beat.game.components.HitBox(
                         size.cpy(),
                         Vector2.Zero.cpy()
                     )
@@ -289,7 +269,7 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
             if (props.hit > 0) {
                 entity.add(com.github.dwursteisen.beat.game.components.Animated()).add(com.github.dwursteisen.beat.game.components.EntityRender())
             } else if (props.hit == -2) {
-                entity.add(com.github.dwursteisen.beat.game.components.Gate()).add(com.github.dwursteisen.beat.game.components.AnimatedHitbox()).add(
+                entity.add(com.github.dwursteisen.beat.game.components.Gate()).add(com.github.dwursteisen.beat.game.components.AnimatedHitBox()).add(
                     com.github.dwursteisen.beat.game.components.Animated()
                 )
                     .add(com.github.dwursteisen.beat.game.components.EntityRender(zLevel = -1))
@@ -331,7 +311,7 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
             val pos = props.x v2 props.y
 
             engine.entity {
-                entity.add(com.github.dwursteisen.beat.game.components.Debugable()).add(com.github.dwursteisen.beat.game.components.DebugCollision()).add(
+                entity.add(com.github.dwursteisen.beat.game.components.Debuggable()).add(com.github.dwursteisen.beat.game.components.DebugCollision()).add(
                     com.github.dwursteisen.beat.game.components.Position(pos)
                 ).add(Size(size))
                     .add(com.github.dwursteisen.beat.game.components.DeadZone())
@@ -351,7 +331,7 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
         engine.entity {
 
             val ball: Aseprite = assets["sheets/egg"]
-            entity.add(com.github.dwursteisen.beat.game.components.Ball(direction = 0 v2 0)).add(com.github.dwursteisen.beat.game.components.Debugable())
+            entity.add(com.github.dwursteisen.beat.game.components.Ball(direction = 0 v2 0)).add(com.github.dwursteisen.beat.game.components.Debuggable())
                 .add(com.github.dwursteisen.beat.game.components.Position(((screenWidth - ballRadius) * 0.5f) v2 25 + playerHeight))
                 .add(Size(8 v2 9))
                 .add(
@@ -386,10 +366,10 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
         engine.entity {
             entity.add(
                 com.github.dwursteisen.beat.game.components.Player(
-                    hitbox = bounds.w v2 bounds.h,
-                    offsetHitbox = bounds.x v2 (playerHeight - bounds.y) - bounds.h
+                    hitBox = bounds.w v2 bounds.h,
+                    offsetHitBox = bounds.x v2 (playerHeight - bounds.y) - bounds.h
                 )
-            ).add(com.github.dwursteisen.beat.game.components.Debugable()).add(com.github.dwursteisen.beat.game.components.DebugCollision()).add(
+            ).add(com.github.dwursteisen.beat.game.components.Debuggable()).add(com.github.dwursteisen.beat.game.components.DebugCollision()).add(
                 com.github.dwursteisen.beat.game.components.EntityRender()
             ).add(com.github.dwursteisen.beat.game.components.Animated())
                 .add(com.github.dwursteisen.beat.game.components.Position((screenWidth - playerWidth) * 0.5f v2 25))
@@ -406,7 +386,7 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
         // --- FOX --- //
         val fox: Aseprite = assets["sheets/renard"]
         engine.entity {
-            entity.add(com.github.dwursteisen.beat.game.components.Debugable()).add(com.github.dwursteisen.beat.game.components.EntityRender()).add(
+            entity.add(com.github.dwursteisen.beat.game.components.Debuggable()).add(com.github.dwursteisen.beat.game.components.EntityRender()).add(
                 com.github.dwursteisen.beat.game.components.Animated(fox["idle"])
             )
                 .add(com.github.dwursteisen.beat.game.components.Position((screenWidth - 64) v2 (screenHeight - 32))).add(Size(64 v2 32))
@@ -446,7 +426,7 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
 
             engine.entity {
                 val texture = clouds[cloudsName.pickOne()].getKeyFrame(0f)
-                entity.add(com.github.dwursteisen.beat.game.components.Debugable()).add(
+                entity.add(com.github.dwursteisen.beat.game.components.Debuggable()).add(
                     com.github.dwursteisen.beat.game.components.Cloud(
                         origin = it,
                         offset = index.toFloat() * 2.5f
@@ -668,7 +648,7 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
                     val chickenAnimation = spriteData["fly"]
                     entity.add(com.github.dwursteisen.beat.game.components.Position(position = position)).add(Size(chickenSize))
                         .add(StateComponent()).add(com.github.dwursteisen.beat.game.components.EntityRender()).add(
-                            com.github.dwursteisen.beat.game.components.Debugable()
+                            com.github.dwursteisen.beat.game.components.Debuggable()
                         ).add(Rotation())
                         .add(com.github.dwursteisen.beat.game.components.Animated(animation = chickenAnimation))
                 }
