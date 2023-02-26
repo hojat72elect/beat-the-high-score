@@ -4,6 +4,7 @@ import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family.all
 import com.badlogic.gdx.assets.AssetManager
+import com.github.dwursteisen.beat.components.Animated
 import com.github.dwursteisen.beat.components.AnimatedHitbox
 import com.github.dwursteisen.beat.components.Gate
 import com.github.dwursteisen.libgdx.aseprite.Aseprite

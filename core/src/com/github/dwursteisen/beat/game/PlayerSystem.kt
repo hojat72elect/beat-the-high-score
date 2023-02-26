@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family.all
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.math.MathUtils
+import com.github.dwursteisen.beat.components.Animated
 import com.github.dwursteisen.beat.components.Player
 import com.github.dwursteisen.libgdx.aseprite.Aseprite
 import com.github.dwursteisen.libgdx.ashley.EntityState
@@ -33,7 +34,7 @@ class PlayerSystem(eventBus: EventBus, val assets: AssetManager) :
                 val anim = if (eventData.event == GameEvent.Player.Touch.id) {
                     chicken["bounce"]
                 } else {
-                    // chose an random animation
+                    // chose a random animation
                     chicken[idles.pickOne()]
                 }
 

@@ -14,7 +14,6 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.GL20
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.Texture
-import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.ParticleEffect
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool
@@ -43,6 +42,7 @@ import com.badlogic.gdx.utils.I18NBundle
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.github.dwursteisen.beat.BeatTheHighScore
+import com.github.dwursteisen.beat.components.Animated
 import com.github.dwursteisen.beat.components.AnimatedHitbox
 import com.github.dwursteisen.beat.components.Ball
 import com.github.dwursteisen.beat.components.BallCopy
@@ -106,11 +106,8 @@ const val screenHeight = 224f
 class Size(var size: Vector2) : Component
 
 val NO_TEXTURE = TextureRegion()
-val NO_ANIMATION = Animation<TextureRegion>(0f)
 val NO_SLICE_ANIMATION = AnimationSlice(0f)
 
-// --- RENDERING --- //
-class Animated(var animation: Animation<TextureRegion> = NO_ANIMATION) : Component
 
 class GameScreen(private val assets: AssetManager, var levelName: String = "level0.tmx") :
     ScreenAdapter() {
