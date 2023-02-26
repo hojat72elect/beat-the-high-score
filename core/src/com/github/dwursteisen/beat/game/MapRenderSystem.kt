@@ -4,11 +4,11 @@ import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family
 import com.badlogic.ashley.systems.IteratingSystem
-import com.github.dwursteisen.beat.components.MapLayer
+import com.github.dwursteisen.beat.game.components.MapLayer
 import com.github.dwursteisen.libgdx.ashley.get
 
-abstract class MapRenderSystem(val layers: IntArray) : IteratingSystem(Family.all(MapLayer::class.java).get()) {
-    private val map: ComponentMapper<MapLayer> = get()
+abstract class MapRenderSystem(val layers: IntArray) : IteratingSystem(Family.all(com.github.dwursteisen.beat.game.components.MapLayer::class.java).get()) {
+    private val map: ComponentMapper<com.github.dwursteisen.beat.game.components.MapLayer> = get()
     override fun processEntity(entity: Entity, deltaTime: Float) {
         entity[map].map.render(layers)
     }

@@ -7,12 +7,12 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.Vector2
-import com.github.dwursteisen.beat.components.DebugCollision
-import com.github.dwursteisen.beat.components.Debugable
-import com.github.dwursteisen.beat.components.Hitbox
-import com.github.dwursteisen.beat.components.Player
-import com.github.dwursteisen.beat.components.Position
-import com.github.dwursteisen.beat.components.ShapeToRender
+import com.github.dwursteisen.beat.game.components.DebugCollision
+import com.github.dwursteisen.beat.game.components.Debugable
+import com.github.dwursteisen.beat.game.components.Hitbox
+import com.github.dwursteisen.beat.game.components.Player
+import com.github.dwursteisen.beat.game.components.Position
+import com.github.dwursteisen.beat.game.components.ShapeToRender
 import com.github.dwursteisen.libgdx.ashley.get
 import com.github.dwursteisen.libgdx.ashley.getNullable
 import ktx.ashley.has
@@ -20,15 +20,15 @@ import ktx.graphics.circle
 import ktx.graphics.rect
 
 class DebugShapeSystem(private val batch: ShapeRenderer) : IteratingSystem(
-    Family.all(Debugable::class.java, Position::class.java, ShapeToRender::class.java, Size::class.java).get()
+    Family.all(com.github.dwursteisen.beat.game.components.Debugable::class.java, com.github.dwursteisen.beat.game.components.Position::class.java, com.github.dwursteisen.beat.game.components.ShapeToRender::class.java, Size::class.java).get()
 ) {
 
-    private val position: ComponentMapper<Position> = get()
+    private val position: ComponentMapper<com.github.dwursteisen.beat.game.components.Position> = get()
     private val size: ComponentMapper<Size> = get()
-    private val shape: ComponentMapper<ShapeToRender> = get()
-    private val collision: ComponentMapper<DebugCollision> = get()
-    private val player: ComponentMapper<Player> = get()
-    private val hitbox: ComponentMapper<Hitbox> = get()
+    private val shape: ComponentMapper<com.github.dwursteisen.beat.game.components.ShapeToRender> = get()
+    private val collision: ComponentMapper<com.github.dwursteisen.beat.game.components.DebugCollision> = get()
+    private val player: ComponentMapper<com.github.dwursteisen.beat.game.components.Player> = get()
+    private val hitbox: ComponentMapper<com.github.dwursteisen.beat.game.components.Hitbox> = get()
 
     private val tmp = Vector2()
 
@@ -60,7 +60,7 @@ class DebugShapeSystem(private val batch: ShapeRenderer) : IteratingSystem(
         draw(shape, entity[position].position, entity[size].size)
     }
 
-    private fun draw(shape: ShapeToRender, pos: Vector2, siz: Vector2) {
+    private fun draw(shape: com.github.dwursteisen.beat.game.components.ShapeToRender, pos: Vector2, siz: Vector2) {
         when (shape.type) {
             is ShapeType.FilledCircle -> batch.circle(pos, siz.x)
             is ShapeType.Circle -> batch.circle(pos, siz.x)

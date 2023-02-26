@@ -4,13 +4,13 @@ import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family
 import com.badlogic.ashley.systems.IteratingSystem
-import com.github.dwursteisen.beat.components.BallCopy
-import com.github.dwursteisen.beat.components.EntityRender
+import com.github.dwursteisen.beat.game.components.BallCopy
+import com.github.dwursteisen.beat.game.components.EntityRender
 import com.github.dwursteisen.libgdx.ashley.get
 
-class AlphaBallCopySystem : IteratingSystem(Family.all(BallCopy::class.java).get()) {
-    private val ballCopy: ComponentMapper<BallCopy> = get()
-    private val render: ComponentMapper<EntityRender> = get()
+class AlphaBallCopySystem : IteratingSystem(Family.all(com.github.dwursteisen.beat.game.components.BallCopy::class.java).get()) {
+    private val ballCopy: ComponentMapper<com.github.dwursteisen.beat.game.components.BallCopy> = get()
+    private val render: ComponentMapper<com.github.dwursteisen.beat.game.components.EntityRender> = get()
     private val size: ComponentMapper<Size> = get()
 
     override fun processEntity(entity: Entity, deltaTime: Float) {

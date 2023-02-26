@@ -4,14 +4,14 @@ import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family.all
 import com.badlogic.ashley.systems.IteratingSystem
-import com.github.dwursteisen.beat.components.Move
-import com.github.dwursteisen.beat.components.Position
+import com.github.dwursteisen.beat.game.components.Move
+import com.github.dwursteisen.beat.game.components.Position
 import com.github.dwursteisen.libgdx.ashley.StateComponent
 import com.github.dwursteisen.libgdx.ashley.get
 
-class MoveSystem : IteratingSystem(all(Move::class.java, Position::class.java, StateComponent::class.java).get()) {
-    private val move: ComponentMapper<Move> = get()
-    private val position: ComponentMapper<Position> = get()
+class MoveSystem : IteratingSystem(all(com.github.dwursteisen.beat.game.components.Move::class.java, com.github.dwursteisen.beat.game.components.Position::class.java, StateComponent::class.java).get()) {
+    private val move: ComponentMapper<com.github.dwursteisen.beat.game.components.Move> = get()
+    private val position: ComponentMapper<com.github.dwursteisen.beat.game.components.Position> = get()
     private val state: ComponentMapper<StateComponent> = get()
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
@@ -32,7 +32,7 @@ class MoveSystem : IteratingSystem(all(Move::class.java, Position::class.java, S
         entity[position].position.y = result
 
         if (percent >= 1f) { // move finished
-            entity.remove(Move::class.java)
+            entity.remove(com.github.dwursteisen.beat.game.components.Move::class.java)
         }
     }
 

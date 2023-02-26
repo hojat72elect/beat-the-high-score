@@ -42,26 +42,26 @@ import com.badlogic.gdx.utils.I18NBundle
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.github.dwursteisen.beat.BeatTheHighScore
-import com.github.dwursteisen.beat.components.Animated
-import com.github.dwursteisen.beat.components.AnimatedHitbox
-import com.github.dwursteisen.beat.components.Ball
-import com.github.dwursteisen.beat.components.BallCopy
-import com.github.dwursteisen.beat.components.Brick
-import com.github.dwursteisen.beat.components.CameraHolder
-import com.github.dwursteisen.beat.components.Cloud
-import com.github.dwursteisen.beat.components.DeadZone
-import com.github.dwursteisen.beat.components.DebugCollision
-import com.github.dwursteisen.beat.components.Debugable
-import com.github.dwursteisen.beat.components.EntityRender
-import com.github.dwursteisen.beat.components.Gate
-import com.github.dwursteisen.beat.components.Hitbox
-import com.github.dwursteisen.beat.components.MapLayer
-import com.github.dwursteisen.beat.components.Move
-import com.github.dwursteisen.beat.components.Player
-import com.github.dwursteisen.beat.components.Position
-import com.github.dwursteisen.beat.components.ShapeToRender
-import com.github.dwursteisen.beat.components.StageComponent
-import com.github.dwursteisen.beat.components.Transition
+import com.github.dwursteisen.beat.game.components.Animated
+import com.github.dwursteisen.beat.game.components.AnimatedHitbox
+import com.github.dwursteisen.beat.game.components.Ball
+import com.github.dwursteisen.beat.game.components.BallCopy
+import com.github.dwursteisen.beat.game.components.Brick
+import com.github.dwursteisen.beat.game.components.CameraHolder
+import com.github.dwursteisen.beat.game.components.Cloud
+import com.github.dwursteisen.beat.game.components.DeadZone
+import com.github.dwursteisen.beat.game.components.DebugCollision
+import com.github.dwursteisen.beat.game.components.Debugable
+import com.github.dwursteisen.beat.game.components.EntityRender
+import com.github.dwursteisen.beat.game.components.Gate
+import com.github.dwursteisen.beat.game.components.Hitbox
+import com.github.dwursteisen.beat.game.components.MapLayer
+import com.github.dwursteisen.beat.game.components.Move
+import com.github.dwursteisen.beat.game.components.Player
+import com.github.dwursteisen.beat.game.components.Position
+import com.github.dwursteisen.beat.game.components.ShapeToRender
+import com.github.dwursteisen.beat.game.components.StageComponent
+import com.github.dwursteisen.beat.game.components.Transition
 import com.github.dwursteisen.beat.extensions.BrickProperties
 import com.github.dwursteisen.beat.extensions.TiledProperties
 import com.github.dwursteisen.beat.extensions.runLater
@@ -219,9 +219,9 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
         engine.addSystem(StateSystem())
 
         engine.addSystem(TransitionSystem(assets, viewportScreen, batch) { e ->
-            if (e.getComponent(Transition::class.java).wayIn) {
-                val player = engine.getEntitiesFor(all(Player::class.java).get()).first()
-                val isWin = player.getComponent(Player::class.java).win
+            if (e.getComponent(com.github.dwursteisen.beat.game.components.Transition::class.java).wayIn) {
+                val player = engine.getEntitiesFor(all(com.github.dwursteisen.beat.game.components.Player::class.java).get()).first()
+                val isWin = player.getComponent(com.github.dwursteisen.beat.game.components.Player::class.java).win
                 val delay = if (isWin) 5f else 3f
                 if (isWin) {
                     dropChickens()
@@ -237,7 +237,7 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
                 engine.removeEntity(e)
             }
         })
-        engine.addSystem(object : IteratingSystem(all(CameraHolder::class.java).get()) {
+        engine.addSystem(object : IteratingSystem(all(com.github.dwursteisen.beat.game.components.CameraHolder::class.java).get()) {
             override fun processEntity(entity: Entity?, deltaTime: Float) {
                 viewport.apply()
                 batch.projectionMatrix = viewport.camera.combined
@@ -263,42 +263,56 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
             }
 
             val entity = engine.createEntity().add(
-                Brick(
+                com.github.dwursteisen.beat.game.components.Brick(
                     hit = props.hit, body = createBox2DRect(
                         pos.cpy().sub(
                             -it.rectangle.width * 0.5f, startOffset - it.rectangle.height * 0.5f
                         ), size.cpy().sub(it.rectangle.width * 0.5f, it.rectangle.height * 0.5f)
                     )
                 )
-            ).add(Debugable()).add(DebugCollision()).add(Position(pos)).add(Size(size))
-                .add(StateComponent()).add(Hitbox(size.cpy(), Vector2.Zero.cpy()))
-                .add(ShapeToRender(type = ShapeType.Rectangle, color = Color.CHARTREUSE))
+            ).add(com.github.dwursteisen.beat.game.components.Debugable()).add(com.github.dwursteisen.beat.game.components.DebugCollision()).add(
+                com.github.dwursteisen.beat.game.components.Position(pos)
+            ).add(Size(size))
+                .add(StateComponent()).add(
+                    com.github.dwursteisen.beat.game.components.Hitbox(
+                        size.cpy(),
+                        Vector2.Zero.cpy()
+                    )
+                )
+                .add(
+                    com.github.dwursteisen.beat.game.components.ShapeToRender(
+                        type = ShapeType.Rectangle,
+                        color = Color.CHARTREUSE
+                    )
+                )
 
             if (props.hit > 0) {
-                entity.add(Animated()).add(EntityRender())
+                entity.add(com.github.dwursteisen.beat.game.components.Animated()).add(com.github.dwursteisen.beat.game.components.EntityRender())
             } else if (props.hit == -2) {
-                entity.add(Gate()).add(AnimatedHitbox()).add(Animated())
-                    .add(EntityRender(zLevel = -1))
+                entity.add(com.github.dwursteisen.beat.game.components.Gate()).add(com.github.dwursteisen.beat.game.components.AnimatedHitbox()).add(
+                    com.github.dwursteisen.beat.game.components.Animated()
+                )
+                    .add(com.github.dwursteisen.beat.game.components.EntityRender(zLevel = -1))
             }
 
             entity
 
         }.sortedWith(
-            compareBy({ it.getComponent(Position::class.java).position.y },
-                { it.getComponent(Position::class.java).position.x })
+            compareBy({ it.getComponent(com.github.dwursteisen.beat.game.components.Position::class.java).position.y },
+                { it.getComponent(com.github.dwursteisen.beat.game.components.Position::class.java).position.x })
         )
 
 
-        val breakableBricks = blocks.filter { it.getComponent(Brick::class.java).hit > 0 }
+        val breakableBricks = blocks.filter { it.getComponent(com.github.dwursteisen.beat.game.components.Brick::class.java).hit > 0 }
         breakableBricks.forEachIndexed { index, entity ->
             val delay = index.toFloat() * 0.1f
             entity.add(
-                Move(
+                com.github.dwursteisen.beat.game.components.Move(
                     duration = 0.7f,
                     delay = delay,
-                    target = entity.getComponent(Position::class.java).position.cpy()
+                    target = entity.getComponent(com.github.dwursteisen.beat.game.components.Position::class.java).position.cpy()
                         .sub(0f, startOffset),
-                    from = entity.getComponent(Position::class.java).position.cpy(),
+                    from = entity.getComponent(com.github.dwursteisen.beat.game.components.Position::class.java).position.cpy(),
                     interpolation = Interpolation.pow2Out
                 )
             )
@@ -317,9 +331,16 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
             val pos = props.x v2 props.y
 
             engine.entity {
-                entity.add(Debugable()).add(DebugCollision()).add(Position(pos)).add(Size(size))
-                    .add(DeadZone())
-                    .add(ShapeToRender(type = ShapeType.Rectangle, color = Color.RED))
+                entity.add(com.github.dwursteisen.beat.game.components.Debugable()).add(com.github.dwursteisen.beat.game.components.DebugCollision()).add(
+                    com.github.dwursteisen.beat.game.components.Position(pos)
+                ).add(Size(size))
+                    .add(com.github.dwursteisen.beat.game.components.DeadZone())
+                    .add(
+                        com.github.dwursteisen.beat.game.components.ShapeToRender(
+                            type = ShapeType.Rectangle,
+                            color = Color.RED
+                        )
+                    )
             }
 
         }
@@ -330,20 +351,30 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
         engine.entity {
 
             val ball: Aseprite = assets["sheets/egg"]
-            entity.add(Ball(direction = 0 v2 0)).add(Debugable())
-                .add(Position(((screenWidth - ballRadius) * 0.5f) v2 25 + playerHeight))
+            entity.add(com.github.dwursteisen.beat.game.components.Ball(direction = 0 v2 0)).add(com.github.dwursteisen.beat.game.components.Debugable())
+                .add(com.github.dwursteisen.beat.game.components.Position(((screenWidth - ballRadius) * 0.5f) v2 25 + playerHeight))
                 .add(Size(8 v2 9))
-                .add(ShapeToRender(type = ShapeType.Rectangle, color = Color.WHITE))
-                .add(EntityRender(ball.frame(0))).add(StateComponent())
+                .add(
+                    com.github.dwursteisen.beat.game.components.ShapeToRender(
+                        type = ShapeType.Rectangle,
+                        color = Color.WHITE
+                    )
+                )
+                .add(com.github.dwursteisen.beat.game.components.EntityRender(ball.frame(0))).add(StateComponent())
                 .add(Rotation(origin = 4 v2 4))
         }
 
         (1..4).forEach {
             engine.entity {
                 val ball: Aseprite = assets["sheets/egg"]
-                entity.add(BallCopy(alpha = 1f / it))
-                    .add(Position(-100 v2 -100)) // hide it by default
-                    .add(Size(8 v2 9)).add(EntityRender(ball.frame(0), zLevel = -1))
+                entity.add(com.github.dwursteisen.beat.game.components.BallCopy(alpha = 1f / it))
+                    .add(com.github.dwursteisen.beat.game.components.Position(-100 v2 -100)) // hide it by default
+                    .add(Size(8 v2 9)).add(
+                        com.github.dwursteisen.beat.game.components.EntityRender(
+                            ball.frame(0),
+                            zLevel = -1
+                        )
+                    )
                     .add(StateComponent()).add(Rotation(origin = 4 v2 4))
             }
         }
@@ -354,39 +385,57 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
 
         engine.entity {
             entity.add(
-                Player(
+                com.github.dwursteisen.beat.game.components.Player(
                     hitbox = bounds.w v2 bounds.h,
                     offsetHitbox = bounds.x v2 (playerHeight - bounds.y) - bounds.h
                 )
-            ).add(Debugable()).add(DebugCollision()).add(EntityRender()).add(Animated())
-                .add(Position((screenWidth - playerWidth) * 0.5f v2 25))
+            ).add(com.github.dwursteisen.beat.game.components.Debugable()).add(com.github.dwursteisen.beat.game.components.DebugCollision()).add(
+                com.github.dwursteisen.beat.game.components.EntityRender()
+            ).add(com.github.dwursteisen.beat.game.components.Animated())
+                .add(com.github.dwursteisen.beat.game.components.Position((screenWidth - playerWidth) * 0.5f v2 25))
                 .add(Size(playerWidth v2 playerHeight))
-                .add(ShapeToRender(type = ShapeType.Rectangle, color = Color.BLUE))
+                .add(
+                    com.github.dwursteisen.beat.game.components.ShapeToRender(
+                        type = ShapeType.Rectangle,
+                        color = Color.BLUE
+                    )
+                )
                 .add(StateComponent())
         }
 
         // --- FOX --- //
         val fox: Aseprite = assets["sheets/renard"]
         engine.entity {
-            entity.add(Debugable()).add(EntityRender()).add(Animated(fox["idle"]))
-                .add(Position((screenWidth - 64) v2 (screenHeight - 32))).add(Size(64 v2 32))
-                .add(ShapeToRender(type = ShapeType.Rectangle, color = Color.BLUE))
+            entity.add(com.github.dwursteisen.beat.game.components.Debugable()).add(com.github.dwursteisen.beat.game.components.EntityRender()).add(
+                com.github.dwursteisen.beat.game.components.Animated(fox["idle"])
+            )
+                .add(com.github.dwursteisen.beat.game.components.Position((screenWidth - 64) v2 (screenHeight - 32))).add(Size(64 v2 32))
+                .add(
+                    com.github.dwursteisen.beat.game.components.ShapeToRender(
+                        type = ShapeType.Rectangle,
+                        color = Color.BLUE
+                    )
+                )
                 .add(StateComponent())
         }
 
         // --- CAMERA --- //
         engine.entity {
-            entity.add(CameraHolder(viewport.camera))
-                .add(Position(screenWidth * 0.5f v2 screenHeight * 0.5f)).add(StateComponent())
+            entity.add(com.github.dwursteisen.beat.game.components.CameraHolder(viewport.camera))
+                .add(com.github.dwursteisen.beat.game.components.Position(screenWidth * 0.5f v2 screenHeight * 0.5f)).add(StateComponent())
         }
 
         // -- MAP --- //
         engine.entity {
-            entity.add(MapLayer(zeMap))
+            entity.add(com.github.dwursteisen.beat.game.components.MapLayer(zeMap))
         }
 
         // --- SCENE 2D --- //
-        engine.entity { entity.add(StageComponent(buttons)) }
+        engine.entity { entity.add(
+            com.github.dwursteisen.beat.game.components.StageComponent(
+                buttons
+            )
+        ) }
 
         // --- CLOUDS --- //
         val clouds: Aseprite = assets["sheets/clouds"]
@@ -397,15 +446,30 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
 
             engine.entity {
                 val texture = clouds[cloudsName.pickOne()].getKeyFrame(0f)
-                entity.add(Debugable()).add(Cloud(origin = it, offset = index.toFloat() * 2.5f))
-                    .add(Position(it.cpy())).add(Size(64 v2 64))
-                    .add(ShapeToRender(type = ShapeType.Rectangle, color = Color.BLACK))
-                    .add(EntityRender(texture = texture, zLevel = -2)).add(StateComponent())
+                entity.add(com.github.dwursteisen.beat.game.components.Debugable()).add(
+                    com.github.dwursteisen.beat.game.components.Cloud(
+                        origin = it,
+                        offset = index.toFloat() * 2.5f
+                    )
+                )
+                    .add(com.github.dwursteisen.beat.game.components.Position(it.cpy())).add(Size(64 v2 64))
+                    .add(
+                        com.github.dwursteisen.beat.game.components.ShapeToRender(
+                            type = ShapeType.Rectangle,
+                            color = Color.BLACK
+                        )
+                    )
+                    .add(
+                        com.github.dwursteisen.beat.game.components.EntityRender(
+                            texture = texture,
+                            zLevel = -2
+                        )
+                    ).add(StateComponent())
             }
         }
 
         engine.entity {
-            entity.add(Transition(wayIn = false)).add(StateComponent())
+            entity.add(com.github.dwursteisen.beat.game.components.Transition(wayIn = false)).add(StateComponent())
 
         }
 
@@ -413,7 +477,7 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
             override fun onEvent(event: Event, eventData: EventData) {
                 info { "com.github.dwursteisen.beat.components.Player just loose the game!" }
                 // destroy the ball
-                val balls = engine.getEntitiesFor(Family.all(Ball::class.java).get())
+                val balls = engine.getEntitiesFor(Family.all(com.github.dwursteisen.beat.game.components.Ball::class.java).get())
                 engine.removeAll(balls)
 
 
@@ -426,7 +490,7 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
                                 TextRender(
                                     txt, color = Color.BLACK, scale = 1f, halign = Align.center
                                 )
-                            ).add(Position((0 + x) v2 (64 + y))).add(Size(screenWidth v2 90))
+                            ).add(com.github.dwursteisen.beat.game.components.Position((0 + x) v2 (64 + y))).add(Size(screenWidth v2 90))
                         }
 
                     }
@@ -437,12 +501,12 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
                         TextRender(
                             txt, color = Color.WHITE, scale = 1f, halign = Align.center
                         )
-                    ).add(Position(0 v2 64)).add(Size(screenWidth v2 90))
+                    ).add(com.github.dwursteisen.beat.game.components.Position(0 v2 64)).add(Size(screenWidth v2 90))
                 }
 
                 // add transition to same level
                 engine.entity {
-                    entity.add(Transition(wayIn = true)).add(StateComponent())
+                    entity.add(com.github.dwursteisen.beat.game.components.Transition(wayIn = true)).add(StateComponent())
                 }
             }
 
@@ -453,11 +517,11 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
             override fun onEvent(event: Event, eventData: EventData) {
                 info { "com.github.dwursteisen.beat.components.Player just win the game!" }
 
-                engine.getEntitiesFor(all(Player::class.java).get()).forEach {
-                    it.getComponent(Player::class.java).win = true
+                engine.getEntitiesFor(all(com.github.dwursteisen.beat.game.components.Player::class.java).get()).forEach {
+                    it.getComponent(com.github.dwursteisen.beat.game.components.Player::class.java).win = true
                 }
                 // destroy the ball
-                val balls = engine.getEntitiesFor(Family.all(Ball::class.java).get())
+                val balls = engine.getEntitiesFor(Family.all(com.github.dwursteisen.beat.game.components.Ball::class.java).get())
                 engine.removeAll(balls)
 
 
@@ -470,7 +534,7 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
                                 TextRender(
                                     txt, color = Color.BLACK, scale = 0.7f, halign = Align.center
                                 )
-                            ).add(Position((0 + x) v2 (64 + y))).add(Size(screenWidth v2 90))
+                            ).add(com.github.dwursteisen.beat.game.components.Position((0 + x) v2 (64 + y))).add(Size(screenWidth v2 90))
                         }
 
                     }
@@ -481,12 +545,12 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
                         TextRender(
                             txt, color = Color.WHITE, scale = 0.7f, halign = Align.center
                         )
-                    ).add(Position(0 v2 64)).add(Size(screenWidth v2 90))
+                    ).add(com.github.dwursteisen.beat.game.components.Position(0 v2 64)).add(Size(screenWidth v2 90))
                 }
 
                 // add transition to same level
                 engine.entity {
-                    entity.add(Transition(wayIn = true)).add(StateComponent())
+                    entity.add(com.github.dwursteisen.beat.game.components.Transition(wayIn = true)).add(StateComponent())
                 }
             }
 
@@ -562,7 +626,7 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
         world.getBodies(bodies)
         bodies.forEach {
             val et = it.userData as? Entity
-            et?.getComponent(Position::class.java)?.position?.set(it.position)
+            et?.getComponent(com.github.dwursteisen.beat.game.components.Position::class.java)?.position?.set(it.position)
             et?.getComponent(Rotation::class.java)?.degree = it.angle * MathUtils.radiansToDegrees
         }
         if (hitbox) {
@@ -602,9 +666,11 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
                 val et = engine.entity {
                     val spriteData: Aseprite = assets["sheets/free_chicken"]
                     val chickenAnimation = spriteData["fly"]
-                    entity.add(Position(position = position)).add(Size(chickenSize))
-                        .add(StateComponent()).add(EntityRender()).add(Debugable()).add(Rotation())
-                        .add(Animated(animation = chickenAnimation))
+                    entity.add(com.github.dwursteisen.beat.game.components.Position(position = position)).add(Size(chickenSize))
+                        .add(StateComponent()).add(com.github.dwursteisen.beat.game.components.EntityRender()).add(
+                            com.github.dwursteisen.beat.game.components.Debugable()
+                        ).add(Rotation())
+                        .add(com.github.dwursteisen.beat.game.components.Animated(animation = chickenAnimation))
                 }
 
                 val bodyDef = BodyDef()

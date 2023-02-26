@@ -11,13 +11,13 @@ import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.CircleShape
 import com.badlogic.gdx.physics.box2d.FixtureDef
 import com.badlogic.gdx.physics.box2d.World
-import com.github.dwursteisen.beat.components.Animated
-import com.github.dwursteisen.beat.components.Brick
-import com.github.dwursteisen.beat.components.DebugCollision
-import com.github.dwursteisen.beat.components.Debugable
-import com.github.dwursteisen.beat.components.EntityRender
-import com.github.dwursteisen.beat.components.Gate
-import com.github.dwursteisen.beat.components.Position
+import com.github.dwursteisen.beat.game.components.Animated
+import com.github.dwursteisen.beat.game.components.Brick
+import com.github.dwursteisen.beat.game.components.DebugCollision
+import com.github.dwursteisen.beat.game.components.Debugable
+import com.github.dwursteisen.beat.game.components.EntityRender
+import com.github.dwursteisen.beat.game.components.Gate
+import com.github.dwursteisen.beat.game.components.Position
 import com.github.dwursteisen.libgdx.aseprite.Aseprite
 import com.github.dwursteisen.libgdx.ashley.*
 import com.github.dwursteisen.libgdx.v2
@@ -32,16 +32,16 @@ class BrickSystem(
     var enabled: Boolean = true
 ) : StateMachineSystem(
     eventBus,
-    Family.all(Brick::class.java, Animated::class.java)
-        .exclude(Gate::class.java)
+    Family.all(com.github.dwursteisen.beat.game.components.Brick::class.java, com.github.dwursteisen.beat.game.components.Animated::class.java)
+        .exclude(com.github.dwursteisen.beat.game.components.Gate::class.java)
         .get()
 ) {
 
-    private val position: ComponentMapper<Position> = get()
-    private val brick: ComponentMapper<Brick> = get()
-    private val collision: ComponentMapper<DebugCollision> = get()
+    private val position: ComponentMapper<com.github.dwursteisen.beat.game.components.Position> = get()
+    private val brick: ComponentMapper<com.github.dwursteisen.beat.game.components.Brick> = get()
+    private val collision: ComponentMapper<com.github.dwursteisen.beat.game.components.DebugCollision> = get()
     private val state: ComponentMapper<StateComponent> = get()
-    private val animation: ComponentMapper<Animated> = get()
+    private val animation: ComponentMapper<com.github.dwursteisen.beat.game.components.Animated> = get()
 
     private val tmp = Vector2()
 
@@ -103,7 +103,7 @@ class BrickSystem(
 
                 addFreeChicken(entity[position].position)
 
-                entity.remove(Brick::class.java)
+                entity.remove(com.github.dwursteisen.beat.game.components.Brick::class.java)
 
                 val spriteData: Aseprite = assets["sheets/brick"]
                 entity[animation].animation = spriteData["explode_nr"]
@@ -156,13 +156,13 @@ class BrickSystem(
             }
 
             entity.add(FreeChicken(position.cpy(), particle))
-                .add(Position(position = position.cpy()))
+                .add(com.github.dwursteisen.beat.game.components.Position(position = position.cpy()))
                 .add(Size(chickenSize))
                 .add(StateComponent())
-                .add(EntityRender(hFlip = direction.second))
-                .add(Debugable())
+                .add(com.github.dwursteisen.beat.game.components.EntityRender(hFlip = direction.second))
+                .add(com.github.dwursteisen.beat.game.components.Debugable())
                 .add(Direction(value = dir))
-                .add(Animated(animation = chickenAnimation))
+                .add(com.github.dwursteisen.beat.game.components.Animated(animation = chickenAnimation))
         }
     }
 
@@ -210,10 +210,10 @@ class BrickSystem(
         val randomFrame = sprData.frame(MathUtils.random(nbFrame - 1))
 
         val et = engine.entity {
-            EngineEntity@ entity.add(Position(position.cpy()))
+            EngineEntity@ entity.add(com.github.dwursteisen.beat.game.components.Position(position.cpy()))
                 .add(Size(wreckageSize))
                 .add(StateComponent())
-                .add(EntityRender(texture = randomFrame))
+                .add(com.github.dwursteisen.beat.game.components.EntityRender(texture = randomFrame))
                 .add(Rotation(origin = wreckageOrigin))
         }
         body.userData = et

@@ -29,9 +29,9 @@ import com.badlogic.gdx.utils.viewport.FitViewport
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.github.dwursteisen.beat.BeatTheHighScore
-import com.github.dwursteisen.beat.components.EntityRender
-import com.github.dwursteisen.beat.components.Position
-import com.github.dwursteisen.beat.components.Transition
+import com.github.dwursteisen.beat.game.components.EntityRender
+import com.github.dwursteisen.beat.game.components.Position
+import com.github.dwursteisen.beat.game.components.Transition
 import com.github.dwursteisen.beat.game.*
 import com.github.dwursteisen.beat.options.centerCamera
 import com.github.dwursteisen.libgdx.aseprite.Aseprite
@@ -49,9 +49,9 @@ class Title(val target: Vector2) : Component
 class TitleSystem : IteratingSystem(all(Title::class.java).get()) {
     private val duration = 1f
     private val state: ComponentMapper<StateComponent> = get()
-    private val render: ComponentMapper<EntityRender> = get()
+    private val render: ComponentMapper<com.github.dwursteisen.beat.game.components.EntityRender> = get()
     private val size: ComponentMapper<Size> = get()
-    private val position: ComponentMapper<Position> = get()
+    private val position: ComponentMapper<com.github.dwursteisen.beat.game.components.Position> = get()
     private val title: ComponentMapper<Title> = get()
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
@@ -117,9 +117,9 @@ class TitleScreen(private val assetManager: AssetManager) : ScreenAdapter() {
 
             entity.add(StateComponent())
                     .add(Title(128 * 0.5 v2 screenHeight - logo.regionHeight * 0.5f - 5f))
-                    .add(Position(0 v2 0))
+                    .add(com.github.dwursteisen.beat.game.components.Position(0 v2 0))
                     .add(Size(0 v2 0))
-                    .add(EntityRender(logo))
+                    .add(com.github.dwursteisen.beat.game.components.EntityRender(logo))
         }
         transition = false
 
@@ -174,7 +174,7 @@ class TitleScreen(private val assetManager: AssetManager) : ScreenAdapter() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             engine.entity {
                 entity.add(StateComponent())
-                        .add(Transition(wayIn = true))
+                        .add(com.github.dwursteisen.beat.game.components.Transition(wayIn = true))
             }
         }
 

@@ -8,14 +8,14 @@ import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Rectangle
 import com.badlogic.gdx.math.Vector2
-import com.github.dwursteisen.beat.components.Ball
-import com.github.dwursteisen.beat.components.Brick
-import com.github.dwursteisen.beat.components.DeadZone
-import com.github.dwursteisen.beat.components.DebugCollision
-import com.github.dwursteisen.beat.components.Hitbox
-import com.github.dwursteisen.beat.components.ParticleEntity
-import com.github.dwursteisen.beat.components.Player
-import com.github.dwursteisen.beat.components.Position
+import com.github.dwursteisen.beat.game.components.Ball
+import com.github.dwursteisen.beat.game.components.Brick
+import com.github.dwursteisen.beat.game.components.DeadZone
+import com.github.dwursteisen.beat.game.components.DebugCollision
+import com.github.dwursteisen.beat.game.components.Hitbox
+import com.github.dwursteisen.beat.game.components.ParticleEntity
+import com.github.dwursteisen.beat.game.components.Player
+import com.github.dwursteisen.beat.game.components.Position
 import com.github.dwursteisen.beat.extensions.between
 import com.github.dwursteisen.beat.extensions.set
 import com.github.dwursteisen.libgdx.ashley.EntityState
@@ -33,24 +33,24 @@ operator fun Vector2.component1() = this.x
 operator fun Vector2.component2() = this.y
 
 class BallSystem(eventBus: EventBus, val assetManager: AssetManager) :
-    StateMachineSystem(eventBus, Family.all(Ball::class.java, Position::class.java).get()) {
+    StateMachineSystem(eventBus, Family.all(com.github.dwursteisen.beat.game.components.Ball::class.java, com.github.dwursteisen.beat.game.components.Position::class.java).get()) {
 
 
-    private val position: ComponentMapper<Position> = get()
+    private val position: ComponentMapper<com.github.dwursteisen.beat.game.components.Position> = get()
     private val size: ComponentMapper<Size> = get()
-    private val ball: ComponentMapper<Ball> = get()
-    private val collision: ComponentMapper<DebugCollision> = get()
-    private val player: ComponentMapper<Player> = get()
+    private val ball: ComponentMapper<com.github.dwursteisen.beat.game.components.Ball> = get()
+    private val collision: ComponentMapper<com.github.dwursteisen.beat.game.components.DebugCollision> = get()
+    private val player: ComponentMapper<com.github.dwursteisen.beat.game.components.Player> = get()
     private val state: ComponentMapper<StateComponent> = get()
     private val rotation: ComponentMapper<Rotation> = get()
-    private val hitbox: ComponentMapper<Hitbox> = get()
+    private val hitbox: ComponentMapper<com.github.dwursteisen.beat.game.components.Hitbox> = get()
 
     private val tmp = Vector2()
     private val tmp2 = Vector2()
     private val tmpRectangle = Rectangle()
 
-    private val brickFamilly = Family.all(Brick::class.java).get()
-    private val deadZoneFamilly = Family.all(DeadZone::class.java).get()
+    private val brickFamilly = Family.all(com.github.dwursteisen.beat.game.components.Brick::class.java).get()
+    private val deadZoneFamilly = Family.all(com.github.dwursteisen.beat.game.components.DeadZone::class.java).get()
 
     private val withSfx = Config.sfx
 
@@ -80,8 +80,8 @@ class BallSystem(eventBus: EventBus, val assetManager: AssetManager) :
 
                 if (touched) {
                     engine.entity {
-                        this.entity.add(Position(entity[position].position.cpy()))
-                            .add(ParticleEntity())
+                        this.entity.add(com.github.dwursteisen.beat.game.components.Position(entity[position].position.cpy()))
+                            .add(com.github.dwursteisen.beat.game.components.ParticleEntity())
                     }
 
                 }
@@ -109,7 +109,7 @@ class BallSystem(eventBus: EventBus, val assetManager: AssetManager) :
     }
 
     private fun touchPlayer(entity: Entity): Boolean {
-        val p = engine.entity(Player::class.java)
+        val p = engine.entity(com.github.dwursteisen.beat.game.components.Player::class.java)
         tmp.set(p[player].offsetHitbox).add(p[position].position)
 
         tmpRectangle.set(tmp, p[player].hitbox)

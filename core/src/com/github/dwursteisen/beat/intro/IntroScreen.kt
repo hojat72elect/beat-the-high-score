@@ -22,7 +22,7 @@ import com.badlogic.gdx.utils.I18NBundle
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.github.dwursteisen.beat.BeatTheHighScore
-import com.github.dwursteisen.beat.components.Position
+import com.github.dwursteisen.beat.game.components.Position
 import com.github.dwursteisen.beat.game.*
 import com.github.dwursteisen.libgdx.aseprite.Aseprite
 import com.github.dwursteisen.libgdx.ashley.StateComponent
@@ -33,10 +33,11 @@ import ktx.log.debug
 import ktx.log.info
 
 class Intro : Component
-class TextRender(var text: String = "",
-                 var color: Color = Color.WHITE,
-                 var scale: Float = 1f,
-                 var halign: Int = Align.left
+class TextRender(
+    var text: String = "",
+    var color: Color = Color.WHITE,
+    var scale: Float = 1f,
+    var halign: Int = Align.left
 ) : Component
 
 class TapToSkip(val txt: String) : Component
@@ -60,9 +61,9 @@ class IntroScreen(private val assetsManager: AssetManager) : ScreenAdapter() {
 
         engine.entity {
             entity.add(StateComponent())
-                    .add(Position(-128f * 0.5f v2 -192f * 0.5f))
-                    .add(Size(128f v2 192f))
-                    .add(Intro())
+                .add(com.github.dwursteisen.beat.game.components.Position(-128f * 0.5f v2 -192f * 0.5f))
+                .add(Size(128f v2 192f))
+                .add(Intro())
         }
 
         val font: BitmapFont = if (Config.customFont) {
@@ -141,7 +142,12 @@ class IntroScreen(private val assetsManager: AssetManager) : ScreenAdapter() {
 
                 debug { "Adding Input Processor. Now listening for touch" }
                 Gdx.input.inputProcessor = object : InputAdapter() {
-                    override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
+                    override fun touchDown(
+                        screenX: Int,
+                        screenY: Int,
+                        pointer: Int,
+                        button: Int
+                    ): Boolean {
                         BeatTheHighScore.title()
                         return true
                     }
@@ -151,10 +157,10 @@ class IntroScreen(private val assetsManager: AssetManager) : ScreenAdapter() {
                 engine.entity {
                     val i18n: I18NBundle = assetsManager["i18n/messages"]
                     entity.add(StateComponent())
-                            .add(Position(-128f * 0.5f v2 -110f))
-                            .add(Size(128f v2 192f))
-                            .add(TextRender(halign = Align.center, scale = 1 / 4f))
-                            .add(TapToSkip(i18n["intro.tap.to.skip"]))
+                        .add(com.github.dwursteisen.beat.game.components.Position(-128f * 0.5f v2 -110f))
+                        .add(Size(128f v2 192f))
+                        .add(TextRender(halign = Align.center, scale = 1 / 4f))
+                        .add(TapToSkip(i18n["intro.tap.to.skip"]))
                 }
             }
         }

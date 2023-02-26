@@ -8,8 +8,8 @@ import com.badlogic.gdx.graphics.g2d.ParticleEffect
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
-import com.github.dwursteisen.beat.components.ParticleEntity
-import com.github.dwursteisen.beat.components.Position
+import com.github.dwursteisen.beat.game.components.ParticleEntity
+import com.github.dwursteisen.beat.game.components.Position
 import com.github.dwursteisen.libgdx.ashley.get
 
 class ParticleImpactSystem(
@@ -18,12 +18,12 @@ class ParticleImpactSystem(
     var enabled: Boolean = true
 ) : IteratingSystem(
     Family.all(
-        ParticleEntity::class.java
+        com.github.dwursteisen.beat.game.components.ParticleEntity::class.java
     ).get()
 ) {
 
-    private val particle: ComponentMapper<ParticleEntity> = get()
-    private val position: ComponentMapper<Position> = get()
+    private val particle: ComponentMapper<com.github.dwursteisen.beat.game.components.ParticleEntity> = get()
+    private val position: ComponentMapper<com.github.dwursteisen.beat.game.components.Position> = get()
 
     fun ParticleEffect.setPosition(v: Vector2) {
         this.setPosition(v.x, v.y)

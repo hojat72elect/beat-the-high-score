@@ -1,4 +1,4 @@
-package com.github.dwursteisen.beat.components
+package com.github.dwursteisen.beat.game.components
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.gdx.math.Interpolation

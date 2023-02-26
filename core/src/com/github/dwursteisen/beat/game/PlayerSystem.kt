@@ -5,8 +5,8 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family.all
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.math.MathUtils
-import com.github.dwursteisen.beat.components.Animated
-import com.github.dwursteisen.beat.components.Player
+import com.github.dwursteisen.beat.game.components.Animated
+import com.github.dwursteisen.beat.game.components.Player
 import com.github.dwursteisen.libgdx.aseprite.Aseprite
 import com.github.dwursteisen.libgdx.ashley.EntityState
 import com.github.dwursteisen.libgdx.ashley.EventBus
@@ -21,8 +21,8 @@ fun <T> List<T>.pickOne(): T {
 }
 
 class PlayerSystem(eventBus: EventBus, val assets: AssetManager) :
-    StateMachineSystem(eventBus, all(Player::class.java).get()) {
-    private val animation: ComponentMapper<Animated> = get()
+    StateMachineSystem(eventBus, all(com.github.dwursteisen.beat.game.components.Player::class.java).get()) {
+    private val animation: ComponentMapper<com.github.dwursteisen.beat.game.components.Animated> = get()
     private val state: ComponentMapper<StateComponent> = get()
 
     private val idles = listOf("idle", "idle3")

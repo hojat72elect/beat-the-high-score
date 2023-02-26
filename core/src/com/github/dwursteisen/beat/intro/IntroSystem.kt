@@ -8,9 +8,9 @@ import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.utils.I18NBundle
 import com.github.dwursteisen.beat.BeatTheHighScore
-import com.github.dwursteisen.beat.components.Animated
-import com.github.dwursteisen.beat.components.EntityRender
-import com.github.dwursteisen.beat.components.Position
+import com.github.dwursteisen.beat.game.components.Animated
+import com.github.dwursteisen.beat.game.components.EntityRender
+import com.github.dwursteisen.beat.game.components.Position
 import com.github.dwursteisen.beat.game.Size
 import com.github.dwursteisen.libgdx.aseprite.Aseprite
 import com.github.dwursteisen.libgdx.ashley.StateComponent
@@ -21,11 +21,11 @@ class IntroSystem(assetManager: AssetManager) : IteratingSystem(Family.all(Intro
 
     private val spritesData: Aseprite = assetManager["sheets/intro"]
 
-    private val animation: ComponentMapper<Animated> = get()
+    private val animation: ComponentMapper<com.github.dwursteisen.beat.game.components.Animated> = get()
     private val state: ComponentMapper<StateComponent> = get()
     private val textRender: ComponentMapper<TextRender> = get()
     private val size: ComponentMapper<Size> = get()
-    private val position: ComponentMapper<Position> = get()
+    private val position: ComponentMapper<com.github.dwursteisen.beat.game.components.Position> = get()
 
     private var index = -1
 
@@ -86,8 +86,8 @@ class IntroSystem(assetManager: AssetManager) : IteratingSystem(Family.all(Intro
             val action = actions[++index]
             when (action) {
                 is Action.Text -> {
-                    entity.remove(Animated::class.java)
-                    entity.remove(EntityRender::class.java)
+                    entity.remove(com.github.dwursteisen.beat.game.components.Animated::class.java)
+                    entity.remove(com.github.dwursteisen.beat.game.components.EntityRender::class.java)
                     entity.add(TextRender("", scale = 1 / 4f))
 
                     entity[position].position.set(-128f * 0.3f, -56f)
@@ -95,8 +95,8 @@ class IntroSystem(assetManager: AssetManager) : IteratingSystem(Family.all(Intro
                 }
                 is Action.Anim -> {
                     entity.remove(TextRender::class.java)
-                    entity.add(Animated())
-                    entity.add(EntityRender())
+                    entity.add(com.github.dwursteisen.beat.game.components.Animated())
+                    entity.add(com.github.dwursteisen.beat.game.components.EntityRender())
                     entity[position].position.set(-128f * 0.5f, -192f * 0.5f)
                     entity[size].size.set(128f, 192f)
                     entity[animation].animation = spritesData[action.name]

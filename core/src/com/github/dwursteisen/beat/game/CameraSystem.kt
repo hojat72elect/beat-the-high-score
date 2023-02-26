@@ -4,16 +4,16 @@ import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family
 import com.badlogic.gdx.math.MathUtils
-import com.github.dwursteisen.beat.components.CameraHolder
-import com.github.dwursteisen.beat.components.Position
+import com.github.dwursteisen.beat.game.components.CameraHolder
+import com.github.dwursteisen.beat.game.components.Position
 import com.github.dwursteisen.beat.extensions.second
 import com.github.dwursteisen.beat.extensions.seconds
 import com.github.dwursteisen.libgdx.ashley.*
 
-class CameraSystem(eventBus: EventBus) : StateMachineSystem(eventBus, Family.all(CameraHolder::class.java).get()) {
+class CameraSystem(eventBus: EventBus) : StateMachineSystem(eventBus, Family.all(com.github.dwursteisen.beat.game.components.CameraHolder::class.java).get()) {
 
-    private val cameraHolder: ComponentMapper<CameraHolder> = get()
-    private val position: ComponentMapper<Position> = get()
+    private val cameraHolder: ComponentMapper<com.github.dwursteisen.beat.game.components.CameraHolder> = get()
+    private val position: ComponentMapper<com.github.dwursteisen.beat.game.components.Position> = get()
     private val state: ComponentMapper<StateComponent> = get()
 
     private val effectDuration = 0.3.seconds

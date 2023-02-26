@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.graphics.glutils.ShaderProgram
 import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.utils.viewport.Viewport
-import com.github.dwursteisen.beat.components.Transition
+import com.github.dwursteisen.beat.game.components.Transition
 import com.github.dwursteisen.libgdx.aseprite.Aseprite
 import com.github.dwursteisen.libgdx.ashley.StateComponent
 import com.github.dwursteisen.libgdx.ashley.get
@@ -18,7 +18,7 @@ import com.github.dwursteisen.libgdx.ashley.get
 class TransitionSystem(assets: AssetManager,
                        private val viewport: Viewport,
                        private val batch: SpriteBatch,
-                       private val callback: (Entity) -> Unit) : IteratingSystem(Family.all(Transition::class.java, StateComponent::class.java).get()) {
+                       private val callback: (Entity) -> Unit) : IteratingSystem(Family.all(com.github.dwursteisen.beat.game.components.Transition::class.java, StateComponent::class.java).get()) {
 
     private val shader: ShaderProgram = assets["shaders/transition.frag"]
     private val texture: TextureRegion
@@ -31,7 +31,7 @@ class TransitionSystem(assets: AssetManager,
 
 
     private val state: ComponentMapper<StateComponent> = get()
-    private val transition: ComponentMapper<Transition> = get()
+    private val transition: ComponentMapper<com.github.dwursteisen.beat.game.components.Transition> = get()
 
     private val tmp = Vector3()
     private val tmp2 = Vector3()

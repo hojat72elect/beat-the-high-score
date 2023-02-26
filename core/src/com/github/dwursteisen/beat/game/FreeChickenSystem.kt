@@ -8,7 +8,7 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.g2d.ParticleEffectPool
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
-import com.github.dwursteisen.beat.components.Position
+import com.github.dwursteisen.beat.game.components.Position
 import com.github.dwursteisen.libgdx.ashley.Direction
 import com.github.dwursteisen.libgdx.ashley.get
 
@@ -33,7 +33,7 @@ class FreeChickenParticleSystem(private val batch: SpriteBatch) : IteratingSyste
 
 class FreeChickenSystem : IteratingSystem(all(FreeChicken::class.java).get()) {
 
-    private val position: ComponentMapper<Position> = get()
+    private val position: ComponentMapper<com.github.dwursteisen.beat.game.components.Position> = get()
     private val chicken: ComponentMapper<FreeChicken> = get()
     private val direction: ComponentMapper<Direction> = get()
 
