@@ -14,6 +14,7 @@ import com.badlogic.gdx.physics.box2d.World
 import com.github.dwursteisen.beat.components.Brick
 import com.github.dwursteisen.beat.components.DebugCollision
 import com.github.dwursteisen.beat.components.Debugable
+import com.github.dwursteisen.beat.components.EntityRender
 import com.github.dwursteisen.beat.components.Gate
 import com.github.dwursteisen.beat.components.Position
 import com.github.dwursteisen.libgdx.aseprite.Aseprite

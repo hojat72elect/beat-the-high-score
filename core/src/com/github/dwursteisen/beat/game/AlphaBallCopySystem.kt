@@ -5,6 +5,7 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family
 import com.badlogic.ashley.systems.IteratingSystem
 import com.github.dwursteisen.beat.components.BallCopy
+import com.github.dwursteisen.beat.components.EntityRender
 import com.github.dwursteisen.libgdx.ashley.get
 
 class AlphaBallCopySystem : IteratingSystem(Family.all(BallCopy::class.java).get()) {

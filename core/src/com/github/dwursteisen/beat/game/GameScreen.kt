@@ -52,6 +52,7 @@ import com.github.dwursteisen.beat.components.Cloud
 import com.github.dwursteisen.beat.components.DeadZone
 import com.github.dwursteisen.beat.components.DebugCollision
 import com.github.dwursteisen.beat.components.Debugable
+import com.github.dwursteisen.beat.components.EntityRender
 import com.github.dwursteisen.beat.components.Gate
 import com.github.dwursteisen.beat.components.Hitbox
 import com.github.dwursteisen.beat.components.MapLayer
@@ -110,15 +111,6 @@ val NO_SLICE_ANIMATION = AnimationSlice(0f)
 
 // --- RENDERING --- //
 class Animated(var animation: Animation<TextureRegion> = NO_ANIMATION) : Component
-
-class EntityRender(
-    var texture: TextureRegion = NO_TEXTURE,
-    val zLevel: Int = 0,
-    var enabled: Boolean = true,
-    val offset: Vector2 = Vector2(),
-    var hFlip: Boolean = false,
-    var alpha: Float = 1f
-) : Component
 
 class GameScreen(private val assets: AssetManager, var levelName: String = "level0.tmx") :
     ScreenAdapter() {
