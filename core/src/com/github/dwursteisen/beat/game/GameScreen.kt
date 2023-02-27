@@ -43,6 +43,7 @@ import com.badlogic.gdx.utils.viewport.Viewport
 import com.github.dwursteisen.beat.BeatTheHighScore
 import com.github.dwursteisen.beat.extensions.BrickProperties
 import com.github.dwursteisen.beat.extensions.TiledProperties
+import com.github.dwursteisen.beat.extensions.pickOne
 import com.github.dwursteisen.beat.extensions.runLater
 import com.github.dwursteisen.beat.game.components.Animated
 import com.github.dwursteisen.beat.game.components.AnimatedHitBox

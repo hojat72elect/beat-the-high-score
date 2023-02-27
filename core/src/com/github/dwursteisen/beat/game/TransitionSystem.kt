@@ -15,10 +15,17 @@ import com.github.dwursteisen.libgdx.aseprite.Aseprite
 import com.github.dwursteisen.libgdx.ashley.StateComponent
 import com.github.dwursteisen.libgdx.ashley.get
 
-class TransitionSystem(assets: AssetManager,
-                       private val viewport: Viewport,
-                       private val batch: SpriteBatch,
-                       private val callback: (Entity) -> Unit) : IteratingSystem(Family.all(com.github.dwursteisen.beat.game.components.Transition::class.java, StateComponent::class.java).get()) {
+class TransitionSystem(
+    assets: AssetManager,
+    private val viewport: Viewport,
+    private val batch: SpriteBatch,
+    private val callback: (Entity) -> Unit
+) : IteratingSystem(
+    Family.all(
+        Transition::class.java,
+        StateComponent::class.java
+    ).get()
+) {
 
     private val shader: ShaderProgram = assets["shaders/transition.frag"]
     private val texture: TextureRegion
@@ -31,7 +38,7 @@ class TransitionSystem(assets: AssetManager,
 
 
     private val state: ComponentMapper<StateComponent> = get()
-    private val transition: ComponentMapper<com.github.dwursteisen.beat.game.components.Transition> = get()
+    private val transition: ComponentMapper<Transition> = get()
 
     private val tmp = Vector3()
     private val tmp2 = Vector3()
@@ -58,9 +65,9 @@ class TransitionSystem(assets: AssetManager,
 
         if (enabled) {
             val percent = if (wayIn) {
-                Math.min(1f, time / duration)
+                1f.coerceAtMost(time / duration)
             } else {
-                Math.max(0f, 1 - time / duration)
+                0f.coerceAtLeast(1 - time / duration)
             }
 
             shader.begin()

@@ -4,7 +4,7 @@ import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family.all
 import com.badlogic.gdx.assets.AssetManager
-import com.badlogic.gdx.math.MathUtils
+import com.github.dwursteisen.beat.extensions.pickOne
 import com.github.dwursteisen.beat.game.components.Animated
 import com.github.dwursteisen.beat.game.components.Player
 import com.github.dwursteisen.libgdx.aseprite.Aseprite
@@ -15,20 +15,15 @@ import com.github.dwursteisen.libgdx.ashley.StateComponent
 import com.github.dwursteisen.libgdx.ashley.StateMachineSystem
 import com.github.dwursteisen.libgdx.ashley.get
 
-fun <T> List<T>.pickOne(): T {
-    val index = MathUtils.random(this.size - 1)
-    return this.elementAt(index)
-}
-
 class PlayerSystem(eventBus: EventBus, val assets: AssetManager) :
-    StateMachineSystem(eventBus, all(com.github.dwursteisen.beat.game.components.Player::class.java).get()) {
-    private val animation: ComponentMapper<com.github.dwursteisen.beat.game.components.Animated> = get()
+    StateMachineSystem(eventBus, all(Player::class.java).get()) {
+    private val animation: ComponentMapper<Animated> = get()
     private val state: ComponentMapper<StateComponent> = get()
 
     private val idles = listOf("idle", "idle3")
 
     override fun describeMachine() {
-        val IDLE = object : EntityState() {
+        val idle = object : EntityState() {
             override fun enter(entity: Entity, machine: StateMachineSystem, eventData: EventData) {
                 val chicken: Aseprite = assets["sheets/chicken"]
                 val anim = if (eventData.event == GameEvent.Player.Touch.id) {
@@ -49,7 +44,7 @@ class PlayerSystem(eventBus: EventBus, val assets: AssetManager) :
             }
         }
 
-        val MOVE = object : EntityState() {
+        val move = object : EntityState() {
             override fun enter(entity: Entity, machine: StateMachineSystem, eventData: EventData) {
                 // chose an random animation
                 val chicken: Aseprite = assets["sheets/chicken"]
@@ -71,29 +66,29 @@ class PlayerSystem(eventBus: EventBus, val assets: AssetManager) :
             }
         }
 
-        startWith(IDLE)
-        onState(IDLE).on(GameEvent.Player.Idle.id, GameEvent.Player.Touch.id) { entity, event ->
-            go(IDLE, entity, event)
+        startWith(idle)
+        onState(idle).on(GameEvent.Player.Idle.id, GameEvent.Player.Touch.id) { entity, event ->
+            go(idle, entity, event)
         }
 
-        onState(IDLE).on(EVENT_KEY) { entity, event ->
-            go(MOVE, entity, event)
+        onState(idle).on(EVENT_KEY) { entity, event ->
+            go(move, entity, event)
         }
 
-        onState(MOVE).on(EVENT_KEY_UP) { entity, event ->
-            go(IDLE, entity, event)
+        onState(move).on(EVENT_KEY_UP) { entity, event ->
+            go(idle, entity, event)
         }
 
-        onState(IDLE).on(EVENT_TOUCHED) { entity, event ->
-            go(MOVE, entity, event)
+        onState(idle).on(EVENT_TOUCHED) { entity, event ->
+            go(move, entity, event)
         }
 
-        onState(MOVE).on(EVENT_SLIDE) { entity, event ->
-            go(IDLE, entity, event)
+        onState(move).on(EVENT_SLIDE) { entity, event ->
+            go(idle, entity, event)
         }
 
-        onState(MOVE).on(GameEvent.Player.Touch.id) { entity, event ->
-            go(MOVE, entity, event)
+        onState(move).on(GameEvent.Player.Touch.id) { entity, event ->
+            go(move, entity, event)
         }
     }
 }

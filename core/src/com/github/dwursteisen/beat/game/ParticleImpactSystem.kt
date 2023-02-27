@@ -18,14 +18,16 @@ class ParticleImpactSystem(
     var enabled: Boolean = true
 ) : IteratingSystem(
     Family.all(
-        com.github.dwursteisen.beat.game.components.ParticleEntity::class.java
+        ParticleEntity::class.java
     ).get()
 ) {
 
-    private val particle: ComponentMapper<com.github.dwursteisen.beat.game.components.ParticleEntity> = get()
-    private val position: ComponentMapper<com.github.dwursteisen.beat.game.components.Position> = get()
+    private val particle: ComponentMapper<ParticleEntity> =
+        get()
+    private val position: ComponentMapper<Position> =
+        get()
 
-    fun ParticleEffect.setPosition(v: Vector2) {
+    private fun ParticleEffect.setPosition(v: Vector2) {
         this.setPosition(v.x, v.y)
     }
 

@@ -10,16 +10,27 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.github.dwursteisen.beat.extensions.between
+import com.github.dwursteisen.beat.game.components.Debuggable
+import com.github.dwursteisen.beat.game.components.Player
+import com.github.dwursteisen.beat.game.components.PlayerTouch
+import com.github.dwursteisen.beat.game.components.Position
+import com.github.dwursteisen.beat.game.components.ShapeToRender
 import com.github.dwursteisen.libgdx.ashley.get
 import com.github.dwursteisen.libgdx.ashley.removeAllWith
 import com.github.dwursteisen.libgdx.v2
 import ktx.ashley.entity
 
 class PlayerControlSystem(private val viewport: Viewport) :
-    IteratingSystem(Family.all(com.github.dwursteisen.beat.game.components.Player::class.java, com.github.dwursteisen.beat.game.components.Position::class.java).get()) {
+    IteratingSystem(
+        Family.all(
+            Player::class.java,
+            Position::class.java
+        ).get()
+    ) {
 
-    private val player: ComponentMapper<com.github.dwursteisen.beat.game.components.Player> = get()
-    private val position: ComponentMapper<com.github.dwursteisen.beat.game.components.Position> = get()
+    private val player: ComponentMapper<Player> = get()
+    private val position: ComponentMapper<Position> =
+        get()
     private val size: ComponentMapper<Size> = get()
 
     private val origin = Vector2()
@@ -43,11 +54,13 @@ class PlayerControlSystem(private val viewport: Viewport) :
                 current.set(origin)
 
                 engine.entity {
-                    entity.add(com.github.dwursteisen.beat.game.components.Position(position = origin)).add(
-                        com.github.dwursteisen.beat.game.components.PlayerTouch()
-                    ).add(com.github.dwursteisen.beat.game.components.Debuggable()).add(Size(4f v2 4f))
+                    entity.add(Position(position = origin))
                         .add(
-                            com.github.dwursteisen.beat.game.components.ShapeToRender(
+                            PlayerTouch()
+                        ).add(Debuggable())
+                        .add(Size(4f v2 4f))
+                        .add(
+                            ShapeToRender(
                                 type = ShapeType.Circle,
                                 color = Color.WHITE
                             )
@@ -55,11 +68,13 @@ class PlayerControlSystem(private val viewport: Viewport) :
                 }
 
                 engine.entity {
-                    entity.add(com.github.dwursteisen.beat.game.components.Position(position = current)).add(
-                        com.github.dwursteisen.beat.game.components.PlayerTouch()
-                    ).add(com.github.dwursteisen.beat.game.components.Debuggable()).add(Size(4f v2 4f))
+                    entity.add(Position(position = current))
                         .add(
-                            com.github.dwursteisen.beat.game.components.ShapeToRender(
+                            PlayerTouch()
+                        ).add(Debuggable())
+                        .add(Size(4f v2 4f))
+                        .add(
+                            ShapeToRender(
                                 type = ShapeType.Circle,
                                 color = Color.WHITE
                             )
@@ -77,7 +92,7 @@ class PlayerControlSystem(private val viewport: Viewport) :
 
         } else {
             if (movingByTouch) {
-                engine.removeAllWith(com.github.dwursteisen.beat.game.components.PlayerTouch::class.java)
+                engine.removeAllWith(PlayerTouch::class.java)
                 movingByTouch = false
             }
             pEntity[player].direction.x = 0f

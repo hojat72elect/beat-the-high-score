@@ -11,12 +11,12 @@ import com.github.dwursteisen.libgdx.ashley.Rotation
 import com.github.dwursteisen.libgdx.ashley.get
 import com.github.dwursteisen.libgdx.ashley.getNullable
 
-class RenderSystem(val batch: SpriteBatch) : IteratingSystem(all(com.github.dwursteisen.beat.game.components.EntityRender::class.java).get()) {
+class RenderSystem(val batch: SpriteBatch) : IteratingSystem(all(EntityRender::class.java).get()) {
 
-    var toRender = mutableListOf<Entity>()
+    private var toRender = mutableListOf<Entity>()
 
-    private val renderMapper: ComponentMapper<com.github.dwursteisen.beat.game.components.EntityRender> = get()
-    private val position: ComponentMapper<com.github.dwursteisen.beat.game.components.Position> = get()
+    private val renderMapper: ComponentMapper<EntityRender> = get()
+    private val position: ComponentMapper<Position> = get()
     private val size: ComponentMapper<Size> = get()
     private val rotation: ComponentMapper<Rotation> = get()
 
@@ -57,12 +57,14 @@ class RenderSystem(val batch: SpriteBatch) : IteratingSystem(all(com.github.dwur
                     (position.x + offset.x) to (size.x)
                 }
                 batch.setColor(1f, 1f, 1f, entityRender.alpha)
-                batch.draw(entityRender.texture,
-                        x, position.y + offset.y,
-                        originX, originY,
-                        sizeX, size.y,
-                        1f, 1f,
-                        degree)
+                batch.draw(
+                    entityRender.texture,
+                    x, position.y + offset.y,
+                    originX, originY,
+                    sizeX, size.y,
+                    1f, 1f,
+                    degree
+                )
             }
         }
         batch.end()
