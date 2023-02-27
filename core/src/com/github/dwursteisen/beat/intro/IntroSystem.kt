@@ -12,20 +12,23 @@ import com.github.dwursteisen.beat.game.components.Animated
 import com.github.dwursteisen.beat.game.components.EntityRender
 import com.github.dwursteisen.beat.game.components.Position
 import com.github.dwursteisen.beat.game.Size
+import com.github.dwursteisen.beat.intro.components.Intro
 import com.github.dwursteisen.libgdx.aseprite.Aseprite
 import com.github.dwursteisen.libgdx.ashley.StateComponent
 import com.github.dwursteisen.libgdx.ashley.get
 import org.apache.commons.lang3.text.WordUtils
+import kotlin.math.roundToInt
 
-class IntroSystem(assetManager: AssetManager) : IteratingSystem(Family.all(Intro::class.java).get()) {
+class IntroSystem(assetManager: AssetManager) :
+    IteratingSystem(Family.all(Intro::class.java).get()) {
 
     private val spritesData: Aseprite = assetManager["sheets/intro"]
 
-    private val animation: ComponentMapper<com.github.dwursteisen.beat.game.components.Animated> = get()
+    private val animation: ComponentMapper<Animated> = get()
     private val state: ComponentMapper<StateComponent> = get()
     private val textRender: ComponentMapper<TextRender> = get()
     private val size: ComponentMapper<Size> = get()
-    private val position: ComponentMapper<com.github.dwursteisen.beat.game.components.Position> = get()
+    private val position: ComponentMapper<Position> = get()
 
     private var index = -1
 
@@ -36,16 +39,16 @@ class IntroSystem(assetManager: AssetManager) : IteratingSystem(Family.all(Intro
         val i18n: I18NBundle = assetManager["i18n/messages"]
 
         actions = listOf(
-                Action.Text(i18n["intro.fox.line1"], this),
-                Action.Text(i18n["intro.fox.line2"], this),
-                Action.Anim("fox", this),
-                Action.Text(i18n["intro.kidnapping.line1"], this),
-                Action.Anim("kidnapping", this),
-                Action.Text(i18n["intro.chicken.line1"], this),
-                Action.Text(i18n["intro.chicken.line2"], this),
-                Action.Anim("chicken", this),
-                Action.Text(i18n["intro.end.line1"], this),
-                Action.Text(i18n["intro.end.line2"], this)
+            Action.Text(i18n["intro.fox.line1"], this),
+            Action.Text(i18n["intro.fox.line2"], this),
+            Action.Anim("fox", this),
+            Action.Text(i18n["intro.kidnapping.line1"], this),
+            Action.Anim("kidnapping", this),
+            Action.Text(i18n["intro.chicken.line1"], this),
+            Action.Text(i18n["intro.chicken.line2"], this),
+            Action.Anim("chicken", this),
+            Action.Text(i18n["intro.end.line1"], this),
+            Action.Text(i18n["intro.end.line2"], this)
         )
     }
 
@@ -67,7 +70,7 @@ class IntroSystem(assetManager: AssetManager) : IteratingSystem(Family.all(Intro
 
             override fun processEntity(entity: Entity, deltaTime: Float) {
                 val t = entity[parent.state].time
-                val length = Math.round((t / (txt.length * 0.1f)) * txt.length)
+                val length = ((t / (txt.length * 0.1f)) * txt.length).roundToInt()
                 val nbLetters = MathUtils.clamp(length, 0, txt.length)
                 entity[parent.textRender].text = txt.take(nbLetters)
             }
@@ -86,8 +89,8 @@ class IntroSystem(assetManager: AssetManager) : IteratingSystem(Family.all(Intro
             val action = actions[++index]
             when (action) {
                 is Action.Text -> {
-                    entity.remove(com.github.dwursteisen.beat.game.components.Animated::class.java)
-                    entity.remove(com.github.dwursteisen.beat.game.components.EntityRender::class.java)
+                    entity.remove(Animated::class.java)
+                    entity.remove(EntityRender::class.java)
                     entity.add(TextRender("", scale = 1 / 4f))
 
                     entity[position].position.set(-128f * 0.3f, -56f)
@@ -95,8 +98,8 @@ class IntroSystem(assetManager: AssetManager) : IteratingSystem(Family.all(Intro
                 }
                 is Action.Anim -> {
                     entity.remove(TextRender::class.java)
-                    entity.add(com.github.dwursteisen.beat.game.components.Animated())
-                    entity.add(com.github.dwursteisen.beat.game.components.EntityRender())
+                    entity.add(Animated())
+                    entity.add(EntityRender())
                     entity[position].position.set(-128f * 0.5f, -192f * 0.5f)
                     entity[size].size.set(128f, 192f)
                     entity[animation].animation = spritesData[action.name]

@@ -24,6 +24,7 @@ import com.badlogic.gdx.utils.viewport.Viewport
 import com.github.dwursteisen.beat.BeatTheHighScore
 import com.github.dwursteisen.beat.game.components.Position
 import com.github.dwursteisen.beat.game.*
+import com.github.dwursteisen.beat.intro.components.Intro
 import com.github.dwursteisen.libgdx.aseprite.Aseprite
 import com.github.dwursteisen.libgdx.ashley.StateComponent
 import com.github.dwursteisen.libgdx.ashley.StateSystem
@@ -32,7 +33,6 @@ import ktx.ashley.entity
 import ktx.log.debug
 import ktx.log.info
 
-class Intro : Component
 class TextRender(
     var text: String = "",
     var color: Color = Color.WHITE,
