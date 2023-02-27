@@ -1,11 +1,6 @@
 package com.github.dwursteisen.beat.title
 
-import com.badlogic.ashley.core.Component
-import com.badlogic.ashley.core.ComponentMapper
-import com.badlogic.ashley.core.Entity
-import com.badlogic.ashley.core.Family.all
 import com.badlogic.ashley.core.PooledEngine
-import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.ScreenAdapter
@@ -17,7 +12,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.maps.tiled.TiledMap
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer
 import com.badlogic.gdx.math.Interpolation
-import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.scenes.scene2d.InputEvent
 import com.badlogic.gdx.scenes.scene2d.Stage
 import com.badlogic.gdx.scenes.scene2d.actions.DelayAction
@@ -29,41 +23,25 @@ import com.badlogic.gdx.utils.viewport.FitViewport
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.github.dwursteisen.beat.BeatTheHighScore
-import com.github.dwursteisen.beat.extensions.invoke
-import com.github.dwursteisen.beat.game.*
+import com.github.dwursteisen.beat.game.Config
+import com.github.dwursteisen.beat.game.RenderSystem
+import com.github.dwursteisen.beat.game.Size
+import com.github.dwursteisen.beat.game.TransitionSystem
+import com.github.dwursteisen.beat.game.components.EntityRender
+import com.github.dwursteisen.beat.game.components.Position
+import com.github.dwursteisen.beat.game.components.Transition
+import com.github.dwursteisen.beat.game.screenHeight
+import com.github.dwursteisen.beat.game.screenWidth
 import com.github.dwursteisen.beat.options.centerCamera
 import com.github.dwursteisen.libgdx.aseprite.Aseprite
 import com.github.dwursteisen.libgdx.ashley.StateComponent
 import com.github.dwursteisen.libgdx.ashley.StateSystem
-import com.github.dwursteisen.libgdx.ashley.get
 import com.github.dwursteisen.libgdx.v2
 import ktx.ashley.entity
 import ktx.log.info
 import ktx.scene2d.KVerticalGroup
 import ktx.scene2d.textButton
 import ktx.scene2d.verticalGroup
-
-class Title(val target: Vector2) : Component
-class TitleSystem : IteratingSystem(all(Title::class.java).get()) {
-    private val duration = 1f
-    private val state: ComponentMapper<StateComponent> = get()
-    private val render: ComponentMapper<com.github.dwursteisen.beat.game.components.EntityRender> = get()
-    private val size: ComponentMapper<Size> = get()
-    private val position: ComponentMapper<com.github.dwursteisen.beat.game.components.Position> = get()
-    private val title: ComponentMapper<Title> = get()
-
-    override fun processEntity(entity: Entity, deltaTime: Float) {
-        val alpha = Interpolation.bounceOut.invoke(Math.min(duration, entity[state].time / duration))
-        val w = entity[render].texture.regionWidth * alpha
-        val h = entity[render].texture.regionHeight * alpha
-
-        entity[size].size.set(w, h)
-
-        val x = entity[title].target.x - w * 0.5f
-        val y = entity[title].target.y - h * 0.5f
-        entity[position].position.set(x, y)
-    }
-}
 
 class TitleScreen(private val assetManager: AssetManager) : ScreenAdapter() {
 
@@ -114,10 +92,10 @@ class TitleScreen(private val assetManager: AssetManager) : ScreenAdapter() {
         engine.entity {
 
             entity.add(StateComponent())
-                    .add(Title(128 * 0.5 v2 screenHeight - logo.regionHeight * 0.5f - 5f))
-                    .add(com.github.dwursteisen.beat.game.components.Position(0 v2 0))
-                    .add(Size(0 v2 0))
-                    .add(com.github.dwursteisen.beat.game.components.EntityRender(logo))
+                .add(Title(128 * 0.5 v2 screenHeight - logo.regionHeight * 0.5f - 5f))
+                .add(Position(0 v2 0))
+                .add(Size(0 v2 0))
+                .add(EntityRender(logo))
         }
         transition = false
 
@@ -172,7 +150,7 @@ class TitleScreen(private val assetManager: AssetManager) : ScreenAdapter() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
             engine.entity {
                 entity.add(StateComponent())
-                        .add(com.github.dwursteisen.beat.game.components.Transition(wayIn = true))
+                    .add(Transition(wayIn = true))
             }
         }
 
@@ -187,7 +165,7 @@ class TitleScreen(private val assetManager: AssetManager) : ScreenAdapter() {
         stage.act()
         stage.draw()
 
-        engine.update(Math.min(delta, 1 / 60f))
+        engine.update(delta.coerceAtMost(1 / 60f))
     }
 
     override fun resume() {
