@@ -14,6 +14,7 @@ import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.I18NBundle
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.github.dwursteisen.beat.BeatTheHighScore
+import com.github.dwursteisen.beat.extensions.asGdx
 import com.github.dwursteisen.beat.extensions.centerCamera
 import com.github.dwursteisen.beat.game.Config
 import com.github.dwursteisen.beat.game.screenHeight
@@ -28,12 +29,8 @@ import ktx.scene2d.table
 import ktx.scene2d.textButton
 import com.badlogic.gdx.utils.Array as GdxArray
 
-inline fun <reified T> Collection<T>.asGdx(): GdxArray<T> {
-    return GdxArray(toTypedArray())
-}
 
 class OptionsScreen(assetManager: AssetManager) : ScreenAdapter() {
-
 
     private val bundle: I18NBundle = assetManager["i18n/messages"]
 
@@ -65,7 +62,8 @@ class OptionsScreen(assetManager: AssetManager) : ScreenAdapter() {
                     addToggle(bundle["options.music"], { Config.music = it }, { Config.music })
 
                     // -- behaviors -- //
-                    addSelect(bundle["options.interpolation"],
+                    addSelect(
+                        bundle["options.interpolation"],
                         { Config.interpolation = it },
                         { Config.interpolation },
                         mapOf(
@@ -100,7 +98,8 @@ class OptionsScreen(assetManager: AssetManager) : ScreenAdapter() {
                         { Config.customFont = it },
                         { Config.customFont })
                     addToggle(bundle["options.shaders"], { Config.shader = it }, { Config.shader })
-                    addSelect(bundle["options.transitions"],
+                    addSelect(
+                        bundle["options.transitions"],
                         { Config.transitions = it },
                         { Config.transitions },
                         mapOf(
@@ -110,7 +109,8 @@ class OptionsScreen(assetManager: AssetManager) : ScreenAdapter() {
                         ),
                         "sheets/transition2"
                     )
-                    addSelect(bundle["options.credit"],
+                    addSelect(
+                        bundle["options.credit"],
                         { Config.credit = it },
                         { Config.credit },
                         mapOf(
@@ -123,7 +123,8 @@ class OptionsScreen(assetManager: AssetManager) : ScreenAdapter() {
                         bundle["options.sprites"],
                         { Config.sprites = it },
                         { Config.sprites })
-                    addSelect(bundle["options.viewport"],
+                    addSelect(
+                        bundle["options.viewport"],
                         { Config.viewport = it },
                         { Config.viewport },
                         mapOf(
