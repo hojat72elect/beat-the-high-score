@@ -1,6 +1,5 @@
 package com.github.dwursteisen.beat.intro
 
-import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.PooledEngine
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.InputAdapter
@@ -27,6 +26,7 @@ import com.github.dwursteisen.beat.game.RenderSystem
 import com.github.dwursteisen.beat.game.Size
 import com.github.dwursteisen.beat.game.components.Position
 import com.github.dwursteisen.beat.intro.components.Intro
+import com.github.dwursteisen.beat.intro.components.TapToSkip
 import com.github.dwursteisen.beat.intro.components.TextRender
 import com.github.dwursteisen.libgdx.aseprite.Aseprite
 import com.github.dwursteisen.libgdx.ashley.StateComponent
@@ -36,7 +36,6 @@ import ktx.ashley.entity
 import ktx.log.debug
 import ktx.log.info
 
-class TapToSkip(val txt: String) : Component
 class IntroScreen(private val assetsManager: AssetManager) : ScreenAdapter() {
 
     private lateinit var engine: PooledEngine
