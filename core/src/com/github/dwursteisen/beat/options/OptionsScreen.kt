@@ -29,7 +29,6 @@ import ktx.scene2d.table
 import ktx.scene2d.textButton
 import com.badlogic.gdx.utils.Array as GdxArray
 
-
 class OptionsScreen(assetManager: AssetManager) : ScreenAdapter() {
 
     private val bundle: I18NBundle = assetManager["i18n/messages"]

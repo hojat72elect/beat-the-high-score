@@ -39,10 +39,7 @@ class TextRender(
     var scale: Float = 1f,
     var halign: Int = Align.left
 ) : Component
-
 class TapToSkip(val txt: String) : Component
-
-
 class IntroScreen(private val assetsManager: AssetManager) : ScreenAdapter() {
 
     private lateinit var engine: PooledEngine
@@ -61,7 +58,7 @@ class IntroScreen(private val assetsManager: AssetManager) : ScreenAdapter() {
 
         engine.entity {
             entity.add(StateComponent())
-                .add(com.github.dwursteisen.beat.game.components.Position(-128f * 0.5f v2 -192f * 0.5f))
+                .add(Position(-128f * 0.5f v2 -192f * 0.5f))
                 .add(Size(128f v2 192f))
                 .add(Intro())
         }
@@ -157,7 +154,7 @@ class IntroScreen(private val assetsManager: AssetManager) : ScreenAdapter() {
                 engine.entity {
                     val i18n: I18NBundle = assetsManager["i18n/messages"]
                     entity.add(StateComponent())
-                        .add(com.github.dwursteisen.beat.game.components.Position(-128f * 0.5f v2 -110f))
+                        .add(Position(-128f * 0.5f v2 -110f))
                         .add(Size(128f v2 192f))
                         .add(TextRender(halign = Align.center, scale = 1 / 4f))
                         .add(TapToSkip(i18n["intro.tap.to.skip"]))
