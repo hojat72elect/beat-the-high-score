@@ -23,6 +23,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport
 import com.badlogic.gdx.utils.viewport.ScreenViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.github.dwursteisen.beat.BeatTheHighScore
+import com.github.dwursteisen.beat.extensions.centerCamera
 import com.github.dwursteisen.beat.game.Config
 import com.github.dwursteisen.beat.game.RenderSystem
 import com.github.dwursteisen.beat.game.Size
@@ -32,7 +33,6 @@ import com.github.dwursteisen.beat.game.components.Position
 import com.github.dwursteisen.beat.game.components.Transition
 import com.github.dwursteisen.beat.game.screenHeight
 import com.github.dwursteisen.beat.game.screenWidth
-import com.github.dwursteisen.beat.options.centerCamera
 import com.github.dwursteisen.libgdx.aseprite.Aseprite
 import com.github.dwursteisen.libgdx.ashley.StateComponent
 import com.github.dwursteisen.libgdx.ashley.StateSystem

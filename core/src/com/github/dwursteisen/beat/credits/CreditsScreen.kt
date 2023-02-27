@@ -21,11 +21,11 @@ import com.badlogic.gdx.utils.I18NBundle
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.github.dwursteisen.beat.BeatTheHighScore
-import com.github.dwursteisen.beat.game.Config
+import com.github.dwursteisen.beat.extensions.centerCamera
 import com.github.dwursteisen.beat.extensions.invoke
+import com.github.dwursteisen.beat.game.Config
 import com.github.dwursteisen.beat.game.screenHeight
 import com.github.dwursteisen.beat.game.screenWidth
-import com.github.dwursteisen.beat.options.centerCamera
 import ktx.log.info
 import ktx.scene2d.container
 import ktx.scene2d.label
