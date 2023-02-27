@@ -89,6 +89,9 @@ const val hitTime = 0.2f
 const val screenWidth = 128f
 const val screenHeight = 224f
 
+/**
+ * Never try to extract this class to a separate file, you will face runtime error.
+ */
 class Size(var size: Vector2) : Component
 
 val NO_TEXTURE = TextureRegion()
@@ -602,7 +605,7 @@ class GameScreen(private val assets: AssetManager, var levelName: String = "leve
         resume()
     }
 
-    fun createBox2DRect(position: Vector2, size: Vector2): Body {
+    private fun createBox2DRect(position: Vector2, size: Vector2): Body {
 
         val groundBodyDef = BodyDef()
         groundBodyDef.position.set(position)
