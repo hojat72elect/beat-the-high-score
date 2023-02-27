@@ -62,8 +62,8 @@ import com.github.dwursteisen.beat.game.components.Position
 import com.github.dwursteisen.beat.game.components.ShapeToRender
 import com.github.dwursteisen.beat.game.components.StageComponent
 import com.github.dwursteisen.beat.game.components.Transition
-import com.github.dwursteisen.beat.intro.TextRender
 import com.github.dwursteisen.beat.intro.TextRenderSystem
+import com.github.dwursteisen.beat.intro.components.TextRender
 import com.github.dwursteisen.libgdx.aseprite.Aseprite
 import com.github.dwursteisen.libgdx.aseprite.AsepriteJson
 import com.github.dwursteisen.libgdx.ashley.Event

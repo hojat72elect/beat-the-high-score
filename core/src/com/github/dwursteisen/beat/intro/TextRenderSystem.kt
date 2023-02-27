@@ -8,12 +8,13 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.github.dwursteisen.beat.game.components.Position
 import com.github.dwursteisen.beat.game.Size
+import com.github.dwursteisen.beat.intro.components.TextRender
 import com.github.dwursteisen.libgdx.ashley.get
 
 class TextRenderSystem(private val batch: SpriteBatch, private val font: BitmapFont) : IteratingSystem(Family.all(TextRender::class.java).get()) {
 
     private val text: ComponentMapper<TextRender> = get()
-    private val position: ComponentMapper<com.github.dwursteisen.beat.game.components.Position> = get()
+    private val position: ComponentMapper<Position> = get()
     private val size: ComponentMapper<Size> = get()
 
 
