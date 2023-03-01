@@ -254,7 +254,7 @@ class AsepriteLoader(resoler: FileHandleResolver) :
         fileName: String?,
         file: FileHandle?,
         parameter: AsepriteParameter?
-    ): Array<AssetDescriptor<out Any>>? {
+    ): Array<AssetDescriptor<out Any>> {
         val result = Array<AssetDescriptor<out Any>>(2)
         result.add(
             AssetDescriptor(

@@ -8,12 +8,13 @@ import com.badlogic.gdx.assets.loaders.FileHandleResolver
 import com.badlogic.gdx.files.FileHandle
 import com.badlogic.gdx.utils.Array
 import com.badlogic.gdx.utils.Json
+import com.github.dwursteisen.beat.extensions.fromJson
 
 class AsepriteJsonParameter : AssetLoaderParameters<AsepriteJson>()
-class AsepriteJsonLoader(resoler: FileHandleResolver) : AsynchronousAssetLoader<AsepriteJson, AsepriteJsonParameter>(resoler) {
+class AsepriteJsonLoader(resolver: FileHandleResolver) : AsynchronousAssetLoader<AsepriteJson, AsepriteJsonParameter>(resolver) {
 
     private val json = Json().apply {
-        setIgnoreUnknownFields(true)
+        ignoreUnknownFields = true
     }
 
     private var data: AsepriteJson? = null

@@ -1,14 +1,11 @@
-import org.apache.tools.ant.taskdefs.condition.Os
-
 apply plugin: "kotlin"
 apply plugin: "com.github.dwursteisen.libgdx.aseprite.AsepritePlugin"
 
-
 sourceCompatibility = 1.6
-sourceSets.main.java.srcDirs = [ "src/" ]
+sourceSets.main.java.srcDirs = ["src/"]
 
 project.ext.mainClassName = "com.github.dwursteisen.beat.desktop.DesktopLauncher"
-project.ext.assetsDir = new File("../core/assets");
+project.ext.assetsDir = new File("../core/assets")
 
 task aseprite(type: com.github.dwursteisen.libgdx.aseprite.AsepriteTask, group: "aseprite") {
     json = true
@@ -23,7 +20,6 @@ task aseprite_skin(type: com.github.dwursteisen.libgdx.aseprite.AsepriteTask, gr
     outputDirectory = project.file("../build/skin2d/")
     inputFiles = fileTree("../skin2d/").include("**/*.aseprite")
 }
-
 
 
 task logo_mdpi(type: com.github.dwursteisen.libgdx.aseprite.AsepriteTask, group: "aseprite") {
@@ -90,9 +86,7 @@ task run(dependsOn: classes, type: JavaExec) {
     standardInput = System.in
     workingDir = project.assetsDir
     ignoreExitValue = true
-    
-//    if(Os.isFamily(Os.FAMILY_MAC))
-//        jvmArgs += "-XstartOnFirstThread"
+
 }
 
 task debug(dependsOn: classes, type: JavaExec) {
@@ -107,9 +101,9 @@ task debug(dependsOn: classes, type: JavaExec) {
 task dist(type: Jar) {
     from files(sourceSets.main.output.classesDir)
     from files(sourceSets.main.output.resourcesDir)
-    from {configurations.compile.collect {zipTree(it)}}
-    from files(project.assetsDir);
- 
+    from { configurations.compile.collect { zipTree(it) } }
+    from files(project.assetsDir)
+
     manifest {
         attributes 'Main-Class': project.mainClassName
     }
@@ -125,12 +119,12 @@ eclipse {
 }
 
 task afterEclipseImport(description: "Post processing after project generation", group: "IDE") {
-  doLast {
-    def classpath = new XmlParser().parse(file(".classpath"))
-    new Node(classpath, "classpathentry", [ kind: 'src', path: 'assets' ]);
-    def writer = new FileWriter(file(".classpath"))
-    def printer = new XmlNodePrinter(new PrintWriter(writer))
-    printer.setPreserveWhitespace(true)
-    printer.print(classpath)
-  }
+    doLast {
+        def classpath = new XmlParser().parse(file(".classpath"))
+        new Node(classpath, "classpathentry", [kind: 'src', path: 'assets']);
+        def writer = new FileWriter(file(".classpath"))
+        def printer = new XmlNodePrinter(new PrintWriter(writer))
+        printer.setPreserveWhitespace(true)
+        printer.print(classpath)
+    }
 }
