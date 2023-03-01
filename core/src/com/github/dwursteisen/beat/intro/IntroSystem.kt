@@ -14,7 +14,7 @@ import com.github.dwursteisen.beat.game.components.Position
 import com.github.dwursteisen.beat.game.Size
 import com.github.dwursteisen.beat.intro.components.Intro
 import com.github.dwursteisen.beat.intro.components.TextRender
-import com.github.dwursteisen.libgdx.aseprite.Aseprite
+import com.github.dwursteisen.beat.addons.aseprite.Aseprite
 import com.github.dwursteisen.libgdx.ashley.StateComponent
 import com.github.dwursteisen.libgdx.ashley.get
 import org.apache.commons.lang3.text.WordUtils

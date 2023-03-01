@@ -7,7 +7,7 @@ import com.badlogic.gdx.assets.AssetManager
 import com.github.dwursteisen.beat.extensions.pickOne
 import com.github.dwursteisen.beat.game.components.Animated
 import com.github.dwursteisen.beat.game.components.Player
-import com.github.dwursteisen.libgdx.aseprite.Aseprite
+import com.github.dwursteisen.beat.addons.aseprite.Aseprite
 import com.github.dwursteisen.libgdx.ashley.EntityState
 import com.github.dwursteisen.libgdx.ashley.EventBus
 import com.github.dwursteisen.libgdx.ashley.EventData

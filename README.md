@@ -4,3 +4,9 @@ in Kotlin, so worth additional attention) so I decided to put it in a separate r
 
 The main game is available on <a href="https://play.google.com/store/apps/details?id=com.github.dwursteisen.beat">Google
 Play Store</a> and in here I'm trying to read and understand it as deeply as I can.
+
+Changelog:
+
+1- I have extracted components into specific separate files, so main game class has become smaller/cleaner.
+
+2- I'm going to move code from LibGDX-addons to this codebase.

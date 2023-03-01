@@ -33,7 +33,7 @@ import com.github.dwursteisen.beat.game.components.Position
 import com.github.dwursteisen.beat.game.components.Transition
 import com.github.dwursteisen.beat.game.screenHeight
 import com.github.dwursteisen.beat.game.screenWidth
-import com.github.dwursteisen.libgdx.aseprite.Aseprite
+import com.github.dwursteisen.beat.addons.aseprite.Aseprite
 import com.github.dwursteisen.libgdx.ashley.StateComponent
 import com.github.dwursteisen.libgdx.ashley.StateSystem
 import com.github.dwursteisen.libgdx.v2

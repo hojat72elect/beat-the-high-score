@@ -11,7 +11,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef
 import com.badlogic.gdx.physics.box2d.CircleShape
 import com.badlogic.gdx.physics.box2d.FixtureDef
 import com.badlogic.gdx.physics.box2d.World
-import com.github.dwursteisen.libgdx.aseprite.Aseprite
+import com.github.dwursteisen.beat.addons.aseprite.Aseprite
 import com.github.dwursteisen.libgdx.ashley.*
 import com.github.dwursteisen.libgdx.v2
 import ktx.ashley.entity
