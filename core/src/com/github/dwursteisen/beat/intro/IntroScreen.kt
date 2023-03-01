@@ -31,7 +31,7 @@ import com.github.dwursteisen.beat.intro.components.TextRender
 import com.github.dwursteisen.beat.addons.aseprite.Aseprite
 import com.github.dwursteisen.beat.addons.ashley.StateComponent
 import com.github.dwursteisen.beat.addons.ashley.StateSystem
-import com.github.dwursteisen.libgdx.v2
+import com.github.dwursteisen.beat.addons.core.v2
 import ktx.ashley.entity
 import ktx.log.debug
 import ktx.log.info

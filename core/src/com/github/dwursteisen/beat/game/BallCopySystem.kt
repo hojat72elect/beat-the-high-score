@@ -12,7 +12,7 @@ import com.github.dwursteisen.beat.addons.aseprite.Aseprite
 import com.github.dwursteisen.beat.addons.ashley.Rotation
 import com.github.dwursteisen.beat.addons.ashley.StateComponent
 import com.github.dwursteisen.beat.addons.ashley.get
-import com.github.dwursteisen.libgdx.v2
+import com.github.dwursteisen.beat.addons.core.v2
 import ktx.ashley.entity
 
 class BallCopySystem(private val assets: AssetManager) : IntervalSystem(0.1f) {

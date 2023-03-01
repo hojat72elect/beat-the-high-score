@@ -25,7 +25,7 @@ import com.github.dwursteisen.beat.addons.ashley.StateComponent
 import com.github.dwursteisen.beat.addons.ashley.StateMachineSystem
 import com.github.dwursteisen.beat.addons.ashley.entity
 import com.github.dwursteisen.beat.addons.ashley.get
-import com.github.dwursteisen.libgdx.v2
+import com.github.dwursteisen.beat.addons.core.v2
 import ktx.ashley.entity
 
 operator fun Vector2.component1() = this.x

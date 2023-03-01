@@ -75,7 +75,7 @@ import com.github.dwursteisen.beat.addons.ashley.Rotation
 import com.github.dwursteisen.beat.addons.ashley.StateComponent
 import com.github.dwursteisen.beat.addons.ashley.StateSystem
 import com.github.dwursteisen.beat.addons.ashley.removeAll
-import com.github.dwursteisen.libgdx.v2
+import com.github.dwursteisen.beat.addons.core.v2
 import ktx.ashley.entity
 import ktx.log.info
 import ktx.scene2d.horizontalGroup

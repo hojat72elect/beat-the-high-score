@@ -17,7 +17,7 @@ import com.github.dwursteisen.beat.game.components.Position
 import com.github.dwursteisen.beat.game.components.ShapeToRender
 import com.github.dwursteisen.beat.addons.ashley.get
 import com.github.dwursteisen.beat.addons.ashley.removeAllWith
-import com.github.dwursteisen.libgdx.v2
+import com.github.dwursteisen.beat.addons.core.v2
 import ktx.ashley.entity
 
 class PlayerControlSystem(private val viewport: Viewport) :

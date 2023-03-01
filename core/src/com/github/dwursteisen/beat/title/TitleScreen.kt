@@ -36,7 +36,7 @@ import com.github.dwursteisen.beat.game.screenWidth
 import com.github.dwursteisen.beat.addons.aseprite.Aseprite
 import com.github.dwursteisen.beat.addons.ashley.StateComponent
 import com.github.dwursteisen.beat.addons.ashley.StateSystem
-import com.github.dwursteisen.libgdx.v2
+import com.github.dwursteisen.beat.addons.core.v2
 import ktx.ashley.entity
 import ktx.log.info
 import ktx.scene2d.KVerticalGroup

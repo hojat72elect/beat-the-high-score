@@ -27,7 +27,6 @@ import ktx.scene2d.scrollPane
 import ktx.scene2d.selectBoxOf
 import ktx.scene2d.table
 import ktx.scene2d.textButton
-import com.badlogic.gdx.utils.Array as GdxArray
 
 class OptionsScreen(assetManager: AssetManager) : ScreenAdapter() {
 

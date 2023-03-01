@@ -1,4 +1,4 @@
-package com.github.dwursteisen.libgdx
+package com.github.dwursteisen.beat.addons.core
 
 import kotlin.reflect.KProperty
 
