@@ -11,7 +11,9 @@ import com.badlogic.gdx.utils.Json
 import com.github.dwursteisen.beat.extensions.fromJson
 
 class AsepriteJsonParameter : AssetLoaderParameters<AsepriteJson>()
-class AsepriteJsonLoader(resolver: FileHandleResolver) : AsynchronousAssetLoader<AsepriteJson, AsepriteJsonParameter>(resolver) {
+
+class AsepriteJsonLoader(resolver: FileHandleResolver) :
+    AsynchronousAssetLoader<AsepriteJson, AsepriteJsonParameter>(resolver) {
 
     private val json = Json().apply {
         ignoreUnknownFields = true
@@ -19,15 +21,29 @@ class AsepriteJsonLoader(resolver: FileHandleResolver) : AsynchronousAssetLoader
 
     private var data: AsepriteJson? = null
 
-    override fun loadSync(manager: AssetManager, fileName: String, file: FileHandle, parameter: AsepriteJsonParameter?): AsepriteJson? {
+    override fun loadSync(
+        manager: AssetManager,
+        fileName: String,
+        file: FileHandle,
+        parameter: AsepriteJsonParameter?
+    ): AsepriteJson? {
         val copy = data
         data = null
         return copy
     }
 
-    override fun getDependencies(fileName: String?, file: FileHandle?, parameter: AsepriteJsonParameter?): Array<AssetDescriptor<Any>>? = null
+    override fun getDependencies(
+        fileName: String?,
+        file: FileHandle?,
+        parameter: AsepriteJsonParameter?
+    ): Array<AssetDescriptor<Any>>? = null
 
-    override fun loadAsync(manager: AssetManager, fileName: String, file: FileHandle, parameter: AsepriteJsonParameter?) {
+    override fun loadAsync(
+        manager: AssetManager,
+        fileName: String,
+        file: FileHandle,
+        parameter: AsepriteJsonParameter?
+    ) {
         data = json.fromJson(file)
     }
 

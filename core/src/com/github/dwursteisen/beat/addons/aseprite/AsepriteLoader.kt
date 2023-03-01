@@ -10,9 +10,10 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.Animation
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import com.badlogic.gdx.utils.Array
+import com.github.dwursteisen.beat.extensions.gcd
 
 class AnimationSlice(
-    val frameDuration: Float,
+    private val frameDuration: Float,
     private val keyFrames: Array<AsepriteBound> = Array(),
     private val playMode: Animation.PlayMode = Animation.PlayMode.NORMAL
 ) {
@@ -51,9 +52,6 @@ class AnimationSlice(
 
 
 }
-
-operator fun AsepriteSourceSize.component1() = this.w
-operator fun AsepriteSourceSize.component2() = this.h
 
 class AnimationSlices(parent: Aseprite, val slice: AsepriteSlices) {
 
@@ -231,11 +229,10 @@ class Aseprite(private val texture: Texture, val json: AsepriteJson) {
     fun animationNames() = animationCache.map { it.key }
 }
 
-
 class AsepriteParameter : AssetLoaderParameters<Aseprite>()
 
-class AsepriteLoader(resoler: FileHandleResolver) :
-    AsynchronousAssetLoader<Aseprite, AsepriteParameter>(resoler) {
+class AsepriteLoader(resolver: FileHandleResolver) :
+    AsynchronousAssetLoader<Aseprite, AsepriteParameter>(resolver) {
 
     private var data: Aseprite? = null
 

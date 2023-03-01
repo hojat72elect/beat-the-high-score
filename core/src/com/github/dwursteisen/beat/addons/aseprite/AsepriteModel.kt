@@ -4,16 +4,13 @@ import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.TextureRegion
 import java.math.BigInteger
 
-fun Int.gcd(other: Int): Int {
-    val b1 = BigInteger.valueOf(this.toLong())
-    val b2 = BigInteger.valueOf(other.toLong())
-    val gcd = b1.gcd(b2)
-    return gcd.toInt()
-}
-
-
 open class AsepriteBound(val x: Int = 0, val y: Int = 0, val w: Int = 0, val h: Int = 0)
-open class AsepriteSliceData(val frame: Int = 0, val bounds: AsepriteBound = AsepriteBound())
+
+open class AsepriteSliceData(
+    val frame: Int = 0,
+    val bounds: AsepriteBound = AsepriteBound()
+)
+
 open class AsepriteFrameTag(
     val name: String = "",
     val from: Int = 0,
@@ -46,8 +43,18 @@ open class AsepriteMetaData(
     val slices: List<AsepriteSlices> = emptyList()
 )
 
-open class AsepriteFrameData(val x: Int = 0, val y: Int = 0, val w: Int = 0, val h: Int = 0)
-open class AsepriteSourceSize(val w: Int = 0, val h: Int = 0)
+open class AsepriteFrameData(
+    val x: Int = 0,
+    val y: Int = 0,
+    val w: Int = 0,
+    val h: Int = 0
+)
+
+open class AsepriteSourceSize(val w: Int = 0, val h: Int = 0) {
+    operator fun component1() = w
+    operator fun component2() = h
+}
+
 open class AsepriteFrame(
     val frame: AsepriteFrameData = AsepriteFrameData(),
     val sourceSize: AsepriteSourceSize = AsepriteSourceSize(),
