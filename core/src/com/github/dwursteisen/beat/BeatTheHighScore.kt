@@ -82,7 +82,7 @@ open class BeatTheHighScore : Game() {
         info { "Setting shader" }
         ShaderProgram.pedantic = false
 
-        BeatTheHighScore.game = this
+        game = this
     }
 
     override fun render() {
@@ -100,7 +100,7 @@ open class BeatTheHighScore : Game() {
             isLoaded = assetsManager.update()
             if (isLoaded) {
                 info { "Assets for introduction fully loaded!" }
-                BeatTheHighScore.intro()
+                intro()
             }
             Gdx.gl.glClearColor(0f, 0f, 0f, 1f)
             Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT)
