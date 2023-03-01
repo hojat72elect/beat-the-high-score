@@ -1,6 +1,6 @@
 buildscript {
     ext.kotlinVersion = '1.2.70'
-    ext.libgdx_addons = 'v1.0'
+
 
     repositories {
         mavenLocal()
@@ -12,7 +12,6 @@ buildscript {
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        classpath "com.github.dwursteisen.libgdx-addons:aseprite-plugin:$libgdx_addons"
         classpath 'com.android.tools.build:gradle:3.1.4'
     }
 }
