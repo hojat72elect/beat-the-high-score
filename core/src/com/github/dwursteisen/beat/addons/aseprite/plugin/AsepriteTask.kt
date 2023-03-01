@@ -1,4 +1,4 @@
-package com.github.dwursteisen.libgdx.aseprite
+package com.github.dwursteisen.beat.addons.aseprite.plugin
 
 import org.gradle.api.DefaultTask
 import org.gradle.api.file.FileCollection
@@ -41,7 +41,8 @@ open class AsepriteTask : DefaultTask() {
             val inp = inputFiles?.map {
                 val base = baseDirectory
                 if (base != null) {
-                    val prefix = it.absolutePath.replace(base.absolutePath, "").replaceAfterLast("/", "")
+                    val prefix =
+                        it.absolutePath.replace(base.absolutePath, "").replaceAfterLast("/", "")
                     File(outputDirectory?.absolutePath + prefix + "/" + it.nameWithoutExtension + ".png")
                 } else {
                     File(outputDirectory?.absolutePath + "/" + it.nameWithoutExtension + ".png")
@@ -80,7 +81,8 @@ open class AsepriteTask : DefaultTask() {
     }
 
     private fun invalideAsepritePath(): Nothing {
-        TODO("""Missing aseprite executable path.
+        TODO(
+            """Missing aseprite executable path.
 Please configure it using aseprite.exec property (ie: in your ~/.gradle/gradle.properties)
 aseprite.exec=<path to exec>
 
@@ -91,7 +93,8 @@ aseprite {
 }
 
 
-MacOS specific : point to aseprite located into <aseprite directory>/Aseprite.app/Contents/MacOS/aseprite""")
+MacOS specific : point to aseprite located into <aseprite directory>/Aseprite.app/Contents/MacOS/aseprite"""
+        )
     }
 
     private fun args(aseprite: File, input: File): List<String> {
@@ -138,7 +141,7 @@ MacOS specific : point to aseprite located into <aseprite directory>/Aseprite.ap
 
         }
 
-        if(sheet_pack) {
+        if (sheet_pack) {
             args += "--sheet-pack"
         }
 

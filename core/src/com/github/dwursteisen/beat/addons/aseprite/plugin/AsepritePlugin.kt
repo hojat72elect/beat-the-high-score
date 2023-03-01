@@ -1,4 +1,4 @@
-package com.github.dwursteisen.libgdx.aseprite
+package com.github.dwursteisen.beat.addons.aseprite.plugin
 
 import org.gradle.api.Plugin
 import org.gradle.api.Project
