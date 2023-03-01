@@ -1,4 +1,4 @@
-package com.github.dwursteisen.libgdx.ashley
+package com.github.dwursteisen.beat.addons.ashley
 
 import com.badlogic.ashley.core.Component
 import com.badlogic.ashley.core.ComponentMapper

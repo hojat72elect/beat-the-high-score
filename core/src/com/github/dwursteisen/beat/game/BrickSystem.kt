@@ -12,7 +12,14 @@ import com.badlogic.gdx.physics.box2d.CircleShape
 import com.badlogic.gdx.physics.box2d.FixtureDef
 import com.badlogic.gdx.physics.box2d.World
 import com.github.dwursteisen.beat.addons.aseprite.Aseprite
-import com.github.dwursteisen.libgdx.ashley.*
+import com.github.dwursteisen.beat.addons.ashley.Direction
+import com.github.dwursteisen.beat.addons.ashley.EntityState
+import com.github.dwursteisen.beat.addons.ashley.EventBus
+import com.github.dwursteisen.beat.addons.ashley.EventData
+import com.github.dwursteisen.beat.addons.ashley.Rotation
+import com.github.dwursteisen.beat.addons.ashley.StateComponent
+import com.github.dwursteisen.beat.addons.ashley.StateMachineSystem
+import com.github.dwursteisen.beat.addons.ashley.get
 import com.github.dwursteisen.libgdx.v2
 import ktx.ashley.entity
 import ktx.ashley.hasNot

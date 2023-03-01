@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.github.dwursteisen.beat.game.components.Debuggable
 import com.github.dwursteisen.beat.game.components.Position
-import com.github.dwursteisen.libgdx.ashley.get
+import com.github.dwursteisen.beat.addons.ashley.get
 
 class DebugPositionSystem(private val batch: SpriteBatch) :
     IteratingSystem(

@@ -7,8 +7,8 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.math.MathUtils
 import com.github.dwursteisen.beat.intro.components.TapToSkip
 import com.github.dwursteisen.beat.intro.components.TextRender
-import com.github.dwursteisen.libgdx.ashley.StateComponent
-import com.github.dwursteisen.libgdx.ashley.get
+import com.github.dwursteisen.beat.addons.ashley.StateComponent
+import com.github.dwursteisen.beat.addons.ashley.get
 
 class TapToSkipSystem : IteratingSystem(Family.all(TapToSkip::class.java).get()) {
 

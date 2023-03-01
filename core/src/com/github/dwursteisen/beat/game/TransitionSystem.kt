@@ -12,8 +12,8 @@ import com.badlogic.gdx.math.Vector3
 import com.badlogic.gdx.utils.viewport.Viewport
 import com.github.dwursteisen.beat.game.components.Transition
 import com.github.dwursteisen.beat.addons.aseprite.Aseprite
-import com.github.dwursteisen.libgdx.ashley.StateComponent
-import com.github.dwursteisen.libgdx.ashley.get
+import com.github.dwursteisen.beat.addons.ashley.StateComponent
+import com.github.dwursteisen.beat.addons.ashley.get
 
 class TransitionSystem(
     assets: AssetManager,

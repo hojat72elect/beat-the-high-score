@@ -15,8 +15,8 @@ import com.github.dwursteisen.beat.game.components.Player
 import com.github.dwursteisen.beat.game.components.PlayerTouch
 import com.github.dwursteisen.beat.game.components.Position
 import com.github.dwursteisen.beat.game.components.ShapeToRender
-import com.github.dwursteisen.libgdx.ashley.get
-import com.github.dwursteisen.libgdx.ashley.removeAllWith
+import com.github.dwursteisen.beat.addons.ashley.get
+import com.github.dwursteisen.beat.addons.ashley.removeAllWith
 import com.github.dwursteisen.libgdx.v2
 import ktx.ashley.entity
 

@@ -5,8 +5,8 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family.all
 import com.badlogic.ashley.systems.IteratingSystem
 import com.github.dwursteisen.beat.extensions.invoke
-import com.github.dwursteisen.libgdx.ashley.StateComponent
-import com.github.dwursteisen.libgdx.ashley.get
+import com.github.dwursteisen.beat.addons.ashley.StateComponent
+import com.github.dwursteisen.beat.addons.ashley.get
 
 class MoveSystem : IteratingSystem(all(com.github.dwursteisen.beat.game.components.Move::class.java, com.github.dwursteisen.beat.game.components.Position::class.java, StateComponent::class.java).get()) {
     private val move: ComponentMapper<com.github.dwursteisen.beat.game.components.Move> = get()

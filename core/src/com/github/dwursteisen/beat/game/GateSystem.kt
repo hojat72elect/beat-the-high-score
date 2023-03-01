@@ -5,12 +5,12 @@ import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family.all
 import com.badlogic.gdx.assets.AssetManager
 import com.github.dwursteisen.beat.addons.aseprite.Aseprite
-import com.github.dwursteisen.libgdx.ashley.EntityState
-import com.github.dwursteisen.libgdx.ashley.EventBus
-import com.github.dwursteisen.libgdx.ashley.EventData
-import com.github.dwursteisen.libgdx.ashley.StateComponent
-import com.github.dwursteisen.libgdx.ashley.StateMachineSystem
-import com.github.dwursteisen.libgdx.ashley.get
+import com.github.dwursteisen.beat.addons.ashley.EntityState
+import com.github.dwursteisen.beat.addons.ashley.EventBus
+import com.github.dwursteisen.beat.addons.ashley.EventData
+import com.github.dwursteisen.beat.addons.ashley.StateComponent
+import com.github.dwursteisen.beat.addons.ashley.StateMachineSystem
+import com.github.dwursteisen.beat.addons.ashley.get
 import ktx.ashley.has
 
 class GateSystem(eventBus: EventBus, assets: AssetManager) :

@@ -7,9 +7,9 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.github.dwursteisen.beat.game.components.EntityRender
 import com.github.dwursteisen.beat.game.components.Position
-import com.github.dwursteisen.libgdx.ashley.Rotation
-import com.github.dwursteisen.libgdx.ashley.get
-import com.github.dwursteisen.libgdx.ashley.getNullable
+import com.github.dwursteisen.beat.addons.ashley.Rotation
+import com.github.dwursteisen.beat.addons.ashley.get
+import com.github.dwursteisen.beat.addons.ashley.getNullable
 
 class RenderSystem(val batch: SpriteBatch) : IteratingSystem(all(EntityRender::class.java).get()) {
 

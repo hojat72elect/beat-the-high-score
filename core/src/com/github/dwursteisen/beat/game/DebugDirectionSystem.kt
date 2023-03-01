@@ -7,9 +7,9 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.math.Vector2
-import com.github.dwursteisen.libgdx.ashley.Direction
-import com.github.dwursteisen.libgdx.ashley.get
-import com.github.dwursteisen.libgdx.ashley.getNullable
+import com.github.dwursteisen.beat.addons.ashley.Direction
+import com.github.dwursteisen.beat.addons.ashley.get
+import com.github.dwursteisen.beat.addons.ashley.getNullable
 
 class DebugDirectionSystem(val batch: ShapeRenderer) :
     IteratingSystem(Family.all(com.github.dwursteisen.beat.game.components.Debuggable::class.java, com.github.dwursteisen.beat.game.components.Position::class.java).get()) {

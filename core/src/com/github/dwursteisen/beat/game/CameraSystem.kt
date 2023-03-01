@@ -4,11 +4,14 @@ import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family
 import com.badlogic.gdx.math.MathUtils
-import com.github.dwursteisen.beat.game.components.CameraHolder
-import com.github.dwursteisen.beat.game.components.Position
+import com.github.dwursteisen.beat.addons.ashley.EntityState
+import com.github.dwursteisen.beat.addons.ashley.EventBus
+import com.github.dwursteisen.beat.addons.ashley.EventData
+import com.github.dwursteisen.beat.addons.ashley.StateComponent
+import com.github.dwursteisen.beat.addons.ashley.StateMachineSystem
+import com.github.dwursteisen.beat.addons.ashley.get
 import com.github.dwursteisen.beat.extensions.second
 import com.github.dwursteisen.beat.extensions.seconds
-import com.github.dwursteisen.libgdx.ashley.*
 
 class CameraSystem(eventBus: EventBus) : StateMachineSystem(eventBus, Family.all(com.github.dwursteisen.beat.game.components.CameraHolder::class.java).get()) {
 

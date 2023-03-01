@@ -1,5 +1,6 @@
-package com.github.dwursteisen.libgdx.ashley
+package com.github.dwursteisen.beat.addons.ashley
 
+import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family
 import com.badlogic.ashley.systems.IteratingSystem
@@ -12,9 +13,9 @@ import com.badlogic.ashley.systems.IteratingSystem
  */
 class StateSystem : IteratingSystem(Family.all(StateComponent::class.java).get()) {
 
-    private val state = get<StateComponent>()
+    private val sm: ComponentMapper<StateComponent> = get()
 
     public override fun processEntity(entity: Entity, deltaTime: Float) {
-        entity[state].time += deltaTime
+        sm[entity].time += deltaTime
     }
 }

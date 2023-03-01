@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.math.Vector2
 import com.github.dwursteisen.beat.game.components.ParticleEntity
 import com.github.dwursteisen.beat.game.components.Position
-import com.github.dwursteisen.libgdx.ashley.get
+import com.github.dwursteisen.beat.addons.ashley.get
 
 class ParticleImpactSystem(
     private val pool: ParticleEffectPool,

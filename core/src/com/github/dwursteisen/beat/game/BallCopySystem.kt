@@ -9,9 +9,9 @@ import com.github.dwursteisen.beat.game.components.BallCopy
 import com.github.dwursteisen.beat.game.components.EntityRender
 import com.github.dwursteisen.beat.game.components.Position
 import com.github.dwursteisen.beat.addons.aseprite.Aseprite
-import com.github.dwursteisen.libgdx.ashley.Rotation
-import com.github.dwursteisen.libgdx.ashley.StateComponent
-import com.github.dwursteisen.libgdx.ashley.get
+import com.github.dwursteisen.beat.addons.ashley.Rotation
+import com.github.dwursteisen.beat.addons.ashley.StateComponent
+import com.github.dwursteisen.beat.addons.ashley.get
 import com.github.dwursteisen.libgdx.v2
 import ktx.ashley.entity
 

@@ -9,8 +9,8 @@ import com.github.dwursteisen.beat.extensions.invoke
 import com.github.dwursteisen.beat.game.Size
 import com.github.dwursteisen.beat.game.components.EntityRender
 import com.github.dwursteisen.beat.game.components.Position
-import com.github.dwursteisen.libgdx.ashley.StateComponent
-import com.github.dwursteisen.libgdx.ashley.get
+import com.github.dwursteisen.beat.addons.ashley.StateComponent
+import com.github.dwursteisen.beat.addons.ashley.get
 
 class TitleSystem : IteratingSystem(Family.all(Title::class.java).get()) {
     private val duration = 1f

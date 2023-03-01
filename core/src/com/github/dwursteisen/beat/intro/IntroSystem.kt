@@ -15,8 +15,8 @@ import com.github.dwursteisen.beat.game.Size
 import com.github.dwursteisen.beat.intro.components.Intro
 import com.github.dwursteisen.beat.intro.components.TextRender
 import com.github.dwursteisen.beat.addons.aseprite.Aseprite
-import com.github.dwursteisen.libgdx.ashley.StateComponent
-import com.github.dwursteisen.libgdx.ashley.get
+import com.github.dwursteisen.beat.addons.ashley.StateComponent
+import com.github.dwursteisen.beat.addons.ashley.get
 import org.apache.commons.lang3.text.WordUtils
 import kotlin.math.roundToInt
 

@@ -1,4 +1,4 @@
-package com.github.dwursteisen.libgdx.ashley
+package com.github.dwursteisen.beat.addons.ashley
 
 import com.badlogic.ashley.core.Entity
 import com.badlogic.gdx.Gdx
@@ -7,16 +7,15 @@ import com.badlogic.gdx.InputMultiplexer
 import com.badlogic.gdx.InputProcessor
 import com.badlogic.gdx.math.Vector2
 import com.badlogic.gdx.utils.Pool
-import com.github.dwursteisen.libgdx.ashley.fsm.Event
-import com.github.dwursteisen.libgdx.ashley.fsm.StateMachineSystem
 import ktx.log.debug
+
 
 interface EventListener {
     fun onEvent(event: Event, eventData: EventData)
 }
 
+// FIXME: I should be abble to target multiple stuff at once
 class EventData(var event: Int = Int.MIN_VALUE, var target: Entity? = null, var body: Any? = null) : Pool.Poolable {
-
     override fun reset() {
         event = Int.MIN_VALUE
         target = null
@@ -26,20 +25,22 @@ class EventData(var event: Int = Int.MIN_VALUE, var target: Entity? = null, var 
 
 data class EventTimer(var timer: Float = 0f, val event: Event, val data: EventData)
 
+
 /**
  * Simple Event bus.
  *
  * - register listener through register method
  * - The update method should be called from the main loop
  *
+ *
  */
-class EventBus(private val eventMapper: Map<Int, String> = emptyMap()) {
+class EventBus(val eventMapper: Map<Int, String> = emptyMap()) {
 
     private val pool: Pool<EventData> = object : Pool<EventData>() {
         override fun newObject(): EventData = EventData()
     }
 
-    class EventInputProcessor(private val bus: EventBus) : InputAdapter() {
+    class EventInputProcessor(val bus: EventBus) : InputAdapter() {
 
         private val touchDown = Vector2()
         private val touchUp = Vector2()
@@ -59,6 +60,7 @@ class EventBus(private val eventMapper: Map<Int, String> = emptyMap()) {
         }
 
         override fun touchDown(screenX: Int, screenY: Int, pointer: Int, button: Int): Boolean {
+
             val screenTouchData = bus.createEventData()
             touchDown.set(screenX.toFloat(), screenY.toFloat())
             screenTouchData.body = touchDown
@@ -108,7 +110,6 @@ class EventBus(private val eventMapper: Map<Int, String> = emptyMap()) {
     private var emitterLatter: MutableList<EventTimer> = mutableListOf()
     private var emitterLatterMirror: MutableList<EventTimer> = mutableListOf()
 
-    @Deprecated("This method will be marked as private in future release. Use #emit + lambda version instead.")
     fun createEventData(): EventData = pool.obtain()
 
     fun emit(event: Event, entity: Entity, data: EventData = createEventData()) {
@@ -130,12 +131,6 @@ class EventBus(private val eventMapper: Map<Int, String> = emptyMap()) {
         }
     }
 
-    fun emitData(event: Event, body: () -> Any? = { null }) {
-        val data = createEventData()
-        data.body = body()
-        emit(event, data)
-    }
-
     fun emitLater(delta: Float, event: Event, entity: Entity, data: EventData = createEventData()) {
         data.target = entity
         emitLater(delta, event, data)
@@ -147,12 +142,18 @@ class EventBus(private val eventMapper: Map<Int, String> = emptyMap()) {
         emitterLatter.add(timer)
     }
 
+
     fun register(eventListener: EventListener, vararg events: Event) {
         events.forEach {
-            val lst = listeners[it] ?: emptyList()
-            listeners[it] = lst + eventListener
+            val lst = listeners[it]
+            if (lst == null) {
+                listeners.put(it, listOf(eventListener))
+            } else {
+                listeners.put(it, lst + eventListener)
+            }
         }
     }
+
 
     fun update(delta: Float) {
 
@@ -179,6 +180,7 @@ class EventBus(private val eventMapper: Map<Int, String> = emptyMap()) {
 
         emitterMirror.clear()
         emitterLatterMirror.clear()
+
     }
 
     private fun invoke(event: Event, data: EventData) {

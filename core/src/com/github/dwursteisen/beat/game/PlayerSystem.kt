@@ -8,12 +8,12 @@ import com.github.dwursteisen.beat.extensions.pickOne
 import com.github.dwursteisen.beat.game.components.Animated
 import com.github.dwursteisen.beat.game.components.Player
 import com.github.dwursteisen.beat.addons.aseprite.Aseprite
-import com.github.dwursteisen.libgdx.ashley.EntityState
-import com.github.dwursteisen.libgdx.ashley.EventBus
-import com.github.dwursteisen.libgdx.ashley.EventData
-import com.github.dwursteisen.libgdx.ashley.StateComponent
-import com.github.dwursteisen.libgdx.ashley.StateMachineSystem
-import com.github.dwursteisen.libgdx.ashley.get
+import com.github.dwursteisen.beat.addons.ashley.EntityState
+import com.github.dwursteisen.beat.addons.ashley.EventBus
+import com.github.dwursteisen.beat.addons.ashley.EventData
+import com.github.dwursteisen.beat.addons.ashley.StateComponent
+import com.github.dwursteisen.beat.addons.ashley.StateMachineSystem
+import com.github.dwursteisen.beat.addons.ashley.get
 
 class PlayerSystem(eventBus: EventBus, val assets: AssetManager) :
     StateMachineSystem(eventBus, all(Player::class.java).get()) {

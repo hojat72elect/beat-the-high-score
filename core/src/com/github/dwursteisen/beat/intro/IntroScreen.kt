@@ -29,8 +29,8 @@ import com.github.dwursteisen.beat.intro.components.Intro
 import com.github.dwursteisen.beat.intro.components.TapToSkip
 import com.github.dwursteisen.beat.intro.components.TextRender
 import com.github.dwursteisen.beat.addons.aseprite.Aseprite
-import com.github.dwursteisen.libgdx.ashley.StateComponent
-import com.github.dwursteisen.libgdx.ashley.StateSystem
+import com.github.dwursteisen.beat.addons.ashley.StateComponent
+import com.github.dwursteisen.beat.addons.ashley.StateSystem
 import com.github.dwursteisen.libgdx.v2
 import ktx.ashley.entity
 import ktx.log.debug

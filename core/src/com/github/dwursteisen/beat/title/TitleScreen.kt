@@ -34,8 +34,8 @@ import com.github.dwursteisen.beat.game.components.Transition
 import com.github.dwursteisen.beat.game.screenHeight
 import com.github.dwursteisen.beat.game.screenWidth
 import com.github.dwursteisen.beat.addons.aseprite.Aseprite
-import com.github.dwursteisen.libgdx.ashley.StateComponent
-import com.github.dwursteisen.libgdx.ashley.StateSystem
+import com.github.dwursteisen.beat.addons.ashley.StateComponent
+import com.github.dwursteisen.beat.addons.ashley.StateSystem
 import com.github.dwursteisen.libgdx.v2
 import ktx.ashley.entity
 import ktx.log.info

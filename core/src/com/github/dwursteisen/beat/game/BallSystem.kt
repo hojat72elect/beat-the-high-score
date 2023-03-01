@@ -17,14 +17,14 @@ import com.github.dwursteisen.beat.game.components.DebugCollision
 import com.github.dwursteisen.beat.game.components.HitBox
 import com.github.dwursteisen.beat.game.components.Player
 import com.github.dwursteisen.beat.game.components.Position
-import com.github.dwursteisen.libgdx.ashley.EntityState
-import com.github.dwursteisen.libgdx.ashley.EventBus
-import com.github.dwursteisen.libgdx.ashley.EventData
-import com.github.dwursteisen.libgdx.ashley.Rotation
-import com.github.dwursteisen.libgdx.ashley.StateComponent
-import com.github.dwursteisen.libgdx.ashley.StateMachineSystem
-import com.github.dwursteisen.libgdx.ashley.entity
-import com.github.dwursteisen.libgdx.ashley.get
+import com.github.dwursteisen.beat.addons.ashley.EntityState
+import com.github.dwursteisen.beat.addons.ashley.EventBus
+import com.github.dwursteisen.beat.addons.ashley.EventData
+import com.github.dwursteisen.beat.addons.ashley.Rotation
+import com.github.dwursteisen.beat.addons.ashley.StateComponent
+import com.github.dwursteisen.beat.addons.ashley.StateMachineSystem
+import com.github.dwursteisen.beat.addons.ashley.entity
+import com.github.dwursteisen.beat.addons.ashley.get
 import com.github.dwursteisen.libgdx.v2
 import ktx.ashley.entity
 
