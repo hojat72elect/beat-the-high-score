@@ -2,7 +2,6 @@
 sourceControl {
     gitRepository("https://github.com/dwursteisen/libgdx-addons.git") {
         producesModule("com.github.dwursteisen.libgdx-addons:aseprite-plugin")
-        producesModule("com.github.dwursteisen.libgdx-addons:core-addons")
     }
 }
 
