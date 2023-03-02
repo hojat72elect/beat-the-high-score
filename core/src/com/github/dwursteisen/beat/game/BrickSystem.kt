@@ -23,32 +23,41 @@ import com.github.dwursteisen.beat.addons.ashley.get
 import com.github.dwursteisen.beat.addons.core.v2
 import ktx.ashley.entity
 import ktx.ashley.hasNot
+import com.github.dwursteisen.beat.game.components.Brick
+import com.github.dwursteisen.beat.game.components.Position
+import com.github.dwursteisen.beat.game.components.EntityRender
+import com.github.dwursteisen.beat.game.components.Animated
+import com.github.dwursteisen.beat.game.components.DebugCollision
+import com.github.dwursteisen.beat.game.components.Gate
+import com.github.dwursteisen.beat.game.components.Debuggable
 
 class BrickSystem(
     eventBus: EventBus,
     private val world: World,
     val assets: AssetManager,
-    val feather: ParticleEffectPool,
+    private val feather: ParticleEffectPool,
     var enabled: Boolean = true
 ) : StateMachineSystem(
     eventBus,
-    Family.all(com.github.dwursteisen.beat.game.components.Brick::class.java, com.github.dwursteisen.beat.game.components.Animated::class.java)
-        .exclude(com.github.dwursteisen.beat.game.components.Gate::class.java)
+    Family.all(Brick::class.java, Animated::class.java)
+        .exclude(Gate::class.java)
         .get()
 ) {
 
-    private val position: ComponentMapper<com.github.dwursteisen.beat.game.components.Position> = get()
-    private val brick: ComponentMapper<com.github.dwursteisen.beat.game.components.Brick> = get()
-    private val collision: ComponentMapper<com.github.dwursteisen.beat.game.components.DebugCollision> = get()
+    private val position: ComponentMapper<Position> = get()
+    private val brick: ComponentMapper<Brick> = get()
+    private val collision: ComponentMapper<DebugCollision> =
+        get()
     private val state: ComponentMapper<StateComponent> = get()
-    private val animation: ComponentMapper<com.github.dwursteisen.beat.game.components.Animated> = get()
+    private val animation: ComponentMapper<Animated> =
+        get()
 
     private val tmp = Vector2()
 
     private val wreckageOrigin = 4 v2 4
 
     override fun describeMachine() {
-        val IDLE = object : EntityState() {
+        val idle = object : EntityState() {
             override fun enter(entity: Entity, machine: StateMachineSystem, eventData: EventData) {
 
                 entity[state].time = MathUtils.random(0.5f)
@@ -66,7 +75,7 @@ class BrickSystem(
             }
         }
 
-        val TOUCHED = object : EntityState() {
+        val touched = object : EntityState() {
             override fun enter(entity: Entity, machine: StateMachineSystem, eventData: EventData) {
                 entity[collision].hit = hitTime
                 entity[brick].hit--
@@ -89,7 +98,7 @@ class BrickSystem(
             }
         }
 
-        val EXPLODED = object : EntityState() {
+        val exploded = object : EntityState() {
             override fun enter(entity: Entity, machine: StateMachineSystem, eventData: EventData) {
                 val direction = eventData.body as Vector2
 
@@ -103,7 +112,7 @@ class BrickSystem(
 
                 addFreeChicken(entity[position].position)
 
-                entity.remove(com.github.dwursteisen.beat.game.components.Brick::class.java)
+                entity.remove(Brick::class.java)
 
                 val spriteData: Aseprite = assets["sheets/brick"]
                 entity[animation].animation = spriteData["explode_nr"]
@@ -116,16 +125,16 @@ class BrickSystem(
             }
         }
 
-        startWith(IDLE)
-        onState(IDLE).on(GameEvent.Brick.Touched.id) { entity, event ->
-            go(TOUCHED, entity, event)
+        startWith(idle)
+        onState(idle).on(GameEvent.Brick.Touched.id) { entity, event ->
+            go(touched, entity, event)
         }
 
-        onState(TOUCHED).on(GameEvent.Brick.Idle.id) { entity, _ ->
-            go(IDLE, entity)
+        onState(touched).on(GameEvent.Brick.Idle.id) { entity, _ ->
+            go(idle, entity)
         }
-        onState(TOUCHED).on(GameEvent.Brick.Exploded.id) { entity, event ->
-            go(EXPLODED, entity, event)
+        onState(touched).on(GameEvent.Brick.Exploded.id) { entity, event ->
+            go(exploded, entity, event)
         }
     }
 
@@ -156,13 +165,13 @@ class BrickSystem(
             }
 
             entity.add(FreeChicken(position.cpy(), particle))
-                .add(com.github.dwursteisen.beat.game.components.Position(position = position.cpy()))
+                .add(Position(position = position.cpy()))
                 .add(Size(chickenSize))
                 .add(StateComponent())
-                .add(com.github.dwursteisen.beat.game.components.EntityRender(hFlip = direction.second))
-                .add(com.github.dwursteisen.beat.game.components.Debuggable())
+                .add(EntityRender(hFlip = direction.second))
+                .add(Debuggable())
                 .add(Direction(value = dir))
-                .add(com.github.dwursteisen.beat.game.components.Animated(animation = chickenAnimation))
+                .add(Animated(animation = chickenAnimation))
         }
     }
 
@@ -210,10 +219,10 @@ class BrickSystem(
         val randomFrame = sprData.frame(MathUtils.random(nbFrame - 1))
 
         val et = engine.entity {
-            EngineEntity@ entity.add(com.github.dwursteisen.beat.game.components.Position(position.cpy()))
+            entity.add(Position(position.cpy()))
                 .add(Size(wreckageSize))
                 .add(StateComponent())
-                .add(com.github.dwursteisen.beat.game.components.EntityRender(texture = randomFrame))
+                .add(EntityRender(texture = randomFrame))
                 .add(Rotation(origin = wreckageOrigin))
         }
         body.userData = et

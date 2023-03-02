@@ -32,6 +32,9 @@ import ktx.scene2d.label
 import ktx.scene2d.textButton
 import ktx.scene2d.verticalGroup
 
+/**
+ * When user wins the last level of the game, they will face this screen.
+ */
 class CreditsScreen(val assets: AssetManager) : ScreenAdapter() {
 
     private lateinit var viewport: Viewport

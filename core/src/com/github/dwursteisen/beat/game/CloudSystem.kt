@@ -7,12 +7,20 @@ import com.badlogic.ashley.systems.IteratingSystem
 import com.badlogic.gdx.math.MathUtils
 import com.github.dwursteisen.beat.addons.ashley.StateComponent
 import com.github.dwursteisen.beat.addons.ashley.get
+import com.github.dwursteisen.beat.game.components.Position
+import com.github.dwursteisen.beat.game.components.Cloud
 
-class CloudSystem : IteratingSystem(all(com.github.dwursteisen.beat.game.components.Cloud::class.java, com.github.dwursteisen.beat.game.components.Position::class.java, StateComponent::class.java).get()) {
+class CloudSystem : IteratingSystem(
+    all(
+        Cloud::class.java,
+        Position::class.java,
+        StateComponent::class.java
+    ).get()
+) {
 
-    private val position: ComponentMapper<com.github.dwursteisen.beat.game.components.Position> = get()
+    private val position: ComponentMapper<Position> = get()
     private val state: ComponentMapper<StateComponent> = get()
-    private val cloud: ComponentMapper<com.github.dwursteisen.beat.game.components.Cloud> = get()
+    private val cloud: ComponentMapper<Cloud> = get()
 
     override fun processEntity(entity: Entity, deltaTime: Float) {
 

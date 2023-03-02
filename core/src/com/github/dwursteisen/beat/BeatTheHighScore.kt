@@ -58,7 +58,10 @@ open class BeatTheHighScore : Game() {
         info { "Application start loading assets..." }
         assetsManager.logger.level = Logger.ERROR // enable logging on assets manager
         assetsManager.setLoader(Aseprite::class.java, AsepriteLoader(InternalFileHandleResolver()))
-        assetsManager.setLoader(AsepriteJson::class.java, AsepriteJsonLoader(InternalFileHandleResolver()))
+        assetsManager.setLoader(
+            AsepriteJson::class.java,
+            AsepriteJsonLoader(InternalFileHandleResolver())
+        )
         assetsManager.setLoader(TiledMap::class.java, TmxMapLoader(InternalFileHandleResolver()))
 
         info { "Loading sprite sheets" }
