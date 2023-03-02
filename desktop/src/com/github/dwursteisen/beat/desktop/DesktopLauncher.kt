@@ -23,7 +23,7 @@ object DesktopLauncher {
 
             override fun render() {
                 if (Gdx.input.isKeyJustPressed(Input.Keys.N)) {
-                    BeatTheHighScore.nextLevel() // little cheat..
+                    nextLevel() // little cheat..
                 } else if (Gdx.input.isKeyJustPressed(Input.Keys.S)) {
                     recorder.takeScreenshot()
                 }

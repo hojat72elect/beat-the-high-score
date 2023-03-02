@@ -17,9 +17,7 @@ import com.badlogic.gdx.graphics.g3d.loader.ObjLoader
 import com.badlogic.gdx.graphics.g3d.utils.CameraInputController
 import io.anuke.gif.GifRecorder
 
-
 object Head3DLauncher {
-
 
     @JvmStatic
     fun main(arg: Array<String>) {
@@ -45,7 +43,9 @@ object Head3DLauncher {
                 environment.set(ColorAttribute(ColorAttribute.AmbientLight, 0.4f, 0.4f, 0.4f, 1f))
                 environment.add(DirectionalLight().set(0.8f, 0.8f, 0.8f, -1f, -0.8f, -0.2f))
 
-                cam = PerspectiveCamera(67f, Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat())
+                cam = PerspectiveCamera(
+                    67f, Gdx.graphics.width.toFloat(), Gdx.graphics.height.toFloat()
+                )
                 cam.position.set(1f, 1f, 1f)
                 cam.lookAt(0f, 0f, 0f)
                 cam.near = 1f
